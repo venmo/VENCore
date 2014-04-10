@@ -2,12 +2,11 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <AFNetworking/AFHTTPRequestOperation.h>
-#import <sys/sysctl.h>
 @import AdSupport;
 
 #import "VENHTTPResponse.h"
+#import "UIDevice+VENCore.h"
 
-NSString *const VENUserDefaultsKeyDeviceID = @"VenmoDeviceID";
 NSString *const VENPrivateAPIPathLogin = @"oauth/access_token";
 NSString *const VENPublicAPIPathPayments = @"payments";
 NSString *const VENPublicAPIPathUsers = @"users";
@@ -141,19 +140,8 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
     [defaultHeaders addEntriesFromDictionary:@{@"User-Agent" : [self userAgentString],
                                                @"Accept": [self acceptString],
                                                @"Accept-Language": [self acceptLanguageString],
-                                               @"Device-ID" : [self deviceIDString]}];
+                                               @"Device-ID" : [[UIDevice currentDevice] VEN_deviceIDString]}];
     return defaultHeaders;
-}
-
-
-+ (NSString *)platformString {
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *machine = malloc(size);
-    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
-    free(machine);
-    return platform;
 }
 
 
@@ -164,7 +152,7 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
     return [NSString stringWithFormat:@"%@/%@ iOS/%@ %@",
             appName, appVersion,
             [[UIDevice currentDevice] systemVersion],
-            [VENHTTP platformString]];
+            [[UIDevice currentDevice] VEN_platformString]];
 }
 
 
@@ -180,18 +168,5 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
             [locale objectForKey:NSLocaleCountryCode]];
 }
 
-
-- (NSString *)deviceIDString {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *uniqueIdentifier = [userDefaults stringForKey:VENUserDefaultsKeyDeviceID];
-    if (!uniqueIdentifier) {
-        CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
-        uniqueIdentifier = CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, uuid));
-        CFRelease(uuid);
-        [userDefaults setObject:uniqueIdentifier forKey:VENUserDefaultsKeyDeviceID];
-        [userDefaults synchronize];
-    }
-    return uniqueIdentifier;
-}
 
 @end

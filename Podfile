@@ -1,9 +1,10 @@
 platform :ios, '6.0'
 
-pod 'VENCore', :path => '.'
+target 'VENCore', :exclusive => true do
+  pod 'AFNetworking'
+end
 
 target 'VENCoreTests', :exclusive => true do
-  pod 'VENCore', :path => '.'
   pod 'Expecta'
   pod 'Nocilla'
   pod 'OCMock'

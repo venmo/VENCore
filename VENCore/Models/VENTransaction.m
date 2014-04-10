@@ -1,6 +1,22 @@
 #import "VENTransaction.h"
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
+#import "VENMutableTransaction.h"
+
+@interface VENTransaction ()
+
+@property (strong, nonatomic, readwrite) NSString *transactionID;
+@property (assign, nonatomic, readwrite) VENTransactionType type;
+@property (assign, nonatomic, readwrite) NSUInteger amount;
+@property (strong, nonatomic, readwrite) NSString *note;
+@property (strong, nonatomic, readwrite) NSString *fromUserID;
+@property (assign, nonatomic, readwrite) VENRecipientType toUserType;
+@property (strong, nonatomic, readwrite) NSString *toUserHandle; // cell number, email, or Venmo user ID.
+@property (strong, nonatomic, readwrite) NSString *toUserID;
+@property (assign, nonatomic, readwrite) VENTransactionStatus status;
+@property (assign, nonatomic, readwrite) VENTransactionAudience audience;
+
+@end
 
 @implementation VENTransaction
 
@@ -10,7 +26,8 @@
                            audience:(VENTransactionAudience)audience
                       recipientType:(VENRecipientType)recipientType
                     recipientString:(NSString *)recipientString {
-    VENTransaction *transaction = [[VENTransaction alloc] init];
+
+    VENTransaction *transaction = [[[self class] alloc] init];
     transaction.type = type;
     transaction.amount = amount;
     transaction.note = note;
@@ -18,6 +35,7 @@
     transaction.toUserType = recipientType;
     transaction.toUserHandle = recipientString;
     transaction.status = VENTransactionStatusNone;
+
     return transaction;
 }
 
@@ -95,6 +113,12 @@
              @"audience" : [self audienceString]};
 }
 
+
+- (VENMutableTransaction *)mutableCopy {
+    VENMutableTransaction *mutableTransaction = [VENMutableTransaction transactionWithType:self.type amount:self.amount note:self.note audience:self.audience recipientType:self.toUserType recipientString:self.toUserHandle];
+    return mutableTransaction;
+}
+
 #pragma mark - Private
 
 + (instancetype)transactionWithPayment:(NSDictionary *)payment {
@@ -132,6 +156,7 @@
     transaction.status        = [VENTransaction statusWithString:statusString];
     return transaction;
 }
+
 
 
 @end

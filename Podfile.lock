@@ -23,20 +23,14 @@ PODS:
   - OCHamcrest (3.0.1)
   - OCMock (2.2.3)
   - Specta (0.2.1)
-  - VENCore (0.0.1):
-    - AFNetworking
 
 DEPENDENCIES:
+  - AFNetworking
   - Expecta
   - Nocilla
   - OCHamcrest
   - OCMock
   - Specta
-  - VENCore (from `.`)
-
-EXTERNAL SOURCES:
-  VENCore:
-    :path: .
 
 SPEC CHECKSUMS:
   AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
@@ -45,6 +39,5 @@ SPEC CHECKSUMS:
   OCHamcrest: 782c52ae8c673e5d6060a65005cfd26d20d519ba
   OCMock: ea7fe30ee99e4e3186ad47d032a301fa7e8793ec
   Specta: 2d06220591110c6d9757d8be8ecf8e63aa40dc2a
-  VENCore: a04e391af5968cc9752e2b7da5865341a8ae4122
 
 COCOAPODS: 0.31.1

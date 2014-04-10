@@ -30,8 +30,6 @@ extern NSString *const VENPrivateAPIPathUsers;
     success:(void(^)(VENHTTPResponse *response))successBlock
      failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
 
-- (VENHTTPResponse *)responseFromOperation:(AFHTTPRequestOperation *)operation;
-
 - (void)setAccessToken:(NSString *)accessToken;
 
 @end

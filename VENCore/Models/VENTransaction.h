@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+@class VENMutableTransaction;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypePay,
@@ -54,6 +55,9 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
                            audience:(VENTransactionAudience)audience
                       recipientType:(VENRecipientType)recipientType
                     recipientString:(NSString *)recipientString;
+
+
+- (VENMutableTransaction *)mutableCopy;
 
 
 @end

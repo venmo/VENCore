@@ -11,14 +11,14 @@
  * Sets the shared core object.
  * @param core The core object to share.
  */
-+ (void)setSharedInstance:(VENCore *)core;
++ (void)setDefaultCore:(VENCore *)core;
 
 
 /**
  * Returns the shared core object.
  * @return A VENCore object.
  */
-+ (instancetype)sharedInstance;
++ (instancetype)defaultCore;
 
 
 /**

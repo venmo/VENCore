@@ -1,5 +1,4 @@
 #import "VENCore.h"
-#import "VENErrors.h"
 #import "VENHTTPResponse.h"
 #import "VENHTTP.h"
 #import "VENTransaction.h"
@@ -36,6 +35,16 @@ static NSString *const VENAPIBaseURL = @"https://api.venmo.com/v1";
 - (void)setAccessToken:(NSString *)accessToken {
     _accessToken = accessToken;
     [self.httpClient setAccessToken:accessToken];
+}
+
+
++ (void)setDefaultCore:(VENCore *)core {
+    sharedInstance = core;
+}
+
+
++ (instancetype)defaultCore {
+    return sharedInstance;
 }
 
 @end

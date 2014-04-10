@@ -1,5 +1,4 @@
 #import "VENCore.h"
-#import "VENErrors.h"
 #import "VENHTTP.h"
 #import "VENUser.h"
 
@@ -12,7 +11,9 @@ NSString *path;
 
 SpecBegin(VENCore)
 
-beforeAll(^{
+    [Expecta setAsynchronousTestTimeout:1];
+
+/*beforeAll(^{
     [[LSNocilla sharedInstance] start];
     accessToken = @"12345678";
     baseURL = [NSURL URLWithString:@"https://venmo.com"];
@@ -35,13 +36,46 @@ afterAll(^{
 afterEach(^{
     [[LSNocilla sharedInstance] clearStubs];
 });
+*/
 
-before(^{
-    core = [[VENCore alloc] initWithClientID:@"id" clientSecret:@"secret" baseURL:baseURL];
-});
+describe(@"Shared Instances of VENCore should persist", ^{
 
-after(^{
-    core = nil;
+    it(@"should set a 'defaultCore' and be retrievable", ^{
+        VENCore *newCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        [VENCore setDefaultCore:newCore];
+
+        expect([VENCore defaultCore]).to.equal(newCore);
+    });
+
+    it(@"should overwrite an existing default core when a new one is set", ^{
+        VENCore *oldCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        [VENCore setDefaultCore:oldCore];
+
+        VENCore *newCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        [VENCore setDefaultCore:newCore];
+
+        expect([VENCore defaultCore]).to.equal(newCore);
+    });
+
+    it(@"should release an old core after setting a new core", ^{
+#pragma clang push
+        __weak VENCore *oldCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        [VENCore setDefaultCore:oldCore];
+        expect([VENCore defaultCore]).to.equal(oldCore);
+
+        [VENCore setDefaultCore:nil];
+
+        expect(oldCore).will.equal(nil);
+
+    });
+
+    it(@"should clear out the defaultCore when set to nil", ^{
+        VENCore *newCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        [VENCore setDefaultCore:newCore];
+        [VENCore setDefaultCore:nil];
+        expect([VENCore defaultCore]).to.equal(nil);
+    });
+
 });
 
 SpecEnd
