@@ -58,14 +58,16 @@ describe(@"Shared Instances of VENCore should persist", ^{
     });
 
     it(@"should release an old core after setting a new core", ^{
-#pragma clang push
-        __weak VENCore *oldCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+#pragma diagnostic push
+#pragma clang diagnostic ignored "-Warc-unsafe-retained-assign"
+    __weak VENCore *oldCore = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
         [VENCore setDefaultCore:oldCore];
         expect([VENCore defaultCore]).to.equal(oldCore);
 
         [VENCore setDefaultCore:nil];
 
         expect(oldCore).will.equal(nil);
+#pragma diagnostic pop
 
     });
 
