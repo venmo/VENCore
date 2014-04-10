@@ -29,7 +29,6 @@
 		EBCB249218E9FBAF00807472 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBCB249018E9FBAF00807472 /* InfoPlist.strings */; };
 		EBCB249418E9FBAF00807472 /* VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCB249318E9FBAF00807472 /* VENCoreSpec.m */; };
 		EBF84D2A18EA5ADE00C0E077 /* NSError+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF84D2918EA5ADE00C0E077 /* NSError+VENCore.m */; };
-		EBF84D2E18EA5BD500C0E077 /* VENErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF84D2D18EA5BD500C0E077 /* VENErrors.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,8 +89,6 @@
 		EBCB249318E9FBAF00807472 /* VENCoreSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENCoreSpec.m; sourceTree = "<group>"; };
 		EBF84D2818EA5ADE00C0E077 /* NSError+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+VENCore.h"; path = "Categories/NSError+VENCore.h"; sourceTree = "<group>"; };
 		EBF84D2918EA5ADE00C0E077 /* NSError+VENCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+VENCore.m"; path = "Categories/NSError+VENCore.m"; sourceTree = "<group>"; };
-		EBF84D2C18EA5BD500C0E077 /* VENErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENErrors.h; sourceTree = "<group>"; };
-		EBF84D2D18EA5BD500C0E077 /* VENErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENErrors.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,8 +213,6 @@
 		EBCB247A18E9FBAF00807472 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EBF84D2C18EA5BD500C0E077 /* VENErrors.h */,
-				EBF84D2D18EA5BD500C0E077 /* VENErrors.m */,
 				EBCB247B18E9FBAF00807472 /* VENCore-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -407,7 +402,6 @@
 				EBBE7E1418EA08A800E47338 /* VENUser.m in Sources */,
 				EBF84D2A18EA5ADE00C0E077 /* NSError+VENCore.m in Sources */,
 				EB418B9518EB0B940003CBF5 /* VENTransaction.m in Sources */,
-				EBF84D2E18EA5BD500C0E077 /* VENErrors.m in Sources */,
 				EBBE7E0818EA017700E47338 /* VENHTTPResponse.m in Sources */,
 				EBCB247F18E9FBAF00807472 /* VENCore.m in Sources */,
 				EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */,

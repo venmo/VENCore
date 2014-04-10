@@ -23,10 +23,12 @@ extern NSString *const VENPrivateAPIPathUsers;
                          baseURL:(NSURL *)baseURL;
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
-completion:(void(^)(VENHTTPResponse *response, NSError *error))completionBlock;
+    success:(void(^)(VENHTTPResponse *response))successBlock
+    failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
 
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
-completion:(void(^)(VENHTTPResponse *response, NSError *error))completionBlock;
+    success:(void(^)(VENHTTPResponse *response))successBlock
+     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
 
 - (VENHTTPResponse *)responseFromOperation:(AFHTTPRequestOperation *)operation;
 

@@ -43,38 +43,57 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
 
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
- completion:(void(^)(VENHTTPResponse *response, NSError *error))completionBlock {
+    success:(void(^)(VENHTTPResponse *response))successBlock
+    failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
 
     [self.operationManager GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         VENHTTPResponse *response = [self responseFromOperation:operation];
-        if (completionBlock) {
-            completionBlock(response, nil);
+        if (successBlock) {
+            successBlock(response);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-        if (completionBlock) {
-            completionBlock(nil, error);
+        if (failureBlock) {
+            failureBlock(nil, error);
         }
     }];
 }
 
 
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
-  completion:(void(^)(VENHTTPResponse *response, NSError *error))completionBlock {
+     success:(void(^)(VENHTTPResponse *response))successBlock
+     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
 
     [self.operationManager POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-        VENHTTPResponse *response = [self responseFromOperation:operation];
-        if (completionBlock) {
-            completionBlock(response, nil);
+        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithOperation:operation];
+
+        if ([response didError]) {
+            if (failureBlock) {
+                NSError *error = [response error] ?: [NSError genericResponseError];
+                failureBlock(response, error);
+            }
+        }
+        else {
+            if (successBlock) {
+                successBlock(response);
+            }
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (!failureBlock) {
+            return;
+        }
 
-        if (completionBlock) {
-            completionBlock(nil, error);
+        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithOperation:operation];
+        if ([response didError]) {
+            NSError *error = [response error] ?: [NSError genericResponseError];
+            failureBlock(response, error);
+        }
+        else {
+            failureBlock(response, error);
         }
     }];
 }
@@ -153,11 +172,6 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
         [userDefaults synchronize];
     }
     return uniqueIdentifier;
-}
-
-
-- (VENHTTPResponse *)responseFromOperation:(AFHTTPRequestOperation *)operation {
-    return [[VENHTTPResponse alloc] initWithStatusCode:operation.response.statusCode responseObject:operation.responseObject];
 }
 
 @end

@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "NSError+VENCore.h"
 
 @class VENTransaction, VENUser, VENHTTP;
 
