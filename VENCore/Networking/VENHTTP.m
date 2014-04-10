@@ -1,5 +1,7 @@
 #import "VENHTTP.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import <AFNetworking/AFHTTPRequestOperation.h>
 #import <sys/sysctl.h>
 @import AdSupport;
 
@@ -46,19 +48,7 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
     success:(void(^)(VENHTTPResponse *response))successBlock
     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
 
-    [self.operationManager GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        VENHTTPResponse *response = [self responseFromOperation:operation];
-        if (successBlock) {
-            successBlock(response);
-        }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (failureBlock) {
-            failureBlock(nil, error);
-        }
-    }];
+    [self sendRequestWithMethod:@"GET" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
 
@@ -66,13 +56,32 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
      success:(void(^)(VENHTTPResponse *response))successBlock
      failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
 
-    [self.operationManager POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self sendRequestWithMethod:@"POST" path:path parameters:parameters success:successBlock failure:failureBlock];
+}
+
+
+- (void)DELETE:(NSString *)path parameters:(NSDictionary *)parameters
+       success:(void(^)(VENHTTPResponse *response))successBlock
+       failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
+
+    [self sendRequestWithMethod:@"DELETE" path:path parameters:parameters success:successBlock failure:failureBlock];
+}
+
+
+- (AFHTTPRequestOperation *)sendRequestWithMethod:(NSString *)method
+                                             path:(NSString *)path parameters:(NSDictionary *)parameters
+                                          success:(void(^)(VENHTTPResponse *response))successBlock
+                                          failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
+
+    NSMutableURLRequest *request = [self.operationManager.requestSerializer requestWithMethod:@"GET" URLString:[[NSURL URLWithString:path relativeToURL:self.operationManager.baseURL] absoluteString] parameters:parameters error:nil];
+
+    void(^operationSuccessBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
 
         VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithOperation:operation];
 
         if ([response didError]) {
             if (failureBlock) {
-                NSError *error = [response error] ?: [NSError genericResponseError];
+                NSError *error = [response error] ?: [NSError defaultResponseError];
                 failureBlock(response, error);
             }
         }
@@ -81,21 +90,32 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
                 successBlock(response);
             }
         }
+    };
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+    void(^operationFailureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+
         if (!failureBlock) {
             return;
         }
 
         VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithOperation:operation];
         if ([response didError]) {
-            NSError *error = [response error] ?: [NSError genericResponseError];
+            NSError *error = [response error] ?: [NSError defaultResponseError];
             failureBlock(response, error);
         }
         else {
             failureBlock(response, error);
         }
-    }];
+    };
+
+
+    AFHTTPRequestOperation *operation = [self.operationManager HTTPRequestOperationWithRequest:request
+                                                                                       success:operationSuccessBlock
+                                                                                       failure:operationFailureBlock];
+
+    [self.operationManager.operationQueue addOperation:operation];
+    return operation;
 }
 
 

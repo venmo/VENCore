@@ -1,5 +1,5 @@
 #import "NSError+VENCore.h"
-#import "VENErrors.h"
+#import "VENHTTPResponse.h"
 
 NSString *const VENErrorDomain = @"com.venmo.VENCore.ErrorDomain";
 
@@ -19,7 +19,7 @@ NSString *const VENErrorDomain = @"com.venmo.VENCore.ErrorDomain";
 
 
 + (instancetype)defaultResponseError {
-    return [self errorWithCode: description:NSLocalizedString(@"Bad response", nil) recoverySuggestion:@"Deal with it."];
+    return [self errorWithCode:VENErrorCodeBadRequest description:NSLocalizedString(@"Bad response", nil) recoverySuggestion:nil];
 }
 
 @end
