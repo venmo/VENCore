@@ -1,6 +1,8 @@
 #import "VENMutableTransaction+Internal.h"
 #import "VENTransaction+Internal.h"
 #import "VENCore.h"
+#import "VENHTTPResponse.h"
+#import "NSDictionary+VENCore.h"
 
 @interface VENMutableTransaction ()
 
@@ -75,14 +77,23 @@ recipientHandle  = _recipientHandle;
     VENCore *defaultCore = [VENCore defaultCore];
     if (!defaultCore) {
         NSError *error = [NSError noDefaultCoreError];
-        failure(nil, error);
+        if (failure) {
+            failure(nil, error);
+        }
         return;
     }
 
     [defaultCore.httpClient POST:VENAPIPathPayments
                       parameters:[self parameters]
                          success:^(VENHTTPResponse *response) {
-
+                             NSDictionary *data = [response.object objectOrNilForKey:@"data"];
+                             NSDictionary *payment = [data objectOrNilForKey:@"payment"];
+                             if (payment) {
+                                 VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:payment];
+                                 if (success) {
+                                     success(transaction, response);
+                                 }
+                             }
     } failure:^(VENHTTPResponse *response, NSError *error) {
 
     }];

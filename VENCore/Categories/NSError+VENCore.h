@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
 
-extern NSString *const VENErrorDomain;
-
 @interface NSError (VENCore)
 
 /**

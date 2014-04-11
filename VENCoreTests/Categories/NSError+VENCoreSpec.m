@@ -1,5 +1,6 @@
 #import "NSError+VENCore.h"
 #import "VENHTTPResponse.h"
+#import "VENCore.h"
 
 SpecBegin(NSErrorVENCore)
 
@@ -40,4 +41,14 @@ describe(@"defaultResponseError", ^{
 });
 
 
+describe(@"noDefaultCoreError", ^{
+    it(@"should return an NSError object with the correct code and user info", ^{
+        NSError *error = [NSError noDefaultCoreError];
+
+        NSString *expectedDescription = NSLocalizedString(@"No default core", nil);
+        expect(error.domain).to.equal(VENErrorDomainCore);
+        expect(error.code).to.equal(VENCoreErrorCodeNoDefaultCore);
+        expect(error.localizedDescription).to.equal(expectedDescription);
+    });
+});
 SpecEnd

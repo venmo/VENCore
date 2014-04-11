@@ -2,18 +2,13 @@
 #import "VENTransaction+Internal.h"
 #import "VENBundledFileParser.h"
 #import "VENHTTPResponse.h"
+#import "NSError+VENCore.h"
+#import "VENCore.h"
+#import "VENHTTP.h"
+
+VENMutableTransaction *transaction;
 
 SpecBegin(VENMutableTransaction)
-
-beforeAll(^{
-    [[LSNocilla sharedInstance] start];
-});
-afterAll(^{
-    [[LSNocilla sharedInstance] stop];
-});
-afterEach(^{
-    [[LSNocilla sharedInstance] clearStubs];
-});
 
 describe(@"mutability", ^{
     it(@"should allow mutating a mutable copy of a VENTransaction", ^{
@@ -50,12 +45,41 @@ describe(@"parameters", ^{
 });
 
 describe(@"sending a transaction", ^{
-    it(@"should send a valid transaction if the default core has been set", ^{
-
+    before(^{
+        [VENCore setDefaultCore:nil];
+        transaction = [VENMutableTransaction transactionWithType:VENTransactionTypePay
+                                                          amount:1000
+                                                            note:@"Here is 10 Bucks"
+                                                        audience:VENTransactionAudienceFriends
+                                                   recipientType:VENRecipientTypeEmail
+                                                 recipientString:@"bg@venmo.com"];
     });
 
-    it(@"should not send a transaction if the default core is nil", ^{
+    after(^{
+        transaction = nil;
+    });
 
+    it(@"should POST a payment with VENHTTP if the default core has been set", ^{
+        VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"abc"];
+        id mockHTTP = [OCMockObject niceMockForClass:[VENHTTP class]];
+        core.httpClient = mockHTTP;
+        [VENCore setDefaultCore:core];
+
+        [[mockHTTP expect] POST:VENAPIPathPayments
+                     parameters:[transaction parameters]
+                        success:[OCMArg any]
+                        failure:[OCMArg any]];
+
+        [transaction sendWithSuccess:nil failure:nil];
+        [mockHTTP verify];
+    });
+
+    it(@"should not send a transaction if the default core is nil", ^AsyncBlock{
+        [transaction sendWithSuccess:nil failure:^(VENHTTPResponse *response, NSError *error) {
+            NSError *expectedError = [NSError noDefaultCoreError];
+            expect(error).to.equal(expectedError);
+            done();
+        }];
     });
 });
 

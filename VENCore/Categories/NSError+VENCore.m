@@ -2,8 +2,6 @@
 #import "VENHTTPResponse.h"
 #import "VENCore.h"
 
-NSString *const VENErrorDomain = @"com.venmo.VENCore.ErrorDomain";
-
 @implementation NSError (VENCore)
 
 + (instancetype)errorWithDomain:(NSString *)domain
@@ -31,9 +29,9 @@ NSString *const VENErrorDomain = @"com.venmo.VENCore.ErrorDomain";
 
 + (instancetype)noDefaultCoreError {
     return [self errorWithDomain:VENErrorDomainCore
-            code:VENCoreErrorCodeNoDefaultCore
-                   description:NSLocalizedString(@"No default core", nil)
-            recoverySuggestion:NSLocalizedString(@"Use setDefaultCore to set the default VENCore instance.", nil)];
+                            code:VENCoreErrorCodeNoDefaultCore
+                     description:NSLocalizedString(@"No default core", nil)
+              recoverySuggestion:NSLocalizedString(@"Use setDefaultCore to set the default VENCore instance.", nil)];
 }
 
 @end
