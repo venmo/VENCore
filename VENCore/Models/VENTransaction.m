@@ -20,25 +20,6 @@
 
 @implementation VENTransaction
 
-+ (instancetype)transactionWithType:(VENTransactionType)type
-                             amount:(NSUInteger)amount
-                               note:(NSString *)note
-                           audience:(VENTransactionAudience)audience
-                      recipientType:(VENRecipientType)recipientType
-                    recipientString:(NSString *)recipientString {
-
-    VENTransaction *transaction = [[[self class] alloc] init];
-    transaction.type = type;
-    transaction.amount = amount;
-    transaction.note = note;
-    transaction.audience = audience;
-    transaction.toUserType = recipientType;
-    transaction.toUserHandle = recipientString;
-    transaction.status = VENTransactionStatusNone;
-
-    return transaction;
-}
-
 
 + (VENTransactionType)typeWithString:(NSString *)string {
     return [[string lowercaseString] isEqualToString:@"charge"] ?
@@ -59,6 +40,19 @@
 }
 
 
++ (VENTransactionAudience)audienceWithString:(NSString *)string {
+    VENTransactionAudience audience = VENTransactionAudiencePrivate;
+    NSString *lowercaseString = [string lowercaseString];
+    if ([lowercaseString isEqualToString:@"friends"]) {
+        audience = VENTransactionAudienceFriends;
+    }
+    else if ([lowercaseString isEqualToString:@"public"]) {
+        audience = VENTransactionAudiencePublic;
+    }
+    return audience;
+}
+
+
 - (NSString *)recipientTypeString {
     switch (self.toUserType) {
         case VENRecipientTypeEmail:
@@ -74,6 +68,7 @@
             break;
     }
 }
+
 
 - (NSString *)audienceString {
     switch (self.audience) {
@@ -115,48 +110,62 @@
 
 
 - (VENMutableTransaction *)mutableCopy {
-    VENMutableTransaction *mutableTransaction = [VENMutableTransaction transactionWithType:self.type amount:self.amount note:self.note audience:self.audience recipientType:self.toUserType recipientString:self.toUserHandle];
+    VENMutableTransaction *mutableTransaction = [[VENMutableTransaction alloc] init];
+    mutableTransaction.transactionID = self.transactionID;
+    mutableTransaction.type          = self.type;
+    mutableTransaction.amount        = self.amount;
+    mutableTransaction.note          = self.note;
+    mutableTransaction.fromUserID    = self.fromUserID;
+    mutableTransaction.toUserType    = self.toUserType;
+    mutableTransaction.toUserID      = self.toUserID;
+    mutableTransaction.toUserHandle  = self.toUserHandle;
+    mutableTransaction.audience      = self.audience;
     return mutableTransaction;
 }
 
 #pragma mark - Private
 
-+ (instancetype)transactionWithPayment:(NSDictionary *)payment {
++ (instancetype)transactionWithPaymentObject:(NSDictionary *)payment {
     if (!payment) {
         return nil;
     }
+
     VENTransaction *transaction = [[VENTransaction alloc] init];
-    transaction.transactionID = [payment stringForKey:@"id"];
-    transaction.type          = [VENTransaction typeWithString:payment[@"action"]];
+    transaction.transactionID   = [payment stringForKey:@"id"];
+    transaction.type            = [VENTransaction typeWithString:payment[@"action"]];
 
-    NSDictionary *actor       = [payment objectOrNilForKey:@"actor"];
-    transaction.fromUserID    = [actor stringForKey:@"id"];
+    NSDictionary *actor         = [payment objectOrNilForKey:@"actor"];
+    transaction.fromUserID      = [actor stringForKey:@"id"];
 
-    NSDictionary *target      = [payment objectOrNilForKey:@"target"];
-    NSString *targetPhone     = [target stringForKey:@"phone"];
-    NSString *targetEmail     = [target stringForKey:@"email"];
-    NSDictionary *targetUser  = [target objectOrNilForKey:@"user"];
+    NSDictionary *target        = [payment objectOrNilForKey:@"target"];
+    NSString *targetPhone       = [target stringForKey:@"phone"];
+    NSString *targetEmail       = [target stringForKey:@"email"];
+    NSDictionary *targetUser    = [target objectOrNilForKey:@"user"];
 
     if (targetPhone) {
-        transaction.toUserHandle = targetPhone;
-        transaction.toUserType = VENRecipientTypePhone;
+        transaction.toUserHandle    = targetPhone;
+        transaction.toUserType      = VENRecipientTypePhone;
     }
     if (targetEmail) {
-        transaction.toUserHandle = targetEmail;
-        transaction.toUserType = VENRecipientTypeEmail;
+        transaction.toUserHandle    = targetEmail;
+        transaction.toUserType      = VENRecipientTypeEmail;
     }
+
     if (targetUser) {
-        transaction.toUserType = VENRecipientTypeUserID;
-        transaction.toUserHandle = [targetUser stringForKey:@"id"];
-        transaction.toUserID = [targetUser stringForKey:@"id"];
+        transaction.toUserType      = VENRecipientTypeUserID;
+        transaction.toUserHandle    = [targetUser stringForKey:@"id"];
+        transaction.toUserID        = [targetUser stringForKey:@"id"];
     }
-    transaction.amount        = [[payment stringForKey:@"amount"] floatValue] * 100;
-    transaction.note          = [payment stringForKey:@"note"];
-    NSString *statusString    = [payment stringForKey:@"status"];
-    transaction.status        = [VENTransaction statusWithString:statusString];
+
+    NSString *audienceString        = [payment stringForKey:@"audience"];
+    transaction.audience            = [VENTransaction audienceWithString:audienceString];
+
+
+    transaction.amount              = [[payment stringForKey:@"amount"] floatValue] * 100;
+    transaction.note                = [payment stringForKey:@"note"];
+    NSString *statusString          = [payment stringForKey:@"status"];
+    transaction.status              = [VENTransaction statusWithString:statusString];
     return transaction;
 }
-
-
 
 @end

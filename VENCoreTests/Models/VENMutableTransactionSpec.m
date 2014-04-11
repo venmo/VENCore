@@ -1,18 +1,21 @@
 #import "VENMutableTransaction.h"
 #import "VENTransaction.h"
+#import "VENBundledFileParser.h"
+
 
 SpecBegin(VENMutableTransaction)
 
 describe(@"mutability", ^{
     it(@"should create a mutable transaction from an immutable transaction", ^{
-        VENTransaction *transaction = [VENTransaction transactionWithType:VENTransactionTypePay amount:100 note:@"Hi there" audience:VENTransactionAudiencePublic recipientType:VENRecipientTypeEmail recipientString:@"kishkish@venmo.com"];
+        NSDictionary *paymentObject = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
+        VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
 
         VENMutableTransaction *mutableTransaction = [transaction mutableCopy];
 
-        expect(mutableTransaction.note).to.equal(@"Hi there");
+        expect(mutableTransaction.note).to.equal(@"Rock Climbing!");
         mutableTransaction.note = @"I am a new note";
         expect(mutableTransaction.note).to.equal(@"I am a new note");
-        expect(transaction.note).to.equal(@"Hi there");
+        expect(transaction.note).to.equal(@"Rock Climbing!");
     });
 
     it(@"should allow mutating properties", ^{

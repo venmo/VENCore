@@ -39,24 +39,10 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
 @property (assign, nonatomic, readonly) VENTransactionStatus status;
 @property (assign, nonatomic, readonly) VENTransactionAudience audience;
 
+
 /**
- * Creates a new transaction.
- * @param type The transaction type (pay or charge)
- * @param amount The amount (in pennies)
- * @param note The payment note
- * @param audience The audience
- * @param recipientType The recipient type (phone, email, or user id)
- * @param recipientString The recipient's phone number, email, or Venmo user ID
- * @return The initialized transaction
+ * Returns a new mutable copy of the receiver.
  */
-+ (instancetype)transactionWithType:(VENTransactionType)type
-                             amount:(NSUInteger)amount
-                               note:(NSString *)note
-                           audience:(VENTransactionAudience)audience
-                      recipientType:(VENRecipientType)recipientType
-                    recipientString:(NSString *)recipientString;
-
-
 - (VENMutableTransaction *)mutableCopy;
 
 
