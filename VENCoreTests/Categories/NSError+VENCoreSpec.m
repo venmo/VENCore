@@ -1,5 +1,6 @@
 #import "NSError+VENCore.h"
 #import "VENHTTPResponse.h"
+#import "VENCoreError.h"
 
 SpecBegin(NSErrorVENCore)
 
@@ -27,7 +28,7 @@ describe(@"defaultResponseError", ^{
 
         NSString *expectedDescription = NSLocalizedString(@"Bad response", nil);
         expect(error.domain).to.equal(VENErrorDomain);
-        expect(error.code).to.equal(VENErrorCodeBadRequest);
+        expect(error.code).to.equal(VENCoreErrorCodeBadResponse);
         expect(error.localizedDescription).to.equal(expectedDescription);
     });
 });

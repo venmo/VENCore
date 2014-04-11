@@ -18,6 +18,7 @@
 		EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */; };
 		EB427E5318F844910070EDD9 /* paymentToEmail.json in Resources */ = {isa = PBXBuildFile; fileRef = EB427E5218F844910070EDD9 /* paymentToEmail.json */; };
 		EB427E5918F8451B0070EDD9 /* VENBundledFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENBundledFileParser.m */; };
+		EB427E6018F872840070EDD9 /* VENCoreError.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5F18F872840070EDD9 /* VENCoreError.m */; };
 		EB58F97D18F75B25008A6914 /* VENMutableTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB58F97C18F75B25008A6914 /* VENMutableTransactionSpec.m */; };
 		EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */; };
 		EB9BF00818EA83B500416645 /* VENUserSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9BF00718EA83B500416645 /* VENUserSpec.m */; };
@@ -79,6 +80,9 @@
 		EB427E5218F844910070EDD9 /* paymentToEmail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = paymentToEmail.json; path = API/paymentToEmail.json; sourceTree = "<group>"; };
 		EB427E5618F8451B0070EDD9 /* VENBundledFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENBundledFileParser.h; path = Utilities/VENBundledFileParser.h; sourceTree = "<group>"; };
 		EB427E5718F8451B0070EDD9 /* VENBundledFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENBundledFileParser.m; path = Utilities/VENBundledFileParser.m; sourceTree = "<group>"; };
+		EB427E5E18F872840070EDD9 /* VENCoreError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCoreError.h; sourceTree = "<group>"; };
+		EB427E5F18F872840070EDD9 /* VENCoreError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCoreError.m; sourceTree = "<group>"; };
+		EB427E6418F876370070EDD9 /* VENMutableTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENMutableTransaction+Internal.h"; path = "Models/VENMutableTransaction+Internal.h"; sourceTree = "<group>"; };
 		EB58F97C18F75B25008A6914 /* VENMutableTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableTransactionSpec.m; sourceTree = "<group>"; };
 		EB65513F18F841D900226A76 /* VENTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENTransaction+Internal.h"; path = "Models/VENTransaction+Internal.h"; sourceTree = "<group>"; };
 		EB74B2BD18E9FD7B00838A9D /* VENHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTP.h; path = Networking/VENHTTP.h; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		EBBE7E1018EA088B00E47338 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EB427E6418F876370070EDD9 /* VENMutableTransaction+Internal.h */,
 				EB10A52718F72581007F2119 /* VENMutableTransaction.h */,
 				EB10A52818F72581007F2119 /* VENMutableTransaction.m */,
 				EB65513F18F841D900226A76 /* VENTransaction+Internal.h */,
@@ -246,6 +251,8 @@
 				EB74B2BC18E9FD4200838A9D /* Networking */,
 				EBCB247C18E9FBAF00807472 /* VENCore.h */,
 				EBCB247E18E9FBAF00807472 /* VENCore.m */,
+				EB427E5E18F872840070EDD9 /* VENCoreError.h */,
+				EB427E5F18F872840070EDD9 /* VENCoreError.m */,
 				EBCB247A18E9FBAF00807472 /* Supporting Files */,
 			);
 			path = VENCore;
@@ -454,6 +461,7 @@
 				EBCB247F18E9FBAF00807472 /* VENCore.m in Sources */,
 				EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */,
 				EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */,
+				EB427E6018F872840070EDD9 /* VENCoreError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

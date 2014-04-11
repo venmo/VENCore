@@ -1,7 +1,7 @@
 #import "VENTransaction.h"
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
-#import "VENMutableTransaction.h"
+#import "VENMutableTransaction+Internal.h"
 
 @interface VENTransaction ()
 
@@ -53,73 +53,17 @@
 }
 
 
-- (NSString *)recipientTypeString {
-    switch (self.recipientType) {
-        case VENRecipientTypeEmail:
-            return @"email";
-            break;
-
-        case VENRecipientTypePhone:
-            return @"phone";
-            break;
-
-        case VENRecipientTypeUserID:
-            return @"user_id";
-            break;
-    }
-}
-
-
-- (NSString *)audienceString {
-    switch (self.audience) {
-        case VENTransactionAudiencePrivate:
-            return @"private";
-            break;
-
-        case VENTransactionAudienceFriends:
-            return @"friends";
-            break;
-
-        case VENTransactionAudiencePublic:
-            return @"public";
-            break;
-
-        default:
-            break;
-    }
-}
-
-
-- (NSString *)amountString {
-    if (self.amount < 1) {
-        return @"";
-    }
-    CGFloat amount = self.amount / 100.0f;
-    NSString *amountStr = [NSString stringWithFormat:@"%.2f", amount];
-    return amountStr;
-}
-
-
-- (NSDictionary *)dictionaryRepresentation {
-    NSString *recipientTypeKey = [self recipientTypeString];
-    return @{recipientTypeKey : self.recipientHandle,
-             @"note" : self.note,
-             @"amount" : self.type == VENTransactionTypePay ? [self amountString] : [NSString stringWithFormat:@"-%@", [self amountString]],
-             @"audience" : [self audienceString]};
-}
-
-
 - (VENMutableTransaction *)mutableCopy {
-    VENMutableTransaction *mutableTransaction = [[VENMutableTransaction alloc] init];
-    mutableTransaction.transactionID = self.transactionID;
-    mutableTransaction.type          = self.type;
-    mutableTransaction.amount        = self.amount;
-    mutableTransaction.note          = self.note;
-    mutableTransaction.fromUserID    = self.fromUserID;
-    mutableTransaction.recipientType    = self.recipientType;
-    mutableTransaction.toUserID      = self.toUserID;
-    mutableTransaction.recipientHandle  = self.recipientHandle;
-    mutableTransaction.audience      = self.audience;
+    VENMutableTransaction *mutableTransaction =
+    [[VENMutableTransaction alloc] initWithTransactionID:self.transactionID
+                                                    type:self.type
+                                                  amount:self.amount
+                                                    note:self.note
+                                              fromUserID:self.fromUserID
+                                           recipientType:self.recipientType
+                                                toUserID:self.toUserID
+                                         recipientHandle:self.recipientHandle
+                                                audience:self.audience];
     return mutableTransaction;
 }
 

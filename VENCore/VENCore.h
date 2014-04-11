@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "NSError+VENCore.h"
+#import "VENHTTP.h"
 
-@class VENTransaction, VENUser, VENHTTP;
+@class VENTransaction, VENUser;
 
 @interface VENCore : NSObject
 

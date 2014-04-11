@@ -7,11 +7,7 @@
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
 
-NSString *const VENPrivateAPIPathLogin = @"oauth/access_token";
-NSString *const VENPublicAPIPathPayments = @"payments";
-NSString *const VENPublicAPIPathUsers = @"users";
-
-NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
+NSString *const VENAPIPathPayments = @"payments";
 
 @interface VENHTTP ()
 

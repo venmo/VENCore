@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString *const VENPrivateAPIPathLogin;
-extern NSString *const VENPublicAPIPathPayments;
+extern NSString *const VENAPIPathPayments;
 extern NSString *const VENPublicAPIPathUsers;
 extern NSString *const VENPrivateAPIPathUsers;
 

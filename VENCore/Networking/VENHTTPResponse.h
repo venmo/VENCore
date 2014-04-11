@@ -5,11 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ENUM(NSInteger, VENErrorCode) {
-    VENErrorCodeUnauthorized,
-    VENErrorCodeBadRequest
-};
-
 @class AFHTTPRequestOperation;
 
 @interface VENHTTPResponse : NSObject

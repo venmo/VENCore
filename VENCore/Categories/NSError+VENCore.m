@@ -1,7 +1,7 @@
 #import "NSError+VENCore.h"
 #import "VENHTTPResponse.h"
-
-NSString *const VENErrorDomain = @"com.venmo.VENCore.ErrorDomain";
+#import "VENCore.h"
+#import "VENCoreError.h"
 
 @implementation NSError (VENCore)
 
@@ -19,7 +19,16 @@ NSString *const VENErrorDomain = @"com.venmo.VENCore.ErrorDomain";
 
 
 + (instancetype)defaultResponseError {
-    return [self errorWithCode:VENErrorCodeBadRequest description:NSLocalizedString(@"Bad response", nil) recoverySuggestion:nil];
+    return [self errorWithCode:VENCoreErrorCodeBadResponse
+                   description:NSLocalizedString(@"Bad response", nil)
+            recoverySuggestion:nil];
+}
+
+
++ (instancetype)noDefaultCoreError {
+    return [self errorWithCode:VENCoreErrorCodeNoDefaultCore
+                   description:NSLocalizedString(@"No default core", nil)
+            recoverySuggestion:NSLocalizedString(@"Use setDefaultCore to set the default VENCore instance.", nil)];
 }
 
 @end

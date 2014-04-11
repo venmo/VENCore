@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
 
-extern NSString *const VENErrorDomain;
-
 @interface NSError (VENCore)
 
 /**
@@ -19,5 +17,10 @@ extern NSString *const VENErrorDomain;
  */
 + (instancetype)defaultResponseError;
 
+
+/**
+ * Returns an error indicating that no default core has been set.
+ */
++ (instancetype)noDefaultCoreError;
 
 @end
