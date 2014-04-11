@@ -4,4 +4,6 @@
 
 + (id)objectFromJSONResource:(NSString *)name;
 
++ (NSString *)stringFromJSONResource:(NSString *)name;
+
 @end

@@ -10,9 +10,20 @@ VENMutableTransaction *transaction;
 
 SpecBegin(VENMutableTransaction)
 
+beforeAll(^{
+    [[LSNocilla sharedInstance] start];
+});
+afterAll(^{
+    [[LSNocilla sharedInstance] stop];
+});
+afterEach(^{
+    [[LSNocilla sharedInstance] clearStubs];
+});
+
 describe(@"mutability", ^{
     it(@"should allow mutating a mutable copy of a VENTransaction", ^{
-        NSDictionary *paymentObject = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
+        NSDictionary *paymentResponse = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
+        NSDictionary *paymentObject = paymentResponse[@"data"][@"payment"];
         VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
 
         VENMutableTransaction *mutableTransaction = [transaction mutableCopy];
@@ -59,9 +70,17 @@ describe(@"sending a transaction", ^{
         transaction = nil;
     });
 
+    it(@"should not send a transaction if the default core is nil", ^AsyncBlock{
+        [transaction sendWithSuccess:nil failure:^(VENHTTPResponse *response, NSError *error) {
+            NSError *expectedError = [NSError noDefaultCoreError];
+            expect(error).to.equal(expectedError);
+            done();
+        }];
+    });
+
     it(@"should POST a payment with VENHTTP if the default core has been set", ^{
         VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"abc"];
-        id mockHTTP = [OCMockObject niceMockForClass:[VENHTTP class]];
+        id mockHTTP = [OCMockObject mockForClass:[VENHTTP class]];
         core.httpClient = mockHTTP;
         [VENCore setDefaultCore:core];
 
@@ -74,13 +93,34 @@ describe(@"sending a transaction", ^{
         [mockHTTP verify];
     });
 
-    it(@"should not send a transaction if the default core is nil", ^AsyncBlock{
-        [transaction sendWithSuccess:nil failure:^(VENHTTPResponse *response, NSError *error) {
-            NSError *expectedError = [NSError noDefaultCoreError];
-            expect(error).to.equal(expectedError);
+    it(@"should return a VENTransaction object if the payment is successful", ^AsyncBlock{
+        VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"abc"];
+        [VENCore setDefaultCore:core];
+
+        NSString *paymentString = [VENBundledFileParser stringFromJSONResource:@"paymentToEmail"];
+        stubRequest(@"GET", VENAPIPathPayments).
+        andReturn(200).
+        withHeader(@"Content-Type", @"application/json").
+        withBody(paymentString);
+
+        stubRequest(@"POST", @"https://api.venmo.com/v1/payments").
+        withBody(@"amount=10.00&audience=friends&email=bg%40venmo.com&note=Here%20is%2010%20Bucks").
+        andReturn(200).
+        withHeader(@"Content-Type", @"application/json").
+        withBody(paymentString);
+
+        [transaction sendWithSuccess:^(VENTransaction *transaction, VENHTTPResponse *response) {
+            expect(transaction).toNot.beNil();
+            expect(response).toNot.beNil();
+            done();
+        } failure:^(VENHTTPResponse *response, NSError *error) {
             done();
         }];
     });
+
+
+
 });
+
 
 SpecEnd

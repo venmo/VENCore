@@ -68,7 +68,12 @@ NSString *const VENAPIPathPayments = @"payments";
                                           success:(void(^)(VENHTTPResponse *response))successBlock
                                           failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
 
-    NSMutableURLRequest *request = [self.operationManager.requestSerializer requestWithMethod:@"GET" URLString:[[NSURL URLWithString:path relativeToURL:self.operationManager.baseURL] absoluteString] parameters:parameters error:nil];
+    NSMutableURLRequest *request =
+    [self.operationManager.requestSerializer requestWithMethod:method
+                                                     URLString:[[NSURL URLWithString:path
+                                                                       relativeToURL:self.operationManager.baseURL] absoluteString]
+                                                    parameters:parameters
+                                                         error:nil];
 
     void(^operationSuccessBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
 

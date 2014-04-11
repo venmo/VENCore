@@ -7,7 +7,8 @@ VENTransaction *transaction;
 SpecBegin(VENTransaction)
 
 before(^{
-    NSDictionary *paymentObject = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
+    NSDictionary *paymentResponse = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
+    NSDictionary *paymentObject = paymentResponse[@"data"][@"payment"];
     transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
 });
 
