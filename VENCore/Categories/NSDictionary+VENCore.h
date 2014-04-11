@@ -5,6 +5,15 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSMutableDictionary (VENCore)
+
+/** 
+ * Removes all keys which have NULL values from the dictionary
+ */
+- (void)removeAllNullValues;
+
+@end
+
 @interface NSDictionary (VENCore)
 
 /**
@@ -29,5 +38,11 @@
  * with the key.
  */
 - (NSString *)stringForKey:(id)key;
+
+/**
+ * Returns a dictionary containing all non-Null key-value pairs from the receiving dictionary
+ * @return Dictionary with no NULL values
+ */
+- (instancetype)dictionaryByRemovingAllNullObjects;
 
 @end

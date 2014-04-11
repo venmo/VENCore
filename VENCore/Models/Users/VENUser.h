@@ -1,20 +1,30 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface VENUser : NSObject
+/**
+
+ @note Users are considered equal if and only if their external IDs are the same
+ */
+
+@interface VENUser : NSObject <NSCopying>
 
 @property (copy, nonatomic, readonly) NSString *username;
 @property (copy, nonatomic, readonly) NSString *firstName;
 @property (copy, nonatomic, readonly) NSString *lastName;
-@property (copy, nonatomic, readonly) NSString *about;
 @property (copy, nonatomic, readonly) NSString *displayName;
-@property (strong, nonatomic, readonly) NSDate *dateJoined;
+@property (copy, nonatomic, readonly) NSString *about;
 @property (copy, nonatomic, readonly) NSString *phone;
 @property (copy, nonatomic, readonly) NSString *profileImageUrl;
 @property (copy, nonatomic, readonly) NSString *email;
-@property (assign, nonatomic, readonly) NSInteger friendsCount;
 @property (copy, nonatomic, readonly) NSString *internalId;
 @property (copy, nonatomic, readonly) NSString *externalId;
-@property (assign, nonatomic, readonly) BOOL isTrusted;
+@property (strong, nonatomic, readonly) NSDate *dateJoined;
+
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (NSDictionary *)dictionaryRepresentation;
+
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
+
 
 @end

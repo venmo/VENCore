@@ -79,4 +79,13 @@ describe(@"stringForKey", ^{
     });
 });
 
+describe(@"removeAllNullValues", ^{
+    it(@"should remove null values from a dictionary", ^{
+        NSMutableDictionary *mutableDictionary = [@{@"nullKey":[NSNull null], @"notNullKey":@"value"}mutableCopy];
+        [mutableDictionary removeAllNullValues];
+        expect(mutableDictionary[@"nullKey"]).to.beNil();
+        expect(mutableDictionary[@"notNullKey"]).to.equal(@"value");
+    });
+});
+
 SpecEnd
