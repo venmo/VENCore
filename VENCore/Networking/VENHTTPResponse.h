@@ -7,6 +7,13 @@
 
 @class AFHTTPRequestOperation;
 
+NSString *const VENErrorDomainHTTPResponse;
+
+NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
+    VENErrorCodeHTTPResponseUnauthorizedRequest,
+    VENErrorCodeHTTPResponseBadResponse
+};
+
 @interface VENHTTPResponse : NSObject
 
 @property (nonatomic, readonly, strong) NSDictionary *object;

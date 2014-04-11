@@ -1,7 +1,6 @@
 #import "VENMutableTransaction+Internal.h"
 #import "VENTransaction+Internal.h"
 #import "VENCore.h"
-#import "VENCoreError.h"
 
 @interface VENMutableTransaction ()
 

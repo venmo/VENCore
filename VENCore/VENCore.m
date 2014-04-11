@@ -6,6 +6,8 @@
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
 
+NSString *const VENErrorDomainCore = @"com.venmo.VENCore.ErrorDomain.VENCore";
+
 static VENCore *sharedInstance = nil;
 
 static NSString *const VENAPIBaseURL = @"https://api.venmo.com/v1";

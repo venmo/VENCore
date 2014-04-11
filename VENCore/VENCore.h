@@ -2,6 +2,12 @@
 #import "NSError+VENCore.h"
 #import "VENHTTP.h"
 
+NSString *const VENErrorDomainCore;
+
+NS_ENUM(NSInteger, VENCoreErrorCode) {
+    VENCoreErrorCodeNoDefaultCore
+};
+
 @class VENTransaction, VENUser;
 
 @interface VENCore : NSObject

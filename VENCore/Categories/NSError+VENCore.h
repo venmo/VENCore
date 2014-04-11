@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+extern NSString *const VENErrorDomain;
+
 @interface NSError (VENCore)
 
 /**
@@ -8,9 +10,10 @@
  * @param description A description of the error
  * @param recoverySuggestion A description of how to recover from the error
  */
-+ (instancetype)errorWithCode:(NSInteger)code
-                  description:(NSString *)description
-           recoverySuggestion:(NSString *)recoverySuggestion;
++ (instancetype)errorWithDomain:(NSString *)domain
+                           code:(NSInteger)code
+                    description:(NSString *)description
+             recoverySuggestion:(NSString *)recoverySuggestion;
 
 /**
  * Returns the default error for failing VENHTTP responses.
