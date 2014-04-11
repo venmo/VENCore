@@ -18,8 +18,8 @@ describe(@"transactionWithPaymentObject:", ^{
         expect(transaction.amount).to.equal(400);
         expect(transaction.note).to.equal(@"Rock Climbing!");
         expect(transaction.fromUserID).to.equal(@"1088551785594880949");
-        expect(transaction.toUserType).to.equal(VENRecipientTypeEmail);
-        expect(transaction.toUserHandle).to.equal(@"nonvenmouser@gmail.com");
+        expect(transaction.recipientType).to.equal(VENRecipientTypeEmail);
+        expect(transaction.recipientHandle).to.equal(@"nonvenmouser@gmail.com");
         expect(transaction.toUserID).to.equal(nil);
         expect(transaction.audience).to.equal(VENTransactionAudiencePublic);
     });
@@ -33,8 +33,8 @@ describe(@"mutableCopy", ^{
         expect(mutableTransaction.amount).to.equal(transaction.amount);
         expect(mutableTransaction.note).to.equal(transaction.note);
         expect(mutableTransaction.fromUserID).to.equal(transaction.fromUserID);
-        expect(mutableTransaction.toUserType).to.equal(transaction.toUserType);
-        expect(mutableTransaction.toUserHandle).to.equal(transaction.toUserHandle);
+        expect(mutableTransaction.recipientType).to.equal(transaction.recipientType);
+        expect(mutableTransaction.recipientHandle).to.equal(transaction.recipientHandle);
         expect(mutableTransaction.toUserID).to.equal(transaction.toUserID);
         expect(mutableTransaction.audience).to.equal(transaction.audience);
     });

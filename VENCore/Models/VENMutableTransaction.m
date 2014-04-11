@@ -2,20 +2,22 @@
 
 @interface VENMutableTransaction ()
 
+@property (assign, nonatomic, readwrite) VENTransactionStatus status;
+
 @end
 
 @implementation VENMutableTransaction
 
-@synthesize type                   = _type,
-amount                             = _amount,
-note                               = _note,
-fromUserID                         = _fromUserID,
-transactionID                      = _transactionID,
-toUserType                         = _toUserType,
-toUserID                           = _toUserID,
-status                             = _status,
-audience                           = _audience,
-toUserHandle                       = _toUserHandle;
+@synthesize type = _type,
+amount           = _amount,
+note             = _note,
+fromUserID       = _fromUserID,
+transactionID    = _transactionID,
+recipientType    = _recipientType,
+toUserID         = _toUserID,
+status           = _status,
+audience         = _audience,
+recipientHandle  = _recipientHandle;
 
 + (instancetype)transactionWithType:(VENTransactionType)type
                              amount:(NSUInteger)amount
@@ -27,11 +29,11 @@ toUserHandle                       = _toUserHandle;
     VENMutableTransaction *transaction = [[[self class] alloc] init];
     transaction.type                   = type;
     transaction.amount                 = amount;
-    transaction.note                   = [note copy];
+    transaction.note                   = note;
     transaction.audience               = audience;
-    transaction.toUserType             = recipientType;
-    transaction.toUserHandle           = [recipientString copy];
-    transaction.status                 = VENTransactionStatusNone;
+    transaction.recipientType          = recipientType;
+    transaction.recipientHandle        = recipientString;
+    transaction.status                 = VENTransactionStatusNotSent;
 
     return transaction;
 }

@@ -2,11 +2,10 @@
 #import "VENTransaction.h"
 #import "VENBundledFileParser.h"
 
-
 SpecBegin(VENMutableTransaction)
 
 describe(@"mutability", ^{
-    it(@"should create a mutable transaction from an immutable transaction", ^{
+    it(@"should allow mutating a mutable copy of a VENTransaction", ^{
         NSDictionary *paymentObject = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
         VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
 

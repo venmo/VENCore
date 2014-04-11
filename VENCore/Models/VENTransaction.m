@@ -5,14 +5,14 @@
 
 @interface VENTransaction ()
 
-@property (strong, nonatomic, readwrite) NSString *transactionID;
+@property (copy, nonatomic, readwrite) NSString *transactionID;
 @property (assign, nonatomic, readwrite) VENTransactionType type;
 @property (assign, nonatomic, readwrite) NSUInteger amount;
-@property (strong, nonatomic, readwrite) NSString *note;
-@property (strong, nonatomic, readwrite) NSString *fromUserID;
-@property (assign, nonatomic, readwrite) VENRecipientType toUserType;
-@property (strong, nonatomic, readwrite) NSString *toUserHandle; // cell number, email, or Venmo user ID.
-@property (strong, nonatomic, readwrite) NSString *toUserID;
+@property (copy, nonatomic, readwrite) NSString *note;
+@property (copy, nonatomic, readwrite) NSString *fromUserID;
+@property (assign, nonatomic, readwrite) VENRecipientType recipientType;
+@property (copy, nonatomic, readwrite) NSString *recipientHandle; // cell number, email, or Venmo user ID.
+@property (copy, nonatomic, readwrite) NSString *toUserID;
 @property (assign, nonatomic, readwrite) VENTransactionStatus status;
 @property (assign, nonatomic, readwrite) VENTransactionAudience audience;
 
@@ -28,7 +28,7 @@
 
 
 + (VENTransactionStatus)statusWithString:(NSString *)string {
-    VENTransactionStatus status = VENTransactionStatusNone;
+    VENTransactionStatus status = VENTransactionStatusNotSent;
     NSString *lowercaseString = [string lowercaseString];
     if ([lowercaseString isEqualToString:@"settled"]) {
         status = VENTransactionStatusSettled;
@@ -54,7 +54,7 @@
 
 
 - (NSString *)recipientTypeString {
-    switch (self.toUserType) {
+    switch (self.recipientType) {
         case VENRecipientTypeEmail:
             return @"email";
             break;
@@ -102,7 +102,7 @@
 
 - (NSDictionary *)dictionaryRepresentation {
     NSString *recipientTypeKey = [self recipientTypeString];
-    return @{recipientTypeKey : self.toUserHandle,
+    return @{recipientTypeKey : self.recipientHandle,
              @"note" : self.note,
              @"amount" : self.type == VENTransactionTypePay ? [self amountString] : [NSString stringWithFormat:@"-%@", [self amountString]],
              @"audience" : [self audienceString]};
@@ -116,9 +116,9 @@
     mutableTransaction.amount        = self.amount;
     mutableTransaction.note          = self.note;
     mutableTransaction.fromUserID    = self.fromUserID;
-    mutableTransaction.toUserType    = self.toUserType;
+    mutableTransaction.recipientType    = self.recipientType;
     mutableTransaction.toUserID      = self.toUserID;
-    mutableTransaction.toUserHandle  = self.toUserHandle;
+    mutableTransaction.recipientHandle  = self.recipientHandle;
     mutableTransaction.audience      = self.audience;
     return mutableTransaction;
 }
@@ -143,17 +143,17 @@
     NSDictionary *targetUser    = [target objectOrNilForKey:@"user"];
 
     if (targetPhone) {
-        transaction.toUserHandle    = targetPhone;
-        transaction.toUserType      = VENRecipientTypePhone;
+        transaction.recipientHandle    = targetPhone;
+        transaction.recipientType      = VENRecipientTypePhone;
     }
     if (targetEmail) {
-        transaction.toUserHandle    = targetEmail;
-        transaction.toUserType      = VENRecipientTypeEmail;
+        transaction.recipientHandle    = targetEmail;
+        transaction.recipientType      = VENRecipientTypeEmail;
     }
 
     if (targetUser) {
-        transaction.toUserType      = VENRecipientTypeUserID;
-        transaction.toUserHandle    = [targetUser stringForKey:@"id"];
+        transaction.recipientType      = VENRecipientTypeUserID;
+        transaction.recipientHandle    = [targetUser stringForKey:@"id"];
         transaction.toUserID        = [targetUser stringForKey:@"id"];
     }
 
