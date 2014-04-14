@@ -5,12 +5,14 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ENUM(NSInteger, VENErrorCode) {
-    VENErrorCodeUnauthorized,
-    VENErrorCodeBadRequest
-};
-
 @class AFHTTPRequestOperation;
+
+NSString *const VENErrorDomainHTTPResponse;
+
+NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
+    VENErrorCodeHTTPResponseUnauthorizedRequest,
+    VENErrorCodeHTTPResponseBadResponse
+};
 
 @interface VENHTTPResponse : NSObject
 

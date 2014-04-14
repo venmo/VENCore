@@ -1,7 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "NSError+VENCore.h"
+#import "VENHTTP.h"
 
-@class VENTransaction, VENUser, VENHTTP;
+NSString *const VENErrorDomainCore;
+
+NS_ENUM(NSInteger, VENCoreErrorCode) {
+    VENCoreErrorCodeNoDefaultCore
+};
+
+@class VENTransaction, VENUser;
 
 @interface VENCore : NSObject
 
