@@ -17,10 +17,13 @@
 		EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */; };
 		EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */; };
 		EB427E5318F844910070EDD9 /* paymentToEmail.json in Resources */ = {isa = PBXBuildFile; fileRef = EB427E5218F844910070EDD9 /* paymentToEmail.json */; };
-		EB427E5918F8451B0070EDD9 /* VENBundledFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENBundledFileParser.m */; };
+		EB427E5918F8451B0070EDD9 /* VENTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */; };
 		EB58F97D18F75B25008A6914 /* VENMutableTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB58F97C18F75B25008A6914 /* VENMutableTransactionSpec.m */; };
 		EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */; };
 		EB9BF00818EA83B500416645 /* VENUserSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9BF00718EA83B500416645 /* VENUserSpec.m */; };
+		EBA57C5318FC362000D39D0F /* invalidAccessTokenError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5018FC362000D39D0F /* invalidAccessTokenError.json */; };
+		EBA57C5418FC362000D39D0F /* invalidAmountError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5118FC362000D39D0F /* invalidAmountError.json */; };
+		EBA57C5518FC362000D39D0F /* invalidAudienceError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5218FC362000D39D0F /* invalidAudienceError.json */; };
 		EBBE7E0818EA017700E47338 /* VENHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */; };
 		EBBE7E0A18EA020500E47338 /* VENHTTPSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */; };
 		EBBE7E0D18EA022300E47338 /* VENHTTPResponseSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0C18EA022300E47338 /* VENHTTPResponseSpec.m */; };
@@ -76,15 +79,18 @@
 		EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+VENCore.h"; path = "Categories/NSDictionary+VENCore.h"; sourceTree = "<group>"; };
 		EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+VENCore.m"; path = "Categories/NSDictionary+VENCore.m"; sourceTree = "<group>"; };
 		EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+VENCoreSpec.m"; path = "Categories/NSDictionary+VENCoreSpec.m"; sourceTree = "<group>"; };
-		EB427E5218F844910070EDD9 /* paymentToEmail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = paymentToEmail.json; path = API/paymentToEmail.json; sourceTree = "<group>"; };
-		EB427E5618F8451B0070EDD9 /* VENBundledFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENBundledFileParser.h; path = Utilities/VENBundledFileParser.h; sourceTree = "<group>"; };
-		EB427E5718F8451B0070EDD9 /* VENBundledFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENBundledFileParser.m; path = Utilities/VENBundledFileParser.m; sourceTree = "<group>"; };
+		EB427E5218F844910070EDD9 /* paymentToEmail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = paymentToEmail.json; path = api/payments/paymentToEmail.json; sourceTree = "<group>"; };
+		EB427E5618F8451B0070EDD9 /* VENTestUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTestUtilities.h; path = Utilities/VENTestUtilities.h; sourceTree = "<group>"; };
+		EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENTestUtilities.m; path = Utilities/VENTestUtilities.m; sourceTree = "<group>"; };
 		EB427E6418F876370070EDD9 /* VENMutableTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENMutableTransaction+Internal.h"; path = "Models/VENMutableTransaction+Internal.h"; sourceTree = "<group>"; };
 		EB58F97C18F75B25008A6914 /* VENMutableTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableTransactionSpec.m; sourceTree = "<group>"; };
 		EB65513F18F841D900226A76 /* VENTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENTransaction+Internal.h"; path = "Models/VENTransaction+Internal.h"; sourceTree = "<group>"; };
 		EB74B2BD18E9FD7B00838A9D /* VENHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTP.h; path = Networking/VENHTTP.h; sourceTree = "<group>"; };
 		EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTP.m; path = Networking/VENHTTP.m; sourceTree = "<group>"; };
 		EB9BF00718EA83B500416645 /* VENUserSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserSpec.m; sourceTree = "<group>"; };
+		EBA57C5018FC362000D39D0F /* invalidAccessTokenError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalidAccessTokenError.json; path = api/errors/invalidAccessTokenError.json; sourceTree = "<group>"; };
+		EBA57C5118FC362000D39D0F /* invalidAmountError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalidAmountError.json; path = api/errors/invalidAmountError.json; sourceTree = "<group>"; };
+		EBA57C5218FC362000D39D0F /* invalidAudienceError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalidAudienceError.json; path = api/errors/invalidAudienceError.json; sourceTree = "<group>"; };
 		EBBE7E0618EA017700E47338 /* VENHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTPResponse.h; path = Networking/VENHTTPResponse.h; sourceTree = "<group>"; };
 		EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponse.m; path = Networking/VENHTTPResponse.m; sourceTree = "<group>"; };
 		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; };
@@ -139,6 +145,7 @@
 			children = (
 				EB418B9918EB0DD20003CBF5 /* NSError+VENCoreSpec.m */,
 				EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */,
+				EBBE7E1118EA089200E47338 /* Models */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -146,7 +153,8 @@
 		EB427E5118F8447D0070EDD9 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				EB427E5218F844910070EDD9 /* paymentToEmail.json */,
+				EBA57C4F18FC361400D39D0F /* errors */,
+				EBA57C4E18FC360600D39D0F /* payments */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -154,8 +162,8 @@
 		EB427E5B18F845250070EDD9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				EB427E5618F8451B0070EDD9 /* VENBundledFileParser.h */,
-				EB427E5718F8451B0070EDD9 /* VENBundledFileParser.m */,
+				EB427E5618F8451B0070EDD9 /* VENTestUtilities.h */,
+				EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -169,6 +177,24 @@
 				EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		EBA57C4E18FC360600D39D0F /* payments */ = {
+			isa = PBXGroup;
+			children = (
+				EB427E5218F844910070EDD9 /* paymentToEmail.json */,
+			);
+			name = payments;
+			sourceTree = "<group>";
+		};
+		EBA57C4F18FC361400D39D0F /* errors */ = {
+			isa = PBXGroup;
+			children = (
+				EBA57C5018FC362000D39D0F /* invalidAccessTokenError.json */,
+				EBA57C5118FC362000D39D0F /* invalidAmountError.json */,
+				EBA57C5218FC362000D39D0F /* invalidAudienceError.json */,
+			);
+			name = errors;
 			sourceTree = "<group>";
 		};
 		EBBE7E0B18EA020C00E47338 /* Networking */ = {
@@ -267,7 +293,6 @@
 				EB427E5B18F845250070EDD9 /* Utilities */,
 				EB427E5118F8447D0070EDD9 /* API */,
 				EB418B9818EB0DAC0003CBF5 /* Categories */,
-				EBBE7E1118EA089200E47338 /* Models */,
 				EBBE7E0B18EA020C00E47338 /* Networking */,
 				EBCB249318E9FBAF00807472 /* VENCoreSpec.m */,
 				EBCB248E18E9FBAF00807472 /* Supporting Files */,
@@ -372,8 +397,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBA57C5418FC362000D39D0F /* invalidAmountError.json in Resources */,
+				EBA57C5318FC362000D39D0F /* invalidAccessTokenError.json in Resources */,
 				EB427E5318F844910070EDD9 /* paymentToEmail.json in Resources */,
 				EBCB249218E9FBAF00807472 /* InfoPlist.strings in Resources */,
+				EBA57C5518FC362000D39D0F /* invalidAudienceError.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,7 +496,7 @@
 				EB418B9718EB0DA30003CBF5 /* VENTransactionSpec.m in Sources */,
 				EB58F97D18F75B25008A6914 /* VENMutableTransactionSpec.m in Sources */,
 				EBBE7E0D18EA022300E47338 /* VENHTTPResponseSpec.m in Sources */,
-				EB427E5918F8451B0070EDD9 /* VENBundledFileParser.m in Sources */,
+				EB427E5918F8451B0070EDD9 /* VENTestUtilities.m in Sources */,
 				EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */,
 				EB418B9A18EB0DD20003CBF5 /* NSError+VENCoreSpec.m in Sources */,
 				EB9BF00818EA83B500416645 /* VENUserSpec.m in Sources */,

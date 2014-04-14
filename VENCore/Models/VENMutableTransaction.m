@@ -95,7 +95,13 @@ recipientHandle  = _recipientHandle;
                                  }
                              }
     } failure:^(VENHTTPResponse *response, NSError *error) {
-
+        NSError *responseError;
+        if ([response didError]){
+            responseError = [response error];
+        }
+        if (failure) {
+            failure(response, responseError ?: error);
+        }
     }];
 }
 

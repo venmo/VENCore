@@ -1,6 +1,6 @@
 #import "VENMutableTransaction+Internal.h"
 #import "VENTransaction+Internal.h"
-#import "VENBundledFileParser.h"
+#import "VENTestUtilities.h"
 #import "VENHTTPResponse.h"
 #import "NSError+VENCore.h"
 #import "VENCore.h"
@@ -22,7 +22,7 @@ afterEach(^{
 
 describe(@"mutability", ^{
     it(@"should allow mutating a mutable copy of a VENTransaction", ^{
-        NSDictionary *paymentResponse = [VENBundledFileParser objectFromJSONResource:@"paymentToEmail"];
+        NSDictionary *paymentResponse = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
         NSDictionary *paymentObject = paymentResponse[@"data"][@"payment"];
         VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
 
@@ -97,28 +97,51 @@ describe(@"sending a transaction", ^{
         VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"abc"];
         [VENCore setDefaultCore:core];
 
-        NSString *paymentString = [VENBundledFileParser stringFromJSONResource:@"paymentToEmail"];
-        stubRequest(@"GET", VENAPIPathPayments).
-        andReturn(200).
-        withHeader(@"Content-Type", @"application/json").
-        withBody(paymentString);
+        NSString *paymentString = [VENTestUtilities stringFromJSONResource:@"paymentToEmail"];
+        NSString *queryString = [VENTestUtilities queryStringFromParameters:[transaction parameters]];
 
-        stubRequest(@"POST", @"https://api.venmo.com/v1/payments").
-        withBody(@"amount=10.00&audience=friends&email=bg%40venmo.com&note=Here%20is%2010%20Bucks").
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:core];
+        stubRequest(@"POST", [NSString stringWithFormat:@"%@%@", baseURLString, VENAPIPathPayments]).
+        withBody(queryString).
         andReturn(200).
         withHeader(@"Content-Type", @"application/json").
         withBody(paymentString);
 
         [transaction sendWithSuccess:^(VENTransaction *transaction, VENHTTPResponse *response) {
             expect(transaction).toNot.beNil();
-            expect(response).toNot.beNil();
+            // TODO: write an isEqual
+            expect(response.statusCode).to.equal(200);
             done();
         } failure:^(VENHTTPResponse *response, NSError *error) {
             done();
         }];
     });
 
+    it(@"should return an error object if the payment failed", ^AsyncBlock{
+        VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"abc"];
+        [VENCore setDefaultCore:core];
 
+        NSString *errorString = [VENTestUtilities stringFromJSONResource:@"invalidAccessTokenError"];
+        NSDictionary *objectDictionary = [VENTestUtilities objectFromJSONResource:@"invalidAccessTokenError"];
+        NSDictionary *errorDictionary = objectDictionary[@"error"];
+        NSString *queryString = [VENTestUtilities queryStringFromParameters:[transaction parameters]];
+
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:core];
+        stubRequest(@"POST", [NSString stringWithFormat:@"%@%@", baseURLString, VENAPIPathPayments]).
+        withBody(queryString).
+        andReturn(400).
+        withHeader(@"Content-Type", @"application/json").
+        withBody(errorString);
+
+        [transaction sendWithSuccess:^(VENTransaction *transaction, VENHTTPResponse *response) {
+            done();
+        } failure:^(VENHTTPResponse *response, NSError *error) {
+            expect(response.statusCode).to.equal(400);
+            expect([error localizedDescription]).to.equal(errorDictionary[@"message"]);
+            expect([error code]).to.equal(errorDictionary[@"code"]);
+            done();
+        }];
+    });
 
 });
 
