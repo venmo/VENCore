@@ -39,6 +39,8 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
 @property (assign, nonatomic, readonly) VENTransactionStatus status;
 @property (assign, nonatomic, readonly) VENTransactionAudience audience;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 
 /**
  * Returns a new mutable copy of the receiver.

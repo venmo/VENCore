@@ -37,4 +37,9 @@
 - (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
                 failure:(void(^)(VENHTTPResponse *response, NSError *error))failure;
 
+/**
+ * Indicates whether the transaction is valid and ready to post to the service
+ */
+- (BOOL)readyToSend;
+
 @end

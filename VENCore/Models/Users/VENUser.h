@@ -21,10 +21,17 @@
 @property (strong, nonatomic, readonly) NSDate *dateJoined;
 
 
+#warning Document this!
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 - (NSDictionary *)dictionaryRepresentation;
 
-+ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
++ (instancetype)userWithUser:(VENUser *)user;
 
+//+ (void)fetchUserWithExternalId:(NSString *)externalId
+//                        success:^{}()successBlock
+//                        failure:^{}()failureBlock;
+
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
 
 @end

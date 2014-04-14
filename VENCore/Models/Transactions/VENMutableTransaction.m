@@ -108,10 +108,15 @@ recipientHandle  = _recipientHandle;
 
 - (NSDictionary *)parameters {
     NSString *recipientTypeKey = [self recipientTypeString];
-    return @{recipientTypeKey : self.recipientHandle,
-             @"note" : self.note,
-             @"amount" : self.type == VENTransactionTypePay ? [self amountString] : [NSString stringWithFormat:@"-%@", [self amountString]],
-             @"audience" : [self audienceString]};
+#warning Make this type-safe for nils
+    NSDictionary *parameters;
+    if ([self readyToSend]) {
+        parameters = @{recipientTypeKey : self.recipientHandle,
+                      @"note" : self.note,
+                      @"amount" : self.type == VENTransactionTypePay ? [self amountString] : [NSString stringWithFormat:@"-%@", [self amountString]],
+                      @"audience" : [self audienceString]};
+    }
+    return parameters;
 }
 
 
@@ -129,6 +134,20 @@ recipientHandle  = _recipientHandle;
             return @"user_id";
             break;
     }
+}
+
+
+- (BOOL)readyToSend {
+    if (!self.recipientHandle) {
+        return NO;
+    }
+    if (!self.note) {
+        return NO;
+    }
+    if (![self audienceString]) {
+        return NO;
+    }
+    return YES;
 }
 
 

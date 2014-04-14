@@ -10,7 +10,7 @@
 /** 
  * Removes all keys which have NULL values from the dictionary
  */
-- (void)removeAllNullValues;
+- (void)cleanseResponseDictionary;
 
 @end
 
@@ -43,6 +43,6 @@
  * Returns a dictionary containing all non-Null key-value pairs from the receiving dictionary
  * @return Dictionary with no NULL values
  */
-- (instancetype)dictionaryByRemovingAllNullObjects;
+- (instancetype)dictionaryByCleansingResponseDictionary;
 
 @end

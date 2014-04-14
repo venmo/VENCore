@@ -26,7 +26,7 @@
     self = [super init];
 
     if (self) {
-        NSDictionary *cleanDictionary = [dictionary dictionaryByRemovingAllNullObjects];
+        NSDictionary *cleanDictionary = [dictionary dictionaryByCleansingResponseDictionary];
 
         self.username       = cleanDictionary[VENUserKeyUsername];
         self.firstName      = cleanDictionary[VENUserKeyFirstName];
@@ -93,6 +93,13 @@
     VENUser *comparisonUser = (VENUser *)object;
 
     return [self.externalId isEqualToString:comparisonUser.externalId];
+}
+
+
++ (instancetype)userWithUser:(VENUser *)user {
+#warning Incomplete implementation
+    VENUser *newUser = [[[self class] alloc] init];
+    return nil;
 }
 
 

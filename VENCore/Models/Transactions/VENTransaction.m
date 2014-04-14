@@ -20,14 +20,24 @@
 
 @implementation VENTransaction
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+#warning Incomplete implementation
+    if (!dictionary) {
+        return nil;
+    }
+    
+    return nil;
+}
 
 + (VENTransactionType)typeWithString:(NSString *)string {
+#warning Let's inline these in initWithDictionary
     return [[string lowercaseString] isEqualToString:@"charge"] ?
     VENTransactionTypeCharge : VENTransactionTypePay;
 }
 
 
 + (VENTransactionStatus)statusWithString:(NSString *)string {
+#warning Let's inline these in initWithDictionary
     VENTransactionStatus status = VENTransactionStatusNotSent;
     NSString *lowercaseString = [string lowercaseString];
     if ([lowercaseString isEqualToString:@"settled"]) {
@@ -41,6 +51,7 @@
 
 
 + (VENTransactionAudience)audienceWithString:(NSString *)string {
+#warning Let's inline these in initWithDictionary
     VENTransactionAudience audience = VENTransactionAudiencePrivate;
     NSString *lowercaseString = [string lowercaseString];
     if ([lowercaseString isEqualToString:@"friends"]) {
@@ -70,6 +81,7 @@
 #pragma mark - Private
 
 + (instancetype)transactionWithPaymentObject:(NSDictionary *)payment {
+#warning This should be initWithDictionary
     if (!payment) {
         return nil;
     }

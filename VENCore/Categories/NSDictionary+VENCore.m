@@ -3,10 +3,13 @@
 
 @implementation NSMutableDictionary (VENCore)
 
-- (void)removeAllNullValues {
+- (void)cleanseResponseDictionary {
     for (NSString *key in [self allKeys]) {
         if (self[key] == [NSNull null]) {
             [self removeObjectForKey:key];
+        }
+        else if (self[key] && [(NSObject *)self[key] isKindOfClass:[NSNumber class]]) {
+            self[key] = [self[key] stringValue];
         }
     }
 }
@@ -37,15 +40,15 @@
 }
 
 
-- (instancetype)dictionaryByRemovingAllNullObjects {
+- (instancetype)dictionaryByCleansingResponseDictionary {
 
     if ([self isKindOfClass:[NSMutableDictionary class]]) {
-        [(NSMutableDictionary *)self removeAllNullValues];
+        [(NSMutableDictionary *)self cleanseResponseDictionary];
         return self;
     }
 
     NSMutableDictionary *dictionary  = [self mutableCopy];
-    [dictionary removeAllNullValues];
+    [dictionary cleanseResponseDictionary];
 
     return [[self class] dictionaryWithDictionary:dictionary];
 }

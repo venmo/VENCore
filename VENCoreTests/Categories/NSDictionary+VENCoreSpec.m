@@ -79,12 +79,37 @@ describe(@"stringForKey", ^{
     });
 });
 
-describe(@"removeAllNullValues", ^{
+describe(@"cleanseResponseDictionary", ^{
     it(@"should remove null values from a dictionary", ^{
-        NSMutableDictionary *mutableDictionary = [@{@"nullKey":[NSNull null], @"notNullKey":@"value"}mutableCopy];
-        [mutableDictionary removeAllNullValues];
+        NSMutableDictionary *mutableDictionary = [@{@"nullKey":[NSNull null], @"notNullKey":@"value"} mutableCopy];
+        [mutableDictionary cleanseResponseDictionary];
         expect(mutableDictionary[@"nullKey"]).to.beNil();
         expect(mutableDictionary[@"notNullKey"]).to.equal(@"value");
+    });
+    
+    it(@"should stringify all NSNumbers", ^{
+        NSMutableDictionary *mutableDictionary = [@{@"numberKey": @(3),
+                                                    @"numberKey2": @(12830.123),
+                                                    @"stringKey": @"Hi there"} mutableCopy];
+        [mutableDictionary cleanseResponseDictionary];
+        
+        [mutableDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            expect(obj).to.beKindOf([NSString class]);
+        }];
+    });
+    
+    it(@"should not modify NSDictionary or NSArray members", ^{
+        NSArray *array = @[@"Lucas",@"uses",@"Venmo"];
+        NSDictionary *dictionary = @{@1: @"one",
+                                     @2: @"two",
+                                     @3: @"3"};
+        NSMutableDictionary *mutableDictionary = [@{@"array": array,
+                                                    @"dictionary": dictionary} mutableCopy];
+        
+        [mutableDictionary cleanseResponseDictionary];
+        expect(mutableDictionary[@"array"]).to.beKindOf([NSArray class]);
+        expect(mutableDictionary[@"dictionary"]).to.beKindOf([NSDictionary class]);
+
     });
 });
 

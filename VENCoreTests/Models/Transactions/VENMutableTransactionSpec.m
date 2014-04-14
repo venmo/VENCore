@@ -4,7 +4,7 @@
 SpecBegin(VENMutableTransaction)
 
 describe(@"mutability", ^{
-    // Changed to use VENMutableTransaction as interface was not there for transaction
+    //
     xit(@"should create a mutable transaction from an immutable transaction", ^{
         VENMutableTransaction *transaction = [VENMutableTransaction transactionWithType:VENTransactionTypePay amount:100 note:@"Hi there" audience:VENTransactionAudiencePublic recipientType:VENRecipientTypeEmail recipientString:@"kishkish@venmo.com"];
 
