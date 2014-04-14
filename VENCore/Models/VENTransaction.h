@@ -45,5 +45,4 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
  */
 - (VENMutableTransaction *)mutableCopy;
 
-
 @end

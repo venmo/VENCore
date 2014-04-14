@@ -7,11 +7,7 @@
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
 
-NSString *const VENPrivateAPIPathLogin = @"oauth/access_token";
-NSString *const VENPublicAPIPathPayments = @"payments";
-NSString *const VENPublicAPIPathUsers = @"users";
-
-NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
+NSString *const VENAPIPathPayments = @"payments";
 
 @interface VENHTTP ()
 
@@ -72,7 +68,12 @@ NSString *const VENPrivateAPIPathUsers = @"api/v5/users";
                                           success:(void(^)(VENHTTPResponse *response))successBlock
                                           failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
 
-    NSMutableURLRequest *request = [self.operationManager.requestSerializer requestWithMethod:@"GET" URLString:[[NSURL URLWithString:path relativeToURL:self.operationManager.baseURL] absoluteString] parameters:parameters error:nil];
+    NSMutableURLRequest *request =
+    [self.operationManager.requestSerializer requestWithMethod:method
+                                                     URLString:[[NSURL URLWithString:path
+                                                                       relativeToURL:self.operationManager.baseURL] absoluteString]
+                                                    parameters:parameters
+                                                         error:nil];
 
     void(^operationSuccessBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
 

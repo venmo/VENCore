@@ -4,6 +4,8 @@
 
 #import <AFNetworking/AFHTTPRequestOperation.h>
 
+NSString *const VENErrorDomainHTTPResponse = @"com.venmo.VENCore.ErrorDomain.VENHTTPResponse";
+
 @interface VENHTTPResponse ()
 
 @property (nonatomic, readwrite, strong) NSDictionary *object;
@@ -48,7 +50,10 @@
     NSError *error;
     if (message) {
         NSInteger code = [[errorObject objectOrNilForKey:@"code"] integerValue];
-        error = [NSError errorWithCode:code description:message recoverySuggestion:nil];
+        error = [NSError errorWithDomain:VENErrorDomainHTTPResponse
+                                    code:code
+                             description:message
+                      recoverySuggestion:nil];
     }
 
     return error;

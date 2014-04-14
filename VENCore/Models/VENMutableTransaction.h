@@ -1,4 +1,6 @@
-#import "VENTransaction+Internal.h"
+#import "VENTransaction.h"
+
+@class VENHTTPResponse;
 
 @interface VENMutableTransaction : VENTransaction
 
@@ -27,5 +29,12 @@
                     recipientString:(NSString *)recipientString;
 
 
+/**
+ * Sends a transaction.
+ * @param success TODO: fill out doc
+ * @param failure
+ */
+- (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
+                failure:(void(^)(VENHTTPResponse *response, NSError *error))failure;
 
 @end
