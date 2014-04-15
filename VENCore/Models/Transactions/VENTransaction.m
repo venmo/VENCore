@@ -1,7 +1,6 @@
 #import "VENTransaction.h"
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
-#import "VENMutableTransaction+Internal.h"
 #import "VENTransactionTarget.h"
 
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
