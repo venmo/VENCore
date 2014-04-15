@@ -1,8 +1,26 @@
 #import "VENTransaction.h"
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
+#import "VENMutableTransaction+Internal.h"
+#import "VENTransactionTarget.h"
+
+NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
+
+@interface VENTransaction ()
+
+@property (copy, nonatomic, readwrite) NSMutableOrderedSet *targets;
+
+@end
 
 @implementation VENTransaction
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.targets = [[NSMutableOrderedSet alloc] init];
+    }
+    return self;
+}
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
 #warning Incomplete implementation
@@ -96,13 +114,37 @@
  }
  */
 
-- (BOOL)addTarget:(VENTransactionTarget *)target {
-    return YES;
+- (NSError *)addTarget:(VENTransactionTarget *)target {
+    NSSet *targetSet = [NSSet setWithObject:target];
+    return [self addTargets:targetSet];
 }
 
 
-- (BOOL)addTargets:(NSSet *)targets {
-    return YES;
+- (NSError *)addTargets:(NSSet *)targets {
+    for (VENTransactionTarget *target in targets) {
+        if (![target isKindOfClass:[VENTransactionTarget class]]) {
+            return [NSError errorWithDomain:VENErrorDomainTransaction
+                                       code:VENErrorCodeTransactionInvalidTarget
+                                description:@"One or more targets is not of class type VENTransactionTarget"
+                         recoverySuggestion:nil];
+        }
+        else if (![target isValid]) {
+            return [NSError errorWithDomain:VENErrorDomainTransaction
+                                       code:VENErrorCodeTransactionInvalidTarget
+                                description:@"One or more targets is not valid"
+                         recoverySuggestion:nil];
+
+        }
+        else if ([self containsDuplicateOfTarget:target]) {
+            return [NSError errorWithDomain:VENErrorDomainTransaction
+                                       code:VENErrorCodeTransactionDuplicateTarget
+                                description:@"One or more targets has a handle that already exists in current targets."
+                         recoverySuggestion:nil];
+        }
+    }
+
+    [self.targets addObjectsFromArray:[targets allObjects]];
+    return nil;
 }
 
 - (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
@@ -113,6 +155,16 @@
 
 - (BOOL)readyToSend {
 #warning Unimplemented
+    return NO;
+}
+
+- (BOOL)containsDuplicateOfTarget:(VENTransactionTarget *)target {
+    NSString *handle = target.handle;
+    for (VENTransactionTarget *currentTarget in self.targets) {
+        if ([handle isEqualToString:currentTarget.handle]) {
+            return YES;
+        }
+    }
     return NO;
 }
 

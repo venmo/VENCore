@@ -20,6 +20,13 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
     VENTransactionAudiencePublic
 };
 
+extern NSString *const VENErrorDomainTransaction;
+
+typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
+    VENErrorCodeTransactionDuplicateTarget,
+    VENErrorCodeTransactionInvalidTarget
+};
+
 @interface VENTransaction : NSObject
 
 @property (copy, nonatomic) NSString *transactionID;
@@ -38,7 +45,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
  * and no target will be added to the transaction.
  * @return Returns a Boolean value indicating whether the target was successfully added.
  */
-- (BOOL)addTarget:(VENTransactionTarget *)target;
+- (NSError *)addTarget:(VENTransactionTarget *)target;
 
 /**
  * Adds multiple targets to a transaction.
@@ -46,7 +53,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
  * and no targets will be added to the transaction.
  * @return Returns a Boolean value indicating whether the targets were successfully added.
  */
-- (BOOL)addTargets:(NSSet *)targets;
+- (NSError *)addTargets:(NSSet *)targets;
 
 /**
  * Sends a transaction.
