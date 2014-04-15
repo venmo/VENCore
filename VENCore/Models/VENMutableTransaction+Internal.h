@@ -10,7 +10,7 @@
                                amount:(NSUInteger)amount
                                  note:(NSString *)note
                            fromUserID:(NSString *)fromUserID
-                        recipientType:(VENRecipientType)recipientType
+                        recipientType:(VENTargetType)recipientType
                              toUserID:(NSString *)toUserID
                       recipientHandle:(NSString *)recipientHandle
                              audience:(VENTransactionAudience)audience;

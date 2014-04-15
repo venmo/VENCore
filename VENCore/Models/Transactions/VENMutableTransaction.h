@@ -1,4 +1,5 @@
 #import "VENTransaction.h"
+#import "VENTransactionTarget.h"
 
 @class VENHTTPResponse;
 
@@ -8,7 +9,7 @@
 @property (assign, nonatomic, readwrite) NSUInteger amount;
 @property (copy, nonatomic, readwrite) NSString *note;
 @property (assign, nonatomic, readwrite) VENTransactionAudience audience;
-@property (assign, nonatomic, readwrite) VENRecipientType recipientType;
+@property (assign, nonatomic, readwrite) VENTargetType recipientType;
 @property (copy, nonatomic, readwrite) NSString *recipientHandle; // cell number, email, or Venmo user ID.
 
 /**
@@ -25,7 +26,7 @@
                              amount:(NSUInteger)amount
                                note:(NSString *)note
                            audience:(VENTransactionAudience)audience
-                      recipientType:(VENRecipientType)recipientType
+                      recipientType:(VENTargetType)recipientType
                     recipientString:(NSString *)recipientString;
 
 

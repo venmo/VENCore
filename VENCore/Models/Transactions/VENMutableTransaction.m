@@ -26,12 +26,33 @@ status           = _status,
 audience         = _audience,
 recipientHandle  = _recipientHandle;
 
+
++ (instancetype)transactionWithType:(VENTransactionType)type
+                             amount:(NSUInteger)amount
+                               note:(NSString *)note
+                           audience:(VENTransactionAudience)audience
+                      recipientType:(VENTargetType)recipientType
+                    recipientString:(NSString *)recipientString {
+
+    VENMutableTransaction *transaction = [[[self class] alloc] init];
+    transaction.type                   = type;
+    transaction.amount                 = amount;
+    transaction.note                   = note;
+    transaction.audience               = audience;
+    transaction.recipientType          = recipientType;
+    transaction.recipientHandle        = recipientString;
+    transaction.status                 = VENTransactionStatusNotSent;
+
+    return transaction;
+}
+
+
 - (instancetype)initWithTransactionID:(NSString *)transactionID
                                  type:(VENTransactionType)type
                                amount:(NSUInteger)amount
                                  note:(NSString *)note
                            fromUserID:(NSString *)fromUserID
-                        recipientType:(VENRecipientType)recipientType
+                        recipientType:(VENTargetType)recipientType
                              toUserID:(NSString *)toUserID
                       recipientHandle:(NSString *)recipientHandle
                              audience:(VENTransactionAudience)audience {
@@ -131,15 +152,15 @@ recipientHandle  = _recipientHandle;
 
 - (NSString *)recipientTypeString {
     switch (self.recipientType) {
-        case VENRecipientTypeEmail:
+        case VENTargetTypeEmail:
             return @"email";
             break;
 
-        case VENRecipientTypePhone:
+        case VENTargetTypePhone:
             return @"phone";
             break;
 
-        case VENRecipientTypeUserID:
+        case VENTargetTypeUserID:
             return @"user_id";
             break;
     }
