@@ -76,15 +76,15 @@
 
     if (targetPhone) {
         transaction.recipientHandle    = targetPhone;
-        transaction.recipientType      = VENRecipientTypePhone;
+        transaction.recipientType      = VENTargetTypePhone;
     }
     if (targetEmail) {
         transaction.recipientHandle    = targetEmail;
-        transaction.recipientType      = VENRecipientTypeEmail;
+        transaction.recipientType      = VENTargetTypeEmail;
     }
 
     if (targetUser) {
-        transaction.recipientType      = VENRecipientTypeUserID;
+        transaction.recipientType      = VENTargetTypeUserID;
         transaction.recipientHandle    = [targetUser stringForKey:@"id"];
         transaction.toUserID        = [targetUser stringForKey:@"id"];
     }
