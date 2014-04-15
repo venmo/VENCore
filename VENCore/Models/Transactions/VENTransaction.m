@@ -4,10 +4,6 @@
 #import "VENMutableTransaction+Internal.h"
 #import "VENTransactionPayloadKeys.h"
 
-@interface VENTransaction ()
-
-@end
-
 @implementation VENTransaction
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -132,7 +128,7 @@
     }
 
     if (targetUser) {
-        transaction.recipientType      = VENTargetTypeUserID;
+        transaction.recipientType      = VENTargetTypeUserId;
         transaction.recipientHandle    = [targetUser stringForKey:@"id"];
         transaction.toUserID        = [targetUser stringForKey:@"id"];
     }
