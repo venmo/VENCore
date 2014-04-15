@@ -3,12 +3,6 @@
 #import "NSDictionary+VENCore.h"
 #import "VENMutableTransaction+Internal.h"
 
-@interface VENTransaction ()
-
-@property (copy, nonatomic, readwrite) NSMutableArray *targets;
-
-@end
-
 @implementation VENTransaction
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
