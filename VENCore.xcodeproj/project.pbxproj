@@ -30,6 +30,7 @@
 		EBB8E3B118FD86AB00A22C6B /* VENTransactionTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */; };
 		EBB8E3B318FDA4BB00A22C6B /* VENTransactionTargetSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B218FDA4BB00A22C6B /* VENTransactionTargetSpec.m */; };
 		EBB8E3BE18FDB05400A22C6B /* NSString+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3BD18FDB05400A22C6B /* NSString+VENCoreSpec.m */; };
+		EBB8E3C118FDDB6300A22C6B /* NSString+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */; };
 		EBBE7E0818EA017700E47338 /* VENHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */; };
 		EBBE7E0A18EA020500E47338 /* VENHTTPSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */; };
 		EBBE7E0D18EA022300E47338 /* VENHTTPResponseSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0C18EA022300E47338 /* VENHTTPResponseSpec.m */; };
@@ -107,6 +108,8 @@
 		EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionTarget.m; sourceTree = "<group>"; };
 		EBB8E3B218FDA4BB00A22C6B /* VENTransactionTargetSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionTargetSpec.m; sourceTree = "<group>"; };
 		EBB8E3BD18FDB05400A22C6B /* NSString+VENCoreSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VENCoreSpec.m"; path = "Categories/NSString+VENCoreSpec.m"; sourceTree = "<group>"; };
+		EBB8E3BF18FDDB6300A22C6B /* NSString+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VENCore.h"; path = "Categories/NSString+VENCore.h"; sourceTree = "<group>"; };
+		EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VENCore.m"; path = "Categories/NSString+VENCore.m"; sourceTree = "<group>"; };
 		EBBE7E0618EA017700E47338 /* VENHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTPResponse.h; path = Networking/VENHTTPResponse.h; sourceTree = "<group>"; };
 		EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponse.m; path = Networking/VENHTTPResponse.m; sourceTree = "<group>"; };
 		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 		EBF84D2B18EA5AE900C0E077 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				EBB8E3BF18FDDB6300A22C6B /* NSString+VENCore.h */,
+				EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */,
 				EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */,
 				EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */,
 				EBF84D2818EA5ADE00C0E077 /* NSError+VENCore.h */,
@@ -559,6 +564,7 @@
 				EBCB247F18E9FBAF00807472 /* VENCore.m in Sources */,
 				EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */,
 				EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */,
+				EBB8E3C118FDDB6300A22C6B /* NSString+VENCore.m in Sources */,
 				EBB8E3B118FD86AB00A22C6B /* VENTransactionTarget.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
