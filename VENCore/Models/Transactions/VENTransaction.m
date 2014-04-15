@@ -1,7 +1,6 @@
 #import "VENTransaction.h"
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
-#import "VENMutableTransaction+Internal.h"
 #import "VENTransactionPayloadKeys.h"
 
 @implementation VENTransaction
