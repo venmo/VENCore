@@ -27,6 +27,7 @@
 		EBA57C5318FC362000D39D0F /* invalidAccessTokenError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5018FC362000D39D0F /* invalidAccessTokenError.json */; };
 		EBA57C5418FC362000D39D0F /* invalidAmountError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5118FC362000D39D0F /* invalidAmountError.json */; };
 		EBA57C5518FC362000D39D0F /* invalidAudienceError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5218FC362000D39D0F /* invalidAudienceError.json */; };
+		EBB8E3B118FD86AB00A22C6B /* VENTransactionTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */; };
 		EBBE7E0818EA017700E47338 /* VENHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */; };
 		EBBE7E0A18EA020500E47338 /* VENHTTPSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */; };
 		EBBE7E0D18EA022300E47338 /* VENHTTPResponseSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0C18EA022300E47338 /* VENHTTPResponseSpec.m */; };
@@ -102,6 +103,8 @@
 		EBA57C5018FC362000D39D0F /* invalidAccessTokenError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalidAccessTokenError.json; path = api/errors/invalidAccessTokenError.json; sourceTree = "<group>"; };
 		EBA57C5118FC362000D39D0F /* invalidAmountError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalidAmountError.json; path = api/errors/invalidAmountError.json; sourceTree = "<group>"; };
 		EBA57C5218FC362000D39D0F /* invalidAudienceError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalidAudienceError.json; path = api/errors/invalidAudienceError.json; sourceTree = "<group>"; };
+		EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionTarget.h; sourceTree = "<group>"; };
+		EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionTarget.m; sourceTree = "<group>"; };
 		EBBE7E0618EA017700E47338 /* VENHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTPResponse.h; path = Networking/VENHTTPResponse.h; sourceTree = "<group>"; };
 		EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponse.m; path = Networking/VENHTTPResponse.m; sourceTree = "<group>"; };
 		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 			children = (
 				C24E595318F84C67009670F7 /* VENTransaction.h */,
 				C24E595418F84C67009670F7 /* VENTransaction.m */,
+				EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */,
+				EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */,
 				C24E595118F84C67009670F7 /* VENMutableTransaction.h */,
 				C24E595218F84C67009670F7 /* VENMutableTransaction.m */,
 				4796D62418FC4BC1001461B1 /* VENMutableTransaction+Internal.h */,
@@ -542,6 +547,7 @@
 				EBCB247F18E9FBAF00807472 /* VENCore.m in Sources */,
 				EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */,
 				EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */,
+				EBB8E3B118FD86AB00A22C6B /* VENTransactionTarget.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

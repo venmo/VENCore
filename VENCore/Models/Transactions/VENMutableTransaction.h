@@ -1,4 +1,5 @@
 #import "VENTransaction.h"
+#import "VENTransactionTarget.h"
 
 @class VENHTTPResponse;
 

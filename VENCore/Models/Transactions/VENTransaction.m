@@ -5,17 +5,6 @@
 
 @interface VENTransaction ()
 
-@property (copy, nonatomic, readwrite) NSString *transactionID;
-@property (assign, nonatomic, readwrite) VENTransactionType type;
-@property (assign, nonatomic, readwrite) NSUInteger amount;
-@property (copy, nonatomic, readwrite) NSString *note;
-@property (copy, nonatomic, readwrite) NSString *fromUserID;
-@property (assign, nonatomic, readwrite) VENRecipientType recipientType;
-@property (copy, nonatomic, readwrite) NSString *recipientHandle; // cell number, email, or Venmo user ID.
-@property (copy, nonatomic, readwrite) NSString *toUserID;
-@property (assign, nonatomic, readwrite) VENTransactionStatus status;
-@property (assign, nonatomic, readwrite) VENTransactionAudience audience;
-
 @end
 
 @implementation VENTransaction
@@ -64,22 +53,9 @@
 }
 
 
-- (VENMutableTransaction *)mutableCopy {
-    VENMutableTransaction *mutableTransaction =
-    [[VENMutableTransaction alloc] initWithTransactionID:self.transactionID
-                                                    type:self.type
-                                                  amount:self.amount
-                                                    note:self.note
-                                              fromUserID:self.fromUserID
-                                           recipientType:self.recipientType
-                                                toUserID:self.toUserID
-                                         recipientHandle:self.recipientHandle
-                                                audience:self.audience];
-    return mutableTransaction;
-}
-
 #pragma mark - Private
 
+/*
 + (instancetype)transactionWithPaymentObject:(NSDictionary *)payment {
 #warning This should be initWithDictionary
     if (!payment) {
@@ -122,6 +98,19 @@
     NSString *statusString          = [payment stringForKey:@"status"];
     transaction.status              = [VENTransaction statusWithString:statusString];
     return transaction;
+}
+*/
+
+
+- (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
+                failure:(void(^)(VENHTTPResponse *reponse, NSError *error))failure {
+#warning Unimplemented
+}
+
+
+- (BOOL)readyToSend {
+#warning Unimplemented
+    return NO;
 }
 
 @end

@@ -1,15 +1,9 @@
 #import <UIKit/UIKit.h>
-@class VENMutableTransaction;
+@class VENMutableTransaction, VENUser, VENHTTPResponse;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypePay,
     VENTransactionTypeCharge
-};
-
-typedef NS_ENUM(NSUInteger, VENRecipientType) {
-    VENRecipientTypePhone,
-    VENRecipientTypeEmail,
-    VENRecipientTypeUserID
 };
 
 // TODO: what are the possible transaction statuses?
@@ -28,23 +22,28 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
 
 @interface VENTransaction : NSObject
 
-@property (copy, nonatomic, readonly) NSString *transactionID;
-@property (assign, nonatomic, readonly) VENTransactionType type;
-@property (assign, nonatomic, readonly) NSUInteger amount;
-@property (copy, nonatomic, readonly) NSString *note;
-@property (copy, nonatomic, readonly) NSString *fromUserID;
-@property (assign, nonatomic, readonly) VENRecipientType recipientType;
-@property (copy, nonatomic, readonly) NSString *recipientHandle; // cell number, email, or Venmo user ID.
-@property (copy, nonatomic, readonly) NSString *toUserID;
-@property (assign, nonatomic, readonly) VENTransactionStatus status;
-@property (assign, nonatomic, readonly) VENTransactionAudience audience;
+@property (copy, nonatomic) NSString *transactionID;
+@property (copy, nonatomic) NSMutableArray *targets;
+@property (copy, nonatomic) NSString *note;
+@property (copy, nonatomic) VENUser *actor;
+@property (assign, nonatomic) VENTransactionType type;
+@property (assign, nonatomic) VENTransactionStatus status;
+@property (assign, nonatomic) VENTransactionAudience audience;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+/**
+ * Sends a transaction.
+ * @param success TODO: fill out doc
+ * @param failure
+ */
+- (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
+                failure:(void(^)(VENHTTPResponse *response, NSError *error))failure;
+
 
 /**
- * Returns a new mutable copy of the receiver.
+ * Indicates whether the transaction is valid and ready to post to the service
  */
-- (VENMutableTransaction *)mutableCopy;
+- (BOOL)readyToSend;
 
 @end
