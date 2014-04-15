@@ -2,7 +2,7 @@
 
 SpecBegin(NSStringVENCore)
 
-describe(@"isUSPhone:", ^{
+describe(@"isUSPhone", ^{
     it(@"should return YES if the testPhone is all numbers and 10 digits", ^{
         NSString *testPhone = @"2234567890";
         expect([testPhone isUSPhone]).to.equal(YES);
@@ -34,7 +34,7 @@ describe(@"isUSPhone:", ^{
     });
 });
 
-describe(@"isEmail:", ^{
+describe(@"isEmail", ^{
     it(@"should return YES if the email has a handle@domain.tld", ^{
         NSString *testEmail = @"test@domain.com";
         expect([testEmail isEmail]).to.equal(YES);
@@ -49,7 +49,7 @@ describe(@"isEmail:", ^{
     });
 });
 
-describe(@"isUserId:", ^{
+describe(@"isUserId", ^{
     it(@"should return YES if the value is all numbers and not a valid phone number", ^{
         NSString *userId = @"1234";
         expect([userId isUserId]).to.equal(YES);
@@ -63,6 +63,28 @@ describe(@"isUserId:", ^{
     it(@"should return NO if the value is not all numbers", ^{
         NSString *userId = @"1234T";
         expect([userId isUserId]).to.equal(NO);
+    });
+});
+
+describe(@"targetType", ^{
+    it(@"should return VENTargetTypePhone if the value is a phone number", ^{
+        NSString *testPhone = @"(223)456-7890";
+        expect([testPhone targetType]).to.equal(VENTargetTypePhone);
+    });
+
+    it(@"should return VENTargetTypeUserId if the value is a userID", ^{
+        NSString *userId = @"1234";
+        expect([userId targetType]).to.equal(VENTargetTypeUserId);
+    });
+
+    it(@"should return VENTargetTypeEmail if the value is an email address", ^{
+        NSString *testEmail = @"test@domain.com";
+        expect([testEmail targetType]).to.equal(VENTargetTypeEmail);
+    });
+
+    it(@"should return VENTargetTypeUnknown if the value is an email address", ^{
+        NSString *testEmail = @"1234T";
+        expect([testEmail targetType]).to.equal(VENTargetTypeUnknown);
     });
 });
 

@@ -1,5 +1,4 @@
 #import "VENMutableTransaction+Internal.h"
-#import "VENTransaction+Internal.h"
 #import "VENCore.h"
 #import "VENHTTPResponse.h"
 #import "NSDictionary+VENCore.h"
@@ -89,9 +88,9 @@ recipientHandle  = _recipientHandle;
                              NSDictionary *data = [response.object objectOrNilForKey:@"data"];
                              NSDictionary *payment = [data objectOrNilForKey:@"payment"];
                              if (payment) {
-                                 VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:payment];
+//                                 VENTransaction *transaction = [VENTransaction transactionWithPaymentObject:payment];
                                  if (success) {
-                                     success(transaction, response);
+//                                     success(transaction, response);
                                  }
                              }
     } failure:^(VENHTTPResponse *response, NSError *error) {
@@ -130,8 +129,11 @@ recipientHandle  = _recipientHandle;
             return @"phone";
             break;
 
-        case VENTargetTypeUserID:
+        case VENTargetTypeUserId:
             return @"user_id";
+            break;
+        default:
+            return nil;
             break;
     }
 }

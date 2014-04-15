@@ -5,6 +5,8 @@
 
 @interface VENTransaction ()
 
+@property (copy, nonatomic, readwrite) NSMutableArray *targets;
+
 @end
 
 @implementation VENTransaction
@@ -84,7 +86,7 @@
     }
 
     if (targetUser) {
-        transaction.recipientType      = VENTargetTypeUserID;
+        transaction.recipientType      = VENTargetTypeUserId;
         transaction.recipientHandle    = [targetUser stringForKey:@"id"];
         transaction.toUserID        = [targetUser stringForKey:@"id"];
     }

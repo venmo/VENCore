@@ -77,7 +77,6 @@
 		4796D61E18FC4B6D001461B1 /* VENMutableUserSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableUserSpec.m; sourceTree = "<group>"; };
 		4796D61F18FC4B6D001461B1 /* VENUserSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserSpec.m; sourceTree = "<group>"; };
 		4796D62418FC4BC1001461B1 /* VENMutableTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENMutableTransaction+Internal.h"; path = "VENCore/Models/VENMutableTransaction+Internal.h"; sourceTree = SOURCE_ROOT; };
-		4796D62518FC4BC1001461B1 /* VENTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENTransaction+Internal.h"; path = "VENCore/Models/VENTransaction+Internal.h"; sourceTree = SOURCE_ROOT; };
 		7CF39AC81B5F4A809B92729B /* libPods-VENCoreTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1AE1BF8A82F4124AD872FD8 /* Pods-VENCore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCore.xcconfig"; path = "Pods/Pods-VENCore.xcconfig"; sourceTree = "<group>"; };
 		BB802D1BBF75489EBAC57A1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,7 +205,6 @@
 				C24E595118F84C67009670F7 /* VENMutableTransaction.h */,
 				C24E595218F84C67009670F7 /* VENMutableTransaction.m */,
 				4796D62418FC4BC1001461B1 /* VENMutableTransaction+Internal.h */,
-				4796D62518FC4BC1001461B1 /* VENTransaction+Internal.h */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";

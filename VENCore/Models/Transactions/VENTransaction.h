@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-@class VENMutableTransaction, VENUser, VENHTTPResponse;
+@class VENMutableTransaction, VENUser, VENHTTPResponse, VENTransactionTarget;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypePay,
@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
 @interface VENTransaction : NSObject
 
 @property (copy, nonatomic) NSString *transactionID;
-@property (copy, nonatomic) NSMutableArray *targets;
+@property (copy, nonatomic, readonly) NSMutableArray *targets;
 @property (copy, nonatomic) NSString *note;
 @property (copy, nonatomic) VENUser *actor;
 @property (assign, nonatomic) VENTransactionType type;
@@ -31,6 +31,17 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
 @property (assign, nonatomic) VENTransactionAudience audience;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ *
+ * @return Returns a Boolean value indicating whether the target was successfully added.
+ */
+- (BOOL)addTarget:(VENTransactionTarget *)target;
+
+/**
+ *
+ */
+- (void)addTargets:(NSSet *)targets;
 
 /**
  * Sends a transaction.
