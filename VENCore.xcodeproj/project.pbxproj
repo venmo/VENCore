@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		3DED53F413AA485586839756 /* libPods-VENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DC461A27E94407698BE1D38 /* libPods-VENCore.a */; };
 		4796A38718FDD4C6005CABA6 /* fetchInvalidUser.json in Resources */ = {isa = PBXBuildFile; fileRef = 4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */; };
-		4796D62018FC4B6D001461B1 /* VENMutableTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61B18FC4B6D001461B1 /* VENMutableTransactionSpec.m */; };
 		4796D62118FC4B6D001461B1 /* VENTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */; };
 		4796D62318FC4B6D001461B1 /* VENUserSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61F18FC4B6D001461B1 /* VENUserSpec.m */; };
 		47BD36E018FDBA4500DE4554 /* fetchChrisUser.json in Resources */ = {isa = PBXBuildFile; fileRef = 47BD36DF18FDBA4500DE4554 /* fetchChrisUser.json */; };
-		C24E595818F84C67009670F7 /* VENMutableTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595218F84C67009670F7 /* VENMutableTransaction.m */; };
 		C24E595918F84C67009670F7 /* VENTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595418F84C67009670F7 /* VENTransaction.m */; };
 		C24E595A18F84C67009670F7 /* VENUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595718F84C67009670F7 /* VENUser.m */; };
 		DD62147186DC475FAC3C3A1D /* libPods-VENCoreTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF39AC81B5F4A809B92729B /* libPods-VENCoreTests.a */; };
@@ -73,16 +71,12 @@
 		1DC461A27E94407698BE1D38 /* libPods-VENCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D4B23F080634FA9923FF691 /* Pods-VENCoreTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCoreTests.xcconfig"; path = "Pods/Pods-VENCoreTests.xcconfig"; sourceTree = "<group>"; };
 		4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fetchInvalidUser.json; sourceTree = "<group>"; };
-		4796D61B18FC4B6D001461B1 /* VENMutableTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableTransactionSpec.m; sourceTree = "<group>"; };
 		4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionSpec.m; sourceTree = "<group>"; };
 		4796D61F18FC4B6D001461B1 /* VENUserSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserSpec.m; sourceTree = "<group>"; };
-		4796D62418FC4BC1001461B1 /* VENMutableTransaction+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VENMutableTransaction+Internal.h"; path = "VENCore/Models/VENMutableTransaction+Internal.h"; sourceTree = SOURCE_ROOT; };
 		47BD36DF18FDBA4500DE4554 /* fetchChrisUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fetchChrisUser.json; sourceTree = "<group>"; };
 		7CF39AC81B5F4A809B92729B /* libPods-VENCoreTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1AE1BF8A82F4124AD872FD8 /* Pods-VENCore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCore.xcconfig"; path = "Pods/Pods-VENCore.xcconfig"; sourceTree = "<group>"; };
 		BB802D1BBF75489EBAC57A1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C24E595118F84C67009670F7 /* VENMutableTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMutableTransaction.h; sourceTree = "<group>"; };
-		C24E595218F84C67009670F7 /* VENMutableTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableTransaction.m; sourceTree = "<group>"; };
 		C24E595318F84C67009670F7 /* VENTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransaction.h; sourceTree = "<group>"; };
 		C24E595418F84C67009670F7 /* VENTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransaction.m; sourceTree = "<group>"; };
 		C24E595618F84C67009670F7 /* VENUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENUser.h; sourceTree = "<group>"; };
@@ -171,7 +165,6 @@
 			children = (
 				4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */,
 				EBB8E3B218FDA4BB00A22C6B /* VENTransactionTargetSpec.m */,
-				4796D61B18FC4B6D001461B1 /* VENMutableTransactionSpec.m */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -210,9 +203,6 @@
 				C24E595418F84C67009670F7 /* VENTransaction.m */,
 				EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */,
 				EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */,
-				C24E595118F84C67009670F7 /* VENMutableTransaction.h */,
-				C24E595218F84C67009670F7 /* VENMutableTransaction.m */,
-				4796D62418FC4BC1001461B1 /* VENMutableTransaction+Internal.h */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -556,7 +546,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C24E595A18F84C67009670F7 /* VENUser.m in Sources */,
-				C24E595818F84C67009670F7 /* VENMutableTransaction.m in Sources */,
 				EBFB2F9018F7228600612BD8 /* UIDevice+VENCore.m in Sources */,
 				C24E595918F84C67009670F7 /* VENTransaction.m in Sources */,
 				EBF84D2A18EA5ADE00C0E077 /* NSError+VENCore.m in Sources */,
@@ -577,7 +566,6 @@
 				EBBE7E0A18EA020500E47338 /* VENHTTPSpec.m in Sources */,
 				4796D62118FC4B6D001461B1 /* VENTransactionSpec.m in Sources */,
 				EBCB249418E9FBAF00807472 /* VENCoreSpec.m in Sources */,
-				4796D62018FC4B6D001461B1 /* VENMutableTransactionSpec.m in Sources */,
 				4796D62318FC4B6D001461B1 /* VENUserSpec.m in Sources */,
 				EBBE7E0D18EA022300E47338 /* VENHTTPResponseSpec.m in Sources */,
 				EB427E5918F8451B0070EDD9 /* VENTestUtilities.m in Sources */,

@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
 - (BOOL)addTarget:(VENTransactionTarget *)target;
 
 /**
- * Adds multiple targets to a transaction. 
+ * Adds multiple targets to a transaction.
  * @note If any of the targets are invalid or duplicates, addTargets: will return NO
  * and no targets will be added to the transaction.
  * @return Returns a Boolean value indicating whether the targets were successfully added.
