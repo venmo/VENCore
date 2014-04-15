@@ -29,7 +29,6 @@
 		EBA57C5518FC362000D39D0F /* invalidAudienceError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5218FC362000D39D0F /* invalidAudienceError.json */; };
 		EBB8E3B118FD86AB00A22C6B /* VENTransactionTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */; };
 		EBB8E3B318FDA4BB00A22C6B /* VENTransactionTargetSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B218FDA4BB00A22C6B /* VENTransactionTargetSpec.m */; };
-		EBB8E3BA18FDAF2300A22C6B /* NSString+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B918FDAF2300A22C6B /* NSString+VENCore.m */; };
 		EBB8E3BE18FDB05400A22C6B /* NSString+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3BD18FDB05400A22C6B /* NSString+VENCoreSpec.m */; };
 		EBBE7E0818EA017700E47338 /* VENHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */; };
 		EBBE7E0A18EA020500E47338 /* VENHTTPSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */; };
@@ -109,8 +108,6 @@
 		EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionTarget.h; sourceTree = "<group>"; };
 		EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionTarget.m; sourceTree = "<group>"; };
 		EBB8E3B218FDA4BB00A22C6B /* VENTransactionTargetSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionTargetSpec.m; sourceTree = "<group>"; };
-		EBB8E3B818FDAF2300A22C6B /* NSString+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VENCore.h"; path = "../../../../github.braintreeps.com/venmo/VENCore/VENCore/Categories/NSString+VENCore.h"; sourceTree = "<group>"; };
-		EBB8E3B918FDAF2300A22C6B /* NSString+VENCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VENCore.m"; path = "../../../../github.braintreeps.com/venmo/VENCore/VENCore/Categories/NSString+VENCore.m"; sourceTree = "<group>"; };
 		EBB8E3BD18FDB05400A22C6B /* NSString+VENCoreSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VENCoreSpec.m"; path = "Categories/NSString+VENCoreSpec.m"; sourceTree = "<group>"; };
 		EBBE7E0618EA017700E47338 /* VENHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTPResponse.h; path = Networking/VENHTTPResponse.h; sourceTree = "<group>"; };
 		EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponse.m; path = Networking/VENHTTPResponse.m; sourceTree = "<group>"; };
@@ -399,8 +396,6 @@
 				EBF84D2918EA5ADE00C0E077 /* NSError+VENCore.m */,
 				EBFB2F8E18F7228600612BD8 /* UIDevice+VENCore.h */,
 				EBFB2F8F18F7228600612BD8 /* UIDevice+VENCore.m */,
-				EBB8E3B818FDAF2300A22C6B /* NSString+VENCore.h */,
-				EBB8E3B918FDAF2300A22C6B /* NSString+VENCore.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -562,7 +557,6 @@
 				C24E595A18F84C67009670F7 /* VENUser.m in Sources */,
 				C24E595818F84C67009670F7 /* VENMutableTransaction.m in Sources */,
 				EBFB2F9018F7228600612BD8 /* UIDevice+VENCore.m in Sources */,
-				EBB8E3BA18FDAF2300A22C6B /* NSString+VENCore.m in Sources */,
 				C24E595918F84C67009670F7 /* VENTransaction.m in Sources */,
 				EBF84D2A18EA5ADE00C0E077 /* NSError+VENCore.m in Sources */,
 				EBBE7E0818EA017700E47338 /* VENHTTPResponse.m in Sources */,
