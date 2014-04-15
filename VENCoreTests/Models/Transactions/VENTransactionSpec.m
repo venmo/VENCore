@@ -4,6 +4,8 @@
 
 @interface VENTransaction ()
 
+@property (strong, nonatomic) NSMutableOrderedSet *mutableTargets;
+
 - (BOOL)containsDuplicateOfTarget:(VENTransactionTarget *)target;
 
 @end
@@ -38,7 +40,7 @@ describe(@"addTarget", ^{
     });
 });
 
-xdescribe(@"addTargets", ^{
+describe(@"addTargets", ^{
     it(@"should add a set of three valid targets to the transaction", ^{
         id mockTarget1 = [OCMockObject mockForClass:[VENTransactionTarget class]];
         [[[mockTarget1 stub] andReturnValue:@YES] isValid];
@@ -48,11 +50,14 @@ xdescribe(@"addTargets", ^{
         [[[mockTarget3 stub] andReturnValue:@YES] isValid];
 
         VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturnValue:@NO] containsDuplicateOfTarget:OCMOCK_ANY];
+
         NSSet *targets = [NSSet setWithArray:@[mockTarget1, mockTarget2, mockTarget3]];
-//        BOOL added = [transaction addTargets:targets];
-//        expect(added).to.equal(YES);
+        NSError *error = [mockTransaction addTargets:targets];
+        expect(error).to.beNil();
         for (id target in targets) {
-            expect([transaction.targets containsObject:target]).to.equal(YES);
+            expect([((VENTransaction *)mockTransaction).targets containsObject:target]).to.equal(YES);
         }
     });
 
@@ -65,15 +70,18 @@ xdescribe(@"addTargets", ^{
         [[[mockTarget3 stub] andReturnValue:@NO] isValid];
 
         VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturnValue:@NO] containsDuplicateOfTarget:OCMOCK_ANY];
+
         NSSet *targets = [NSSet setWithArray:@[mockTarget1, mockTarget2, mockTarget3]];
-        BOOL added = [transaction addTargets:targets];
-        expect(added).to.equal(NO);
+        NSError *error = [transaction addTargets:targets];
+        expect(error).toNot.beNil();
         for (id target in targets) {
             expect([transaction.targets containsObject:target]).to.equal(NO);
         }
     });
 
-    it(@"should not allow adding an object that is not a VENTransactionTarget instance", ^{
+    xit(@"should not allow adding an object that is not a VENTransactionTarget instance", ^{
         id object = [NSObject new];
 
         VENTransaction *transaction = [[VENTransaction alloc] init];

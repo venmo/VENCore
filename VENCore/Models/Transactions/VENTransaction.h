@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 @interface VENTransaction : NSObject
 
 @property (copy, nonatomic) NSString *transactionID;
-@property (copy, nonatomic, readonly) NSMutableOrderedSet *targets;
+@property (strong, nonatomic, readonly) NSOrderedSet *targets;
 @property (copy, nonatomic) NSString *note;
 @property (copy, nonatomic) VENUser *actor;
 @property (assign, nonatomic) VENTransactionType type;

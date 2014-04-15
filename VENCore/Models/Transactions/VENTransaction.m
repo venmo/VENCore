@@ -7,7 +7,7 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 
 @interface VENTransaction ()
 
-@property (copy, nonatomic, readwrite) NSMutableOrderedSet *targets;
+@property (strong, nonatomic) NSMutableOrderedSet *mutableTargets;
 
 @end
 
@@ -16,10 +16,16 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 - (id)init {
     self = [super init];
     if (self) {
-        self.targets = [[NSMutableOrderedSet alloc] init];
+        self.mutableTargets = [[NSMutableOrderedSet alloc] init];
     }
     return self;
 }
+
+
+- (NSOrderedSet *)targets {
+    return [self.mutableTargets copy];
+}
+
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
 #warning Incomplete implementation
@@ -142,7 +148,7 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
         }
     }
 
-    [self.targets addObjectsFromArray:[targets allObjects]];
+    [self.mutableTargets addObjectsFromArray:[targets allObjects]];
     return nil;
 }
 
