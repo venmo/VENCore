@@ -97,6 +97,14 @@
 }
 */
 
+- (BOOL)addTarget:(VENTransactionTarget *)target {
+    return YES;
+}
+
+
+- (BOOL)addTargets:(NSSet *)targets {
+    return YES;
+}
 
 - (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
                 failure:(void(^)(VENHTTPResponse *reponse, NSError *error))failure {
