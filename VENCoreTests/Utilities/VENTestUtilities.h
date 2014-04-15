@@ -27,4 +27,24 @@
  */
 + (NSString *)baseURLStringForCore:(VENCore *)core;
 
+/**
+ * Stubs a GET of a URL with the contents of the file at the given path
+ * @note Adds all default header parmeters
+ */
++ (void)stubNetworkGET:(NSString *)path
+        withStatusCode:(NSInteger)statusCode
+   andResponseFilePath:(NSString *)filePath;
+
+
+/**
+ * Stubs a POST of a URL with the given parameters with the contents of the file at the given path
+ * @note Adds all default header parmeters
+ */
++ (void)stubNetworkPOST:(NSString *)path
+          forParameters:(NSDictionary *)dictionary
+         withStatusCode:(NSInteger)statusCode
+    andResponseFilePath:(NSString *)filePath;
+
+
+
 @end

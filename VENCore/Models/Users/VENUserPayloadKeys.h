@@ -2,16 +2,16 @@
 #define VENCore_VENUserPayloadKeys_h
 
 #define VENUserKeyUsername @"username"
-#define VENUserKeyFirstName @"firstname"
-#define VENUserKeyLastName @"lastname"
-#define VENUserKeyDisplayName @"displayname"
+#define VENUserKeyFirstName @"first_name"
+#define VENUserKeyLastName @"last_name"
+#define VENUserKeyDisplayName @"display_name"
 #define VENUserKeyAbout @"about"
 #define VENUserKeyPhone @"phone"
-#define VENUserKeyProfileImageUrl @"profileimageurl"
+#define VENUserKeyProfileImageUrl @"profile_picture_url"
 #define VENUserKeyEmail @"email"
 #define VENUserKeyInternalId @"internalid"
-#define VENUserKeyExternalId @"externalid"
-#define VENUserKeyDateJoined @"datejoined"
+#define VENUserKeyExternalId @"id"
+#define VENUserKeyDateJoined @"date_joined"
 
 
 #endif

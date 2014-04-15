@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
 #import "VENMutableTransaction+Internal.h"
+#import "VENTransactionPayloadKeys.h"
 
 @interface VENTransaction ()
 
@@ -22,11 +23,58 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
 #warning Incomplete implementation
-    if (!dictionary) {
-        return nil;
+    self = [super init];
+    if (self) {
+        NSDictionary *cleanDictionary = [dictionary dictionaryByCleansingResponseDictionary];
+        
+        self.transactionID  = cleanDictionary[VENTransactionIDKey];
+        self.amount         = [cleanDictionary[VENTransactionAmountKey] unsignedIntegerValue];
+        self.note           = cleanDictionary[VENTransactionNoteKey];
+        self.fromUserID     = cleanDictionary[VENTransactionActorKey][VENTransactionActorUserID];
+        
+        NSDictionary *target = cleanDictionary[VENTransactionTargetKey];
+        NSString *targetTypeString = [target[VENTransactionTargetTypeKey] lowercaseString];
+        
+        if ([targetTypeString isEqualToString:@"email"]) {
+            self.recipientType = VENRecipientTypeEmail;
+            self.recipientHandle = target[VENTransactionTargetEmailKey];
+        }
+        else if ([targetTypeString isEqualToString:@"phone"]) {
+            self.recipientType = VENRecipientTypePhone;
+            self.recipientHandle = target[VENTransactionTargetPhoneKey];
+        }
+        else if ([targetTypeString isEqualToString:@"user"]) {
+            NSDictionary *user = target[VENTransactionTargetUserKey];
+            self.recipientType = VENRecipientTypeUserID;
+            self.recipientHandle = user[VENTransactionTargetUserIDKey];
+        }
+        
+#warning should we call transaction type charge?
+        
+        self.type = ([[cleanDictionary[VENTransactionTypeKey] lowercaseString] isEqualToString:@"charge"]) ? VENTransactionTypeCharge : VENTransactionTypePay;
+        NSString *statusString = cleanDictionary[VENTransactionStatusKey];
+        if ([statusString isEqualToString:@"pending"]) {
+            self.status = VENTransactionStatusPending;
+        }
+        else if ([statusString isEqualToString:@"settled"]) {
+            self.status = VENTransactionStatusSettled;
+        }
+        else {
+            self.status = VENTransactionStatusNotSent;
+        }
+        NSString *audienceString = cleanDictionary[VENTransactionAudienceKey];
+        if ([audienceString isEqualToString:@"public"]) {
+            self.audience = VENTransactionAudiencePublic;
+        }
+        else if ([audienceString isEqualToString:@"friends"]) {
+            self.audience = VENTransactionAudienceFriends;
+        }
+        else {
+            self.audience = VENTransactionAudiencePrivate;
+        }
     }
     
-    return nil;
+    return self;
 }
 
 + (VENTransactionType)typeWithString:(NSString *)string {

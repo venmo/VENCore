@@ -1,22 +1,11 @@
 #import "VENUser.h"
-#import "VENMutableUser.h"
 #import "VENHTTP.h"
+#import "VENCore.h"
 #import "NSDictionary+VENCore.h"
 #import "VENUserPayloadKeys.h"
+#import "VENHTTPResponse.h"
 
 @interface VENUser ()
-
-@property (copy, nonatomic, readwrite) NSString *username;
-@property (copy, nonatomic, readwrite) NSString *firstName;
-@property (copy, nonatomic, readwrite) NSString *lastName;
-@property (copy, nonatomic, readwrite) NSString *displayName;
-@property (copy, nonatomic, readwrite) NSString *about;
-@property (copy, nonatomic, readwrite) NSString *phone;
-@property (copy, nonatomic, readwrite) NSString *profileImageUrl;
-@property (copy, nonatomic, readwrite) NSString *email;
-@property (copy, nonatomic, readwrite) NSString *internalId;
-@property (copy, nonatomic, readwrite) NSString *externalId;
-@property (strong, nonatomic, readwrite) NSDate *dateJoined;
 
 @end
 
@@ -47,27 +36,7 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone {
 
-    VENUser *newUser    = [[VENUser alloc] init];
-
-    newUser.username    = self.username;
-    newUser.firstName   = self.firstName;
-    newUser.lastName    = self.lastName;
-    newUser.displayName = self.displayName;
-    newUser.about       = self.about;
-    newUser.phone       = self.phone;
-    newUser.email       = self.email;
-    newUser.internalId  = self.internalId;
-    newUser.externalId  = self.externalId;
-    newUser.dateJoined  = self.dateJoined;
-    newUser.profileImageUrl = self.profileImageUrl;
-
-    return newUser;
-}
-
-
-- (id)mutableCopy {
-
-    VENMutableUser *newUser = [[VENMutableUser alloc] init];
+    VENUser *newUser    = [[[self class] alloc] init];
 
     newUser.username    = self.username;
     newUser.firstName   = self.firstName;
@@ -96,10 +65,8 @@
 }
 
 
-+ (instancetype)userWithUser:(VENUser *)user {
-#warning Incomplete implementation
-    VENUser *newUser = [[[self class] alloc] init];
-    return nil;
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ :: %@", [self class], [self dictionaryRepresentation]];
 }
 
 
@@ -169,5 +136,45 @@
     return dictionary;
 }
 
+
++ (void)fetchUserWithExternalId:(NSString *)externalId
+                        success:(VENUserFetchSuccessBlock)successBlock
+                        failure:(VENUserFetchFailureBlock)failureBlock {
+    
+    if((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
+        NSError *error = [[NSError alloc] initWithDomain:VENErrorDomainCore
+                                                    code:-999
+                                                userInfo:@{}];
+        failureBlock(error);
+        return;
+    }
+    
+    NSDictionary *parameters = @{};
+    
+    [[[VENCore defaultCore] httpClient] GET:[NSString stringWithFormat:@"users/%@", externalId]
+                                 parameters:parameters
+                                    success:^(VENHTTPResponse *response) {
+                                        
+                                        NSDictionary *userPayload = [NSDictionary dictionaryWithDictionary:response.object[@"data"]];
+                                        
+                                        if ([self canInitWithDictionary:userPayload] && successBlock) {
+                                            VENUser *user = [[VENUser alloc] initWithDictionary:userPayload];
+                                            successBlock(user);
+                                        }
+                                        else if (failureBlock) {
+                                            failureBlock(response.error);
+                                        }
+                                    }
+                                    failure:^(VENHTTPResponse *response, NSError *error) {
+                                        
+                                        if ([response error]) {
+                                            error = [response error];
+                                        }
+
+                                        if (failureBlock) {
+                                            failureBlock(error);
+                                        }
+                                    }];
+}
 
 @end

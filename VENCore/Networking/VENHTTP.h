@@ -5,10 +5,10 @@
 
 #import <Foundation/Foundation.h>
 
+#warning These should not be in VENHTTP?
 extern NSString *const VENPrivateAPIPathLogin;
 extern NSString *const VENAPIPathPayments;
-extern NSString *const VENPublicAPIPathUsers;
-extern NSString *const VENPrivateAPIPathUsers;
+extern NSString *const VENAPIPathUsers;
 
 @class AFHTTPRequestOperationManager, AFHTTPRequestOperation, VENHTTPResponse;
 
@@ -31,5 +31,7 @@ extern NSString *const VENPrivateAPIPathUsers;
      failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
 
 - (void)setAccessToken:(NSString *)accessToken;
+
+- (NSDictionary *)defaultHeaders;;
 
 @end

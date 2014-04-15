@@ -1,6 +1,7 @@
 #import "VENUser.h"
-#import "VENMutableUser.h"
+#import "VENCore.h"
 #import "VENUserPayloadKeys.h"
+#import "VENTestUtilities.h"
 
 SpecBegin(VENUser)
 
@@ -46,6 +47,24 @@ void(^assertUsersAreFieldwiseEqual)(VENUser *, VENUser *) = ^(VENUser *user1, VE
 };
 
 
+beforeAll(^{
+    
+    VENCore *core = [[VENCore alloc] initWithClientID:@"1689" clientSecret:@"Skf89msmXN2JptRuTBR9RhuvAjPMsa5v"];
+    [core setAccessToken:@"XGun8xtBZLufGCZdW558UKqQETmB48Ys"];
+    [VENCore setDefaultCore:core];
+    
+    [[LSNocilla sharedInstance] start];
+});
+
+afterAll(^{
+    [[LSNocilla sharedInstance] stop];
+});
+
+afterEach(^{
+    [[LSNocilla sharedInstance] clearStubs];
+});
+
+
 describe(@"Initialization", ^{
 
     it(@"should succesfully create an empty object from init", ^{
@@ -64,6 +83,14 @@ describe(@"Initialization", ^{
         expect(canInit).to.beFalsy();
 
         canInit = [VENUser canInitWithDictionary:invalidUserDictionary2];
+        expect(canInit).to.beFalsy();
+    });
+    
+    it(@"should return NO to a nil or empty dictionary", ^{
+        BOOL canInit = [VENUser canInitWithDictionary:@{}];
+        expect(canInit).to.beFalsy();
+        
+        canInit = [VENUser canInitWithDictionary:nil];
         expect(canInit).to.beFalsy();
     });
 
@@ -92,22 +119,6 @@ describe(@"Copying", ^{
 
         expect(user).to.equal(newUser);
     });
-
-
-    it(@"should create a mutable copy of a valid user", ^{
-        VENUser *user = [[VENUser alloc] initWithDictionary:validUserDictionary1];
-        VENMutableUser *mutableUser = [user mutableCopy];
-
-        assertUsersAreFieldwiseEqual(user, mutableUser);
-    });
-
-    it (@"should create a mutable copy of an invalid user", ^{
-        VENUser *user = [[VENUser alloc] initWithDictionary:invalidUserDictionary1];
-        VENMutableUser *mutableUser = [user mutableCopy];
-
-        assertUsersAreFieldwiseEqual(user, mutableUser);
-    });
-
 });
 
 
@@ -156,14 +167,6 @@ describe(@"Equality", ^{
         expect(invalidUser).toNot.equal(copiedInvalidUser);
         
     });
-
-    it(@"should not consider mutable and immutable objects with the same external id to be the same", ^{
-        VENUser *user = [[VENUser alloc] initWithDictionary:validUserDictionary1];
-        VENMutableUser *mutableUser = [user mutableCopy];
-
-        expect([user isEqual:mutableUser]).to.beFalsy();
-        expect([mutableUser isEqual:user]).to.beFalsy();
-    });
 });
 
 describe(@"Dictionary Representation", ^{
@@ -180,5 +183,79 @@ describe(@"Dictionary Representation", ^{
 });
 
 
+describe(@"Fetching a User", ^{
+    xit(@"should retrieve a user with a correct external id", ^AsyncBlock{
+        
+        NSString *externalId = @"11063873587118083333";
+        [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
+            expect(user.externalId).to.equal(externalId);
+            done();
+        } failure:^(NSError *error) {
+            expect(YES).to.beFalsy();
+            done();
+        }];
+    });
+    
+    it(@"should retrieve a pre-canned Chris user and create a valid user", ^AsyncBlock{
+        
+        NSString *externalId = @"1106387358711808333";
+        
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@%@/%@?", baseURLString, VENAPIPathUsers, externalId];
+        
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchChrisUser"];
+        
+        [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
+            
+            expect(user.externalId).to.equal(externalId);
+            done();
+        } failure:^(NSError *error) {
+            expect(YES).to.beFalsy();
+            done();
+        }];
+
+    });
+    
+    it(@"should call failure when cannot find a user with that external Id", ^AsyncBlock{
+        NSString *externalId = @"1106387358711808339"; //invalid external id
+        
+        
+        
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@%@/%@?", baseURLString, VENAPIPathUsers, externalId];
+        
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidUser"];
+        
+        [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
+            expect(YES).to.beFalsy();
+            done();
+        } failure:^(NSError *error) {
+            expect([error localizedDescription]).to.equal(@"Resource not found.");
+            done();
+        }];
+
+    });
+    
+    it(@"should call failure when not passed an external id", ^AsyncBlock{
+        [VENUser fetchUserWithExternalId:nil success:^(VENUser *user) {
+            expect(YES).to.beFalsy();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
+    
+    it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
+        [VENUser fetchUserWithExternalId:@"" success:^(VENUser *user) {
+            expect(YES).to.beFalsy();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
+    
+});
 
 SpecEnd

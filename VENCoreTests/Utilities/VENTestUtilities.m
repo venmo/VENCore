@@ -31,4 +31,38 @@
     return [core.httpClient.operationManager.baseURL absoluteString];
 }
 
+
++ (void)stubNetworkGET:(NSString *)path
+        withStatusCode:(NSInteger)statusCode
+   andResponseFilePath:(NSString *)filePath {
+    
+    NSString *responseFileContents = [self stringFromJSONResource:filePath];
+    
+    NSMutableDictionary *headers = [[[VENCore defaultCore].httpClient defaultHeaders] mutableCopy];
+    headers[@"Content-Type"] = @"application/json";
+    
+    stubRequest(@"GET", path).
+    andReturn(statusCode).
+    withHeaders(headers).
+    withBody(responseFileContents);
+}
+
+
++ (void)stubNetworkPOST:(NSString *)path
+          forParameters:(NSDictionary *)dictionary
+         withStatusCode:(NSInteger)statusCode
+    andResponseFilePath:(NSString *)filePath {
+    
+    NSString *responseFileContents = [self stringFromJSONResource:filePath];
+    
+    NSMutableDictionary *headers = [[[VENCore defaultCore].httpClient defaultHeaders] mutableCopy];
+    headers[@"Content-Type"] = @"application/json";
+    
+    stubRequest(@"POST", path).
+    andReturn(statusCode).
+    withBody([NSKeyedArchiver archivedDataWithRootObject:dictionary]).
+    withHeaders(headers).
+    withBody(responseFileContents);
+}
+
 @end

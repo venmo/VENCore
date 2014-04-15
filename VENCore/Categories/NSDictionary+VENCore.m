@@ -11,6 +11,9 @@
         else if (self[key] && [(NSObject *)self[key] isKindOfClass:[NSNumber class]]) {
             self[key] = [self[key] stringValue];
         }
+        else if ([(NSObject *)self[key] isKindOfClass:[NSNumber class]]) {
+            self[key] = [((NSNumber *)self[key]) stringValue];
+        }
     }
 }
 
@@ -42,7 +45,7 @@
 
 - (instancetype)dictionaryByCleansingResponseDictionary {
 
-    if ([self isKindOfClass:[NSMutableDictionary class]]) {
+    if ([self respondsToSelector:@selector(setObject:forKey:)]) {
         [(NSMutableDictionary *)self cleanseResponseDictionary];
         return self;
     }

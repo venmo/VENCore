@@ -26,26 +26,6 @@ status           = _status,
 audience         = _audience,
 recipientHandle  = _recipientHandle;
 
-+ (instancetype)transactionWithType:(VENTransactionType)type
-                             amount:(NSUInteger)amount
-                               note:(NSString *)note
-                           audience:(VENTransactionAudience)audience
-                      recipientType:(VENRecipientType)recipientType
-                    recipientString:(NSString *)recipientString {
-
-    VENMutableTransaction *transaction = [[[self class] alloc] init];
-    transaction.type                   = type;
-    transaction.amount                 = amount;
-    transaction.note                   = note;
-    transaction.audience               = audience;
-    transaction.recipientType          = recipientType;
-    transaction.recipientHandle        = recipientString;
-    transaction.status                 = VENTransactionStatusNotSent;
-
-    return transaction;
-}
-
-
 - (instancetype)initWithTransactionID:(NSString *)transactionID
                                  type:(VENTransactionType)type
                                amount:(NSUInteger)amount
@@ -68,6 +48,35 @@ recipientHandle  = _recipientHandle;
         self.audience = audience;
     }
     return self;
+}
+
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.status = VENTransactionStatusNotSent;
+    }
+    return self;
+}
+
+
++ (instancetype)transactionWithType:(VENTransactionType)type
+                             amount:(NSUInteger)amount
+                               note:(NSString *)note
+                           audience:(VENTransactionAudience)audience
+                      recipientType:(VENRecipientType)recipientType
+                    recipientString:(NSString *)recipientString {
+
+    VENMutableTransaction *transaction = [[[self class] alloc] init];
+    transaction.type                   = type;
+    transaction.amount                 = amount;
+    transaction.note                   = note;
+    transaction.audience               = audience;
+    transaction.recipientType          = recipientType;
+    transaction.recipientHandle        = recipientString;
+    transaction.status                 = VENTransactionStatusNotSent;
+
+    return transaction;
 }
 
 
@@ -134,6 +143,7 @@ recipientHandle  = _recipientHandle;
             return @"user_id";
             break;
     }
+    return nil;
 }
 
 

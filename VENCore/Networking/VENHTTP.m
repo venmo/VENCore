@@ -7,15 +7,14 @@
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
 
-NSString *const VENAPIPathPayments = @"payments";
+NSString *const VENAPIPathPayments  = @"payments";
+NSString *const VENAPIPathUsers     = @"users";
 
 @interface VENHTTP ()
 
 @property (strong, nonatomic) NSString *accessToken;
 @property (strong, nonatomic, readwrite) NSString *clientID;
 @property (strong, nonatomic, readwrite) NSString *clientSecret;
-
-- (NSDictionary *)defaultHeaders;
 
 @end
 

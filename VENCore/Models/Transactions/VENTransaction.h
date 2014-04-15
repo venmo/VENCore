@@ -7,6 +7,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionType) {
 };
 
 typedef NS_ENUM(NSUInteger, VENRecipientType) {
+    VENRecipientTypeUnknown,
     VENRecipientTypePhone,
     VENRecipientTypeEmail,
     VENRecipientTypeUserID
