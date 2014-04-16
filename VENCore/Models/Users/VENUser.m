@@ -7,6 +7,9 @@
 
 @interface VENUser ()
 
+@property (nonatomic, copy, readwrite) NSString *internalId;
+@property (nonatomic, copy, readwrite) NSString *externalId;
+
 @end
 
 @implementation VENUser
@@ -22,12 +25,12 @@
         self.lastName       = cleanDictionary[VENUserKeyLastName];
         self.displayName    = cleanDictionary[VENUserKeyDisplayName];
         self.about          = cleanDictionary[VENUserKeyAbout];
-        self.phone          = cleanDictionary[VENUserKeyPhone];
+        self.primaryPhone   = cleanDictionary[VENUserKeyPhone];
         self.internalId     = cleanDictionary[VENUserKeyInternalId];
         self.externalId     = cleanDictionary[VENUserKeyExternalId];
         self.dateJoined     = cleanDictionary[VENUserKeyDateJoined];
-        self.email          = cleanDictionary[VENUserKeyEmail];
-        self.profileImageUrl = cleanDictionary[VENUserKeyProfileImageUrl];
+        self.primaryEmail   = cleanDictionary[VENUserKeyEmail];
+        self.profileImageUrl= cleanDictionary[VENUserKeyProfileImageUrl];
     }
 
     return self;
@@ -36,18 +39,18 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone {
 
-    VENUser *newUser    = [[[self class] alloc] init];
+    VENUser *newUser        = [[[self class] alloc] init];
 
-    newUser.username    = self.username;
-    newUser.firstName   = self.firstName;
-    newUser.lastName    = self.lastName;
-    newUser.displayName = self.displayName;
-    newUser.about       = self.about;
-    newUser.phone       = self.phone;
-    newUser.email       = self.email;
-    newUser.internalId  = self.internalId;
-    newUser.externalId  = self.externalId;
-    newUser.dateJoined  = self.dateJoined;
+    newUser.username        = self.username;
+    newUser.firstName       = self.firstName;
+    newUser.lastName        = self.lastName;
+    newUser.displayName     = self.displayName;
+    newUser.about           = self.about;
+    newUser.primaryPhone    = self.primaryPhone;
+    newUser.primaryEmail    = self.primaryEmail;
+    newUser.internalId      = self.internalId;
+    newUser.externalId      = self.externalId;
+    newUser.dateJoined      = self.dateJoined;
     newUser.profileImageUrl = self.profileImageUrl;
 
     return newUser;
@@ -109,12 +112,12 @@
         dictionary[VENUserKeyAbout] = self.about;
     }
 
-    if (self.phone) {
-        dictionary[VENUserKeyPhone] = self.phone;
+    if (self.primaryPhone) {
+        dictionary[VENUserKeyPhone] = self.primaryPhone;
     }
 
-    if (self.email) {
-        dictionary[VENUserKeyEmail] = self.email;
+    if (self.primaryEmail) {
+        dictionary[VENUserKeyEmail] = self.primaryEmail;
     }
 
     if (self.internalId) {

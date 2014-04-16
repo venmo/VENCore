@@ -38,8 +38,8 @@ void(^assertUsersAreFieldwiseEqual)(VENUser *, VENUser *) = ^(VENUser *user1, VE
     expect(user1.lastName).to.equal(user2.lastName);
     expect(user1.displayName).to.equal(user2.displayName);
     expect(user1.about).to.equal(user2.about);
-    expect(user1.phone).to.equal(user2.phone);
-    expect(user1.email).to.equal(user2.email);
+    expect(user1.primaryPhone).to.equal(user2.primaryPhone);
+    expect(user1.primaryEmail).to.equal(user2.primaryEmail);
     expect(user1.internalId).to.equal(user2.internalId);
     expect(user1.externalId).to.equal(user2.externalId);
     expect(user1.dateJoined).to.equal(user2.dateJoined);
@@ -218,8 +218,6 @@ describe(@"Fetching a User", ^{
     
     it(@"should call failure when cannot find a user with that external Id", ^AsyncBlock{
         NSString *externalId = @"1106387358711808339"; //invalid external id
-        
-        
         
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
         NSString *urlToStub = [NSString stringWithFormat:@"%@%@/%@?", baseURLString, VENAPIPathUsers, externalId];
