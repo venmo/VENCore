@@ -16,11 +16,11 @@ typedef void(^VENUserFetchFailureBlock)(NSError *error);
 @property (copy, nonatomic) NSString *lastName;
 @property (copy, nonatomic) NSString *displayName;
 @property (copy, nonatomic) NSString *about;
-@property (copy, nonatomic) NSString *phone;
 @property (copy, nonatomic) NSString *profileImageUrl;
-@property (copy, nonatomic) NSString *email;
-@property (copy, nonatomic) NSString *internalId;
-@property (copy, nonatomic) NSString *externalId;
+@property (copy, nonatomic) NSString *primaryPhone;
+@property (copy, nonatomic) NSString *primaryEmail;
+@property (copy, nonatomic, readonly) NSString *internalId;
+@property (copy, nonatomic, readonly) NSString *externalId;
 @property (strong, nonatomic) NSDate *dateJoined;
 
 
@@ -61,5 +61,6 @@ typedef void(^VENUserFetchFailureBlock)(NSError *error);
 + (void)fetchUserWithExternalId:(NSString *)externalId
                         success:(VENUserFetchSuccessBlock)successBlock
                         failure:(VENUserFetchFailureBlock)failureBlock;
+
 
 @end
