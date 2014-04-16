@@ -157,55 +157,14 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 - (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
                 failure:(void(^)(VENHTTPResponse *reponse, NSError *error))failure {
 #warning Unimplemented
-    
     for (VENTransactionTarget *target in self.targets) {
-        NSString *recipientTypeKey;
-        NSString *audienceString;
-        NSString*amountString;
-        switch (target.targetType) {
-            case VENTargetTypeEmail:
-                recipientTypeKey = @"email";
-                break;
-            case VENTargetTypePhone:
-                recipientTypeKey = @"phone";
-                break;
-            case VENTargetTypeUserId:
-                recipientTypeKey = @"user_id";
-                break;
-            default:
-                break;
-        }
-        
-        switch (self.audience) {
-            case VENTransactionAudiencePrivate:
-                audienceString = @"private";
-                break;
-            case VENTransactionAudienceFriends:
-                audienceString = @"friends";
-                break;
-            case VENTransactionAudiencePublic:
-                audienceString = @"public";
-                break;
-            default:
-                break;
-        }
-                amountString = [NSString stringWithFormat:@"%d", target.amount];
-        if (self.transactionType == VENTransactionTypeCharge) {
-            amountString = [@"-" stringByAppendingString:amountString];
-        }
-        NSDictionary *parameters = @{recipientTypeKey: target.handle,
-                                     @"note"        : self.note,
-                                     @"amount"      : amountString,
-                                     @"audience"    : audienceString};
+        NSDictionary *postParameters = [self dictionaryWithParametersForTarget:target];
         [[VENCore defaultCore].httpClient POST:@"payments"
-                                    parameters:parameters
+                                    parameters:postParameters
                                        success:^(VENHTTPResponse *response) {
-                                           
                                        }
                                        failure:^(VENHTTPResponse *response, NSError *error) {
-                                           
                                        }];
-        
     }
 }
 
@@ -229,6 +188,47 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
         }
     }
     return NO;
+}
+
+- (NSDictionary *)dictionaryWithParametersForTarget:(VENTransactionTarget *)target {
+    NSString *recipientTypeKey;
+    NSString *audienceString;
+    NSString*amountString;
+    switch (target.targetType) {
+        case VENTargetTypeEmail:
+            recipientTypeKey = @"email";
+            break;
+        case VENTargetTypePhone:
+            recipientTypeKey = @"phone";
+            break;
+        case VENTargetTypeUserId:
+            recipientTypeKey = @"user_id";
+            break;
+        default:
+            return nil;
+            break;
+    }
+    
+    switch (self.audience) {
+        case VENTransactionAudienceFriends:
+            audienceString = @"friends";
+            break;
+        case VENTransactionAudiencePublic:
+            audienceString = @"public";
+            break;
+        default:
+            audienceString = @"private";
+            break;
+    }
+    amountString = [NSString stringWithFormat:@"%d", target.amount];
+    if (self.transactionType == VENTransactionTypeCharge) {
+        amountString = [@"-" stringByAppendingString:amountString];
+    }
+    NSDictionary *parameters = @{recipientTypeKey: target.handle,
+                                 @"note"        : self.note,
+                                 @"amount"      : amountString,
+                                 @"audience"    : audienceString};
+    return parameters;
 }
 
 @end

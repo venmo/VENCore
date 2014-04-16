@@ -9,6 +9,7 @@
     if (self) {
         self.handle = phoneEmailOrUserID;
         self.targetType = [phoneEmailOrUserID targetType];
+        self.amount = amount;
     }
     return self;
 }
