@@ -8,11 +8,11 @@
         if (self[key] == [NSNull null]) {
             [self removeObjectForKey:key];
         }
-        else if (self[key] && [(NSObject *)self[key] isKindOfClass:[NSNumber class]]) {
-            self[key] = [self[key] stringValue];
-        }
         else if ([(NSObject *)self[key] isKindOfClass:[NSNumber class]]) {
             self[key] = [((NSNumber *)self[key]) stringValue];
+        }
+        else if ([(NSObject *)self[key] isKindOfClass:[NSDictionary class]]) {
+            self[key] = [((NSDictionary *)self[key]) dictionaryByCleansingResponseDictionary];
         }
     }
 }
