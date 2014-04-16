@@ -98,7 +98,7 @@ describe(@"cleanseResponseDictionary", ^{
         }];
     });
     
-    it(@"should not modify NSDictionary or NSArray members", ^{
+    it(@"should not modify NSDictionary members that dont contain NSNull/NSNumber values or NSArray members", ^{
         NSArray *array = @[@"Lucas",@"uses",@"Venmo"];
         NSDictionary *dictionary = @{@1: @"one",
                                      @2: @"two",
@@ -111,6 +111,24 @@ describe(@"cleanseResponseDictionary", ^{
         expect(mutableDictionary[@"dictionary"]).to.beKindOf([NSDictionary class]);
 
     });
+    
+    it(@"should not cleanse NSDictionary members that contain NSNull values and NSNumber values", ^{
+        NSArray *memberArray = @[@"Lucas",@"uses",@"Venmo"];
+        NSDictionary *memberDictionary = @{@1: @"one",
+                                     @2: [NSNull null],
+                                     @3: @3};
+        NSMutableDictionary *mutableDictionary = [@{@"array": memberArray,
+                                                    @"dictionary": memberDictionary} mutableCopy];
+        NSDictionary *cleansedMemberDictionary = @{@1: @"one",
+                                                   @3: @"3"};
+        NSMutableDictionary *cleansedMutableDictionary = [mutableDictionary mutableCopy];
+        [cleansedMutableDictionary setObject:cleansedMemberDictionary
+                                      forKey:@"dictionary"];
+        
+        [mutableDictionary cleanseResponseDictionary];
+        expect(mutableDictionary).to.equal(cleansedMutableDictionary);
+    });
+    
 });
 
 SpecEnd
