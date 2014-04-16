@@ -9,6 +9,8 @@
 
 - (BOOL)containsDuplicateOfTarget:(VENTransactionTarget *)target;
 
+- (NSDictionary *)dictionaryWithParametersForTarget:(VENTransactionTarget *)target;
+
 @end
 
 SpecBegin(VENTransaction)
@@ -241,6 +243,67 @@ describe(@"readyToSend", ^{
     
 });
 
+describe(@"dictionaryWithParametersForTarget:", ^{
+    it(@"should create a parameters dictionary for positive amounts", ^{
+        NSString *emailAddress = @"dasmer@venmo.com";
+        NSString *note = @"Here is two bucks";
+        NSString *amount = @"200";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        [transaction addTarget:target];
+        transaction.note = note;
+        transaction.transactionType = VENTransactionTypePay;
+        transaction.audience = VENTransactionAudienceFriends;
+        transaction.status = VENTransactionStatusNotSent;
+        NSDictionary *expectedPostParameters = @{@"email": emailAddress,
+                                                 @"note": note,
+                                                 @"amount" : amount,
+                                                 @"audience" : @"friends"};
+        NSDictionary *postParameters = [transaction dictionaryWithParametersForTarget:target];
+        expect(postParameters).to.equal(expectedPostParameters);
+        
+    });
+    
+    it(@"should create a parameters dictionary for negative amounts", ^{
+        NSString *emailAddress = @"dasmer@venmo.com";
+        NSString *note = @"I want your two bucks";
+        NSString *amount = @"200";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        [transaction addTarget:target];
+        transaction.note = note;
+        transaction.transactionType = VENTransactionTypeCharge;
+        transaction.audience = VENTransactionAudiencePrivate;
+        transaction.status = VENTransactionStatusNotSent;
+        NSDictionary *expectedPostParameters = @{@"email": emailAddress,
+                                                 @"note": note,
+                                                 @"amount" : @"-200",
+                                                 @"audience" : @"private"};
+        NSDictionary *postParameters = [transaction dictionaryWithParametersForTarget:target];
+        expect(postParameters).to.equal(expectedPostParameters);
+        
+    });
+    
+    
+    it(@"should return nil if target type is unknown", ^{
+        NSString *emailAddress = @"dasmer";
+        NSString *note = @"I want your two bucks";
+        NSString *amount = @"200";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:target];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        [transaction addTarget:target];
+        ((VENTransaction *)mockTransaction).note = note;
+        ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypeCharge;
+        ((VENTransaction *)mockTransaction).audience = VENTransactionAudiencePrivate;
+        ((VENTransaction *)mockTransaction).status = VENTransactionStatusNotSent;
+        NSDictionary *postParameters = [((VENTransaction *)mockTransaction) dictionaryWithParametersForTarget:target];
+        expect(target.targetType).equal(VENTargetTypeUnknown);
+        expect(postParameters).to.beNil();
+    });
+});
 
 describe(@"Equality", ^{
     it(@"should consider two identical transactions equal", ^{

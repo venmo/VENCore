@@ -12,6 +12,7 @@
         self.handle = phoneEmailOrUserID;
         self.amount = amount;
         self.targetType = [phoneEmailOrUserID targetType];
+        self.amount = amount;
     }
     return self;
 }
