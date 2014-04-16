@@ -131,4 +131,14 @@ describe(@"containsDuplicateOfTarget", ^{
     });
 });
 
+describe(@"readyToSend", ^{
+    it(@"should return NO if there are 0 targets", ^{
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        transaction.note = @"Here is 10 Bucks";
+        transaction.transactionType = VENTransactionTypePay;
+        transaction.status = VENTransactionStatusNotSent;
+        expect([transaction readyToSend]).to.equal(NO);
+    });
+});
+
 SpecEnd

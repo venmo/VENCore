@@ -2,6 +2,7 @@
 @class VENMutableTransaction, VENUser, VENHTTPResponse, VENTransactionTarget;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
+    VENTransactionTypeUnknown,
     VENTransactionTypePay,
     VENTransactionTypeCharge
 };
@@ -33,7 +34,7 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 @property (strong, nonatomic, readonly) NSOrderedSet *targets;
 @property (copy, nonatomic) NSString *note;
 @property (copy, nonatomic) VENUser *actor;
-@property (assign, nonatomic) VENTransactionType type;
+@property (assign, nonatomic) VENTransactionType transactionType;
 @property (assign, nonatomic) VENTransactionStatus status;
 @property (assign, nonatomic) VENTransactionAudience audience;
 

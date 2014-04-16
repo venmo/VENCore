@@ -88,4 +88,14 @@ describe(@"targetType", ^{
     });
 });
 
+describe(@"hasContent", ^{
+    it(@"should return YES if the value contains non-whitespace characters", ^{
+        NSString *string = @"*";
+        expect([string hasContent]).to.equal(YES);
+    });
+    it(@"should return YES if the value contains non-whitespace characters", ^{
+        NSString *string = @" ";
+        expect([string hasContent]).to.equal(NO);
+    });
+});
 SpecEnd

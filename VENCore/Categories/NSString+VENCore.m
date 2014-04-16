@@ -40,4 +40,14 @@
     }
 }
 
+
+- (BOOL)hasContent {
+    NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+    if ([[self stringByTrimmingCharactersInSet: set] length] == 0)
+    {
+        return NO;
+    }
+    return YES;
+}
+
 @end

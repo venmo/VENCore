@@ -6,5 +6,6 @@
 - (BOOL)isEmail;
 - (BOOL)isUserId;
 - (VENTargetType)targetType;
+- (BOOL)hasContent;
 
 @end

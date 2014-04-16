@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "NSDictionary+VENCore.h"
 #import "VENTransactionTarget.h"
+#import "NSString+VENCore.h"
 
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 
@@ -160,7 +161,13 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 
 - (BOOL)readyToSend {
 #warning Unimplemented
-    return NO;
+    if (![self.mutableTargets count] ||
+        ![self.note hasContent] ||
+        self.transactionType != VENTransactionTypeUnknown ||
+        self.status == VENTransactionStatusNotSent) {
+        return NO;
+    }
+    return YES;
 }
 
 - (BOOL)containsDuplicateOfTarget:(VENTransactionTarget *)target {
