@@ -12,10 +12,42 @@
 
 SpecBegin(VENTransaction)
 
+void(^assertTransactionsAreFieldwiseEqual)(VENTransaction *, VENTransaction *) = ^(VENTransaction *tx1, VENTransaction *tx2) {
+    expect(tx1.transactionID).to.equal(tx2.transactionID);
+    expect(tx1.targets).to.equal(tx2.targets);
+    expect(tx1.note).to.equal(tx2.note);
+    expect(tx1.actor).to.equal(tx2.actor);
+    expect(tx1.transactionType).to.equal(tx2.transactionType);
+    expect(tx1.status).to.equal(tx2.status);
+    expect(tx1.audience).to.equal(tx2.audience);
+};
+
+
 before(^{
     NSDictionary *paymentResponse = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
     NSDictionary *paymentObject = paymentResponse[@"data"][@"payment"];
 //    transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
+});
+
+describe(@"Initialization", ^{
+    
+    it(@"should return YES to canInitWithDictionary for a valid transaction dictionary", ^{
+        
+    });
+    
+    it(@"should return NO to canInitWithDictionary for a transaction dictionary without an ID", ^{
+        
+    });
+    
+    it(@"should return NO to canInitWithDictionary for a transaction dictionary without any transaction targets", ^{
+        
+    });
+    
+    it(@"should successfully initialize a transaction from a valid transaction dictionary", ^{
+        
+    });
+    
+    
 });
 
 
@@ -139,6 +171,34 @@ describe(@"readyToSend", ^{
         transaction.status = VENTransactionStatusNotSent;
         expect([transaction readyToSend]).to.equal(NO);
     });
+});
+
+
+describe(@"Equality", ^{
+    it(@"should consider two identical transactions equal", ^{
+
+    });
+
+    it(@"should consider two transactions with different transaction targets different", ^{
+        
+    });
+    
+    it(@"should consider two identical transactions with empty targets equal", ^{
+        
+    });
+    
+    it(@"should consider two identical transactions but with different types inequal", ^{
+        
+    });
+    
+    it(@"should consider transactions with different ids inequal", ^{
+        
+    });
+    
+    it(@"should consider transactions with different statusses EQUAL", ^{
+        
+    });
+    
 });
 
 SpecEnd
