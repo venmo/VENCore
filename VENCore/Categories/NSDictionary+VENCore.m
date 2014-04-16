@@ -45,15 +45,10 @@
 
 - (instancetype)dictionaryByCleansingResponseDictionary {
 
-    if ([self respondsToSelector:@selector(setObject:forKey:)]) {
-        [(NSMutableDictionary *)self cleanseResponseDictionary];
-        return self;
-    }
-
     NSMutableDictionary *dictionary  = [self mutableCopy];
     [dictionary cleanseResponseDictionary];
 
-    return [[self class] dictionaryWithDictionary:dictionary];
+    return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
 @end

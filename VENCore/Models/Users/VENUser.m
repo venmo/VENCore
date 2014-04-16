@@ -18,6 +18,11 @@
     self = [super init];
 
     if (self) {
+        
+        if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
+            return self;
+        }
+        
         NSDictionary *cleanDictionary = [dictionary dictionaryByCleansingResponseDictionary];
 
         self.username       = cleanDictionary[VENUserKeyUsername];

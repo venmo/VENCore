@@ -2,6 +2,7 @@
 #import "NSString+VENCore.h"
 #import "VENUser.h"
 #import "VENTransactionPayloadKeys.h"
+#import "NSDictionary+VENCore.h"
 
 @implementation VENTransactionTarget
 
@@ -17,9 +18,17 @@
 
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    
     self = [super init];
     if (self) {
-        NSString *targetType = dictionary[VENTransactionTargetTypeKey];
+        
+        if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
+            return self;
+        }
+        
+        NSDictionary *cleanDictionary = [dictionary dictionaryByCleansingResponseDictionary];
+
+        NSString *targetType = cleanDictionary[VENTransactionTargetTypeKey];
         
         if ([targetType isEqualToString:VENTransactionTargetEmailKey]) {
             self.targetType = VENTargetTypeEmail;
@@ -34,8 +43,8 @@
             self.targetType = VENTargetTypeUnknown;
         }
         
-        self.handle = dictionary[targetType];
-        self.amount = (NSUInteger)([dictionary[VENTransactionAmountKey] doubleValue] * (double)100);
+        self.handle = cleanDictionary[targetType];
+        self.amount = (NSUInteger)([cleanDictionary[VENTransactionAmountKey] doubleValue] * (double)100);
     }
     return self;
 }

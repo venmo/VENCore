@@ -1,6 +1,7 @@
 #import "VENTransaction.h"
 #import "VENTestUtilities.h"
 #import "VENTransactionTarget.h"
+#import "VENUser.h"
 
 @interface VENTransaction ()
 
@@ -23,13 +24,10 @@ void(^assertTransactionsAreFieldwiseEqual)(VENTransaction *, VENTransaction *) =
 };
 
 
-before(^{
-    NSDictionary *paymentResponse = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
-    NSDictionary *paymentObject = paymentResponse[@"data"][@"payment"];
-//    transaction = [VENTransaction transactionWithPaymentObject:paymentObject];
-});
-
 describe(@"Initialization", ^{
+
+    NSDictionary *paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
+    NSDictionary *paymentObject     = paymentResponse[@"data"][@"payment"];
     
     it(@"should return YES to canInitWithDictionary for a valid transaction dictionary", ^{
         
@@ -44,6 +42,17 @@ describe(@"Initialization", ^{
     });
     
     it(@"should successfully initialize a transaction from a valid transaction dictionary", ^{
+        VENTransaction *transaction = [[VENTransaction alloc] initWithDictionary:paymentObject];
+        
+        expect(transaction.transactionID).to.equal(@"1322585332520059420");
+        expect(transaction.note).to.equal(@"Rock Climbing!");
+        expect(transaction.actor.externalId).to.equal(@"1088551785594880949");
+        expect(transaction.transactionType).to.equal(VENTransactionTypePay);
+        expect(transaction.status).to.equal(VENTransactionStatusPending);
+        expect(transaction.audience).to.equal(VENTransactionAudiencePublic);
+        
+        expect([transaction.targets count]).to.equal(1);
+        expect(((VENTransactionTarget *)transaction.targets[0]).handle).to.equal(@"nonvenmouser@gmail.com");
         
     });
     
@@ -235,7 +244,7 @@ describe(@"readyToSend", ^{
 
 describe(@"Equality", ^{
     it(@"should consider two identical transactions equal", ^{
-
+        
     });
 
     it(@"should consider two transactions with different transaction targets different", ^{
