@@ -3,6 +3,7 @@
 #import "NSDictionary+VENCore.h"
 #import "VENTransactionTarget.h"
 #import "NSString+VENCore.h"
+#import "VENCore.h"
 
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 
@@ -156,6 +157,56 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 - (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
                 failure:(void(^)(VENHTTPResponse *reponse, NSError *error))failure {
 #warning Unimplemented
+    
+    for (VENTransactionTarget *target in self.targets) {
+        NSString *recipientTypeKey;
+        NSString *audienceString;
+        NSString*amountString;
+        switch (target.targetType) {
+            case VENTargetTypeEmail:
+                recipientTypeKey = @"email";
+                break;
+            case VENTargetTypePhone:
+                recipientTypeKey = @"phone";
+                break;
+            case VENTargetTypeUserId:
+                recipientTypeKey = @"user_id";
+                break;
+            default:
+                break;
+        }
+        
+        switch (self.audience) {
+            case VENTransactionAudiencePrivate:
+                audienceString = @"private";
+                break;
+            case VENTransactionAudienceFriends:
+                audienceString = @"friends";
+                break;
+            case VENTransactionAudiencePublic:
+                audienceString = @"public";
+                break;
+            default:
+                break;
+        }
+                amountString = [NSString stringWithFormat:@"%d", target.amount];
+        if (self.transactionType == VENTransactionTypeCharge) {
+            amountString = [@"-" stringByAppendingString:amountString];
+        }
+        NSDictionary *parameters = @{recipientTypeKey: target.handle,
+                                     @"note"        : self.note,
+                                     @"amount"      : amountString,
+                                     @"audience"    : audienceString};
+        [[VENCore defaultCore].httpClient POST:@"payments"
+                                    parameters:parameters
+                                       success:^(VENHTTPResponse *response) {
+                                           
+                                       }
+                                       failure:^(VENHTTPResponse *response, NSError *error) {
+                                           
+                                       }];
+        
+    }
 }
 
 
