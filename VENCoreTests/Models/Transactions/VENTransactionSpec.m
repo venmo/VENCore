@@ -132,6 +132,18 @@ describe(@"containsDuplicateOfTarget", ^{
 });
 
 describe(@"readyToSend", ^{
+    it(@"should return YES if transaction has at least one target, has a note, transactionType and status is not sent.", ^{
+        id object = [NSObject new];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        ((VENTransaction *)mockTransaction).note = @"Here is 10 Bucks";
+        ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypePay;
+        ((VENTransaction *)mockTransaction).status = VENTransactionStatusNotSent;
+        expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(YES);
+    });
+    
     it(@"should return NO if there are 0 targets", ^{
         VENTransaction *transaction = [[VENTransaction alloc] init];
         transaction.note = @"Here is 10 Bucks";
@@ -139,6 +151,53 @@ describe(@"readyToSend", ^{
         transaction.status = VENTransactionStatusNotSent;
         expect([transaction readyToSend]).to.equal(NO);
     });
+    
+    it(@"should return NO if transaction has no note", ^{
+        id object = [NSObject new];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypePay;
+        ((VENTransaction *)mockTransaction).status = VENTransactionStatusNotSent;
+        expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(NO);
+    });
+    
+    it(@"should return NO if transactionType has not been set", ^{
+        id object = [NSObject new];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        ((VENTransaction *)mockTransaction).note = @"Here is 10 Bucks";
+        ((VENTransaction *)mockTransaction).status = VENTransactionStatusNotSent;
+        expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(NO);
+    });
+    
+    it(@"should return NO if status is settled", ^{
+        id object = [NSObject new];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        ((VENTransaction *)mockTransaction).note = @"Here is 10 Bucks";
+        ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypePay;
+        ((VENTransaction *)mockTransaction).status = VENTransactionStatusSettled;
+        expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(NO);
+    });
+    
+    it(@"should return NO if status is pending", ^{
+        id object = [NSObject new];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        ((VENTransaction *)mockTransaction).note = @"Here is 10 Bucks";
+        ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypePay;
+        ((VENTransaction *)mockTransaction).status = VENTransactionStatusPending;
+        expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(NO);
+    });
+    
 });
 
 SpecEnd

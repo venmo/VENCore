@@ -163,8 +163,8 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 #warning Unimplemented
     if (![self.mutableTargets count] ||
         ![self.note hasContent] ||
-        self.transactionType != VENTransactionTypeUnknown ||
-        self.status == VENTransactionStatusNotSent) {
+        self.transactionType == VENTransactionTypeUnknown ||
+        self.status != VENTransactionStatusNotSent) {
         return NO;
     }
     return YES;
