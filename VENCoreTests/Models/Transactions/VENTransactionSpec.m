@@ -99,76 +99,33 @@ describe(@"Initialization", ^{
 
 
 describe(@"addTarget", ^{
-    it(@"should call addTargets with a set containing the target.", ^{
-        id mockTarget = [OCMockObject mockForClass:[VENTransactionTarget class]];
+    it(@"it should add a valid target", ^{
+        id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
+        [[[mockTarget stub] andReturnValue:@(YES)]isValid];
         VENTransaction *transaction = [[VENTransaction alloc] init];
-        id mockTransaction = [OCMockObject partialMockForObject:transaction];
-        NSSet *targetsSet = [NSSet setWithObject:mockTarget];
-        [[mockTransaction expect] addTargets:targetsSet];
-        [mockTransaction addTarget:mockTarget];
-        [mockTransaction verify];
+        BOOL addedTarget = [transaction addTarget:mockTarget];
+        expect(addedTarget).to.beTruthy();
+        expect([transaction.targets count]).to.equal(1);
     });
 
-    it(@"should return any error returned by addTargets", ^{
+    it(@"it should not add a invalid target", ^{
+        id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
+        [[[mockTarget stub] andReturnValue:@(NO)] isValid];
         VENTransaction *transaction = [[VENTransaction alloc] init];
-        id mockTransaction = [OCMockObject partialMockForObject:transaction];
-        id mockError = [OCMockObject mockForClass:[NSError class]];
-        [[[mockTransaction stub] andReturn:mockError] addTargets:OCMOCK_ANY];
-        NSError *error = [mockTransaction addTarget:[OCMockObject mockForClass:[VENTransactionTarget class]]];
-        expect(error).to.equal(mockError);
-    });
-});
-
-
-describe(@"addTargets", ^{
-    it(@"should add a set of three valid targets to the transaction", ^{
-        id mockTarget1 = [OCMockObject mockForClass:[VENTransactionTarget class]];
-        [[[mockTarget1 stub] andReturnValue:@YES] isValid];
-        id mockTarget2 = [OCMockObject mockForClass:[VENTransactionTarget class]];
-        [[[mockTarget2 stub] andReturnValue:@YES] isValid];
-        id mockTarget3 = [OCMockObject mockForClass:[VENTransactionTarget class]];
-        [[[mockTarget3 stub] andReturnValue:@YES] isValid];
-
-        VENTransaction *transaction = [[VENTransaction alloc] init];
-        id mockTransaction = [OCMockObject partialMockForObject:transaction];
-        [[[mockTransaction stub] andReturnValue:@NO] containsDuplicateOfTarget:OCMOCK_ANY];
-
-        NSSet *targets = [NSSet setWithArray:@[mockTarget1, mockTarget2, mockTarget3]];
-        NSError *error = [mockTransaction addTargets:targets];
-        expect(error).to.beNil();
-        for (id target in targets) {
-            expect([((VENTransaction *)mockTransaction).targets containsObject:target]).to.equal(YES);
-        }
+        BOOL addedTarget = [transaction addTarget:mockTarget];
+        expect(addedTarget).to.beFalsy();
+        expect([transaction.targets count]).to.equal(0);
     });
 
-    it(@"should not add a set of two valid targets and an invalid target to the transaction", ^{
-        id mockTarget1 = [OCMockObject mockForClass:[VENTransactionTarget class]];
-        [[[mockTarget1 stub] andReturnValue:@YES] isValid];
-        id mockTarget2 = [OCMockObject mockForClass:[VENTransactionTarget class]];
-        [[[mockTarget2 stub] andReturnValue:@YES] isValid];
-        id mockTarget3 = [OCMockObject mockForClass:[VENTransactionTarget class]];
-        [[[mockTarget3 stub] andReturnValue:@NO] isValid];
-
+    it(@"it should not add duplicate targets", ^{
+        id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
         VENTransaction *transaction = [[VENTransaction alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transaction];
-        [[[mockTransaction stub] andReturnValue:@NO] containsDuplicateOfTarget:OCMOCK_ANY];
+        [[[mockTransaction stub] andReturnValue:@(YES)] containsDuplicateOfTarget:OCMOCK_ANY];
 
-        NSSet *targets = [NSSet setWithArray:@[mockTarget1, mockTarget2, mockTarget3]];
-        NSError *error = [transaction addTargets:targets];
-        expect(error).toNot.beNil();
-        for (id target in targets) {
-            expect([transaction.targets containsObject:target]).to.equal(NO);
-        }
-    });
-
-    xit(@"should not allow adding an object that is not a VENTransactionTarget instance", ^{
-        id object = [NSObject new];
-
-        VENTransaction *transaction = [[VENTransaction alloc] init];
-        NSSet *targets = [NSSet setWithArray:@[object]];
-        BOOL added = [transaction addTargets:targets];
-        expect(added).to.equal(NO);
-        expect([transaction.targets containsObject:object]).to.equal(NO);
+        BOOL addedTarget = [mockTransaction addTarget:mockTarget];
+        expect(addedTarget).to.beFalsy();
+        expect(((VENTransaction *)mockTransaction).targets.count).to.equal(0);
     });
 });
 
@@ -347,28 +304,73 @@ describe(@"dictionaryWithParametersForTarget:", ^{
 
 
 describe(@"Equality", ^{
+    
+    NSDictionary *paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
+    NSDictionary *paymentObject     = paymentResponse[@"data"][@"payment"];
+    
     it(@"should consider two identical transactions equal", ^{
+        VENTransaction *transaction1 = [[VENTransaction alloc] initWithDictionary:paymentObject];
+        VENTransaction *transaction2 = [[VENTransaction alloc] initWithDictionary:paymentObject];
         
+        expect(transaction1).to.equal(transaction2);
+        expect(transaction2).to.equal(transaction1);
     });
 
     it(@"should consider two transactions with different transaction targets different", ^{
+        VENTransaction *transaction = [[VENTransaction alloc] initWithDictionary:paymentObject];
         
+        NSMutableDictionary *transactionDictionary = [paymentObject mutableCopy];
+        [transactionDictionary removeObjectForKey:VENTransactionTargetKey];
+
+        VENTransactionTarget *newTarget = [[VENTransactionTarget alloc] initWithHandle:@"Ben Guo" amount:14];
+        transactionDictionary[VENTransactionTargetKey] = [newTarget dictionaryRepresentation];
+        VENTransaction *otherTransaction = [[VENTransaction alloc] initWithDictionary:transactionDictionary];
+        
+        expect(transaction).to.equal(otherTransaction);
     });
     
     it(@"should consider two identical transactions with empty targets equal", ^{
+        NSMutableDictionary *transactionDictionary = [paymentObject mutableCopy];
+        [transactionDictionary removeObjectForKey:VENTransactionTargetKey];
+        VENTransaction *transaction = [[VENTransaction alloc] initWithDictionary:transactionDictionary];
+        VENTransaction *otherTransaction = [[VENTransaction alloc] initWithDictionary:transactionDictionary];
         
+        expect(transaction).to.equal(otherTransaction);
     });
     
     it(@"should consider two identical transactions but with different types inequal", ^{
+        NSMutableDictionary *transactionDictionary = [paymentObject mutableCopy];
+        NSMutableDictionary *otherTransactionDictionary = [transactionDictionary mutableCopy];
+        otherTransactionDictionary[VENTransactionTypeKey] = VENTransactionTypeStrings[VENTransactionTypeCharge];
+        VENTransaction *transaction = [[VENTransaction alloc] initWithDictionary:transactionDictionary];
+        VENTransaction *otherTransaction = [[VENTransaction alloc] initWithDictionary:otherTransactionDictionary];
         
+        expect(transaction).toNot.equal(otherTransaction);
     });
     
     it(@"should consider transactions with different ids inequal", ^{
+        NSMutableDictionary *transactionDictionary = [paymentObject mutableCopy];
+        transactionDictionary[VENTransactionIDKey] = @"frack";
         
+        NSMutableDictionary *otherTransactionDictionary = [transactionDictionary mutableCopy];
+        otherTransactionDictionary[VENTransactionIDKey] = @"frick";
+        VENTransaction *transaction = [[VENTransaction alloc] initWithDictionary:transactionDictionary];
+        VENTransaction *otherTransaction = [[VENTransaction alloc] initWithDictionary:otherTransactionDictionary];
+        
+        expect(transaction).toNot.equal(otherTransaction);
     });
     
-    it(@"should consider transactions with different statusses EQUAL", ^{
+    it(@"should consider transactions with different statuses EQUAL", ^{
+        NSMutableDictionary *transactionDictionary = [paymentObject mutableCopy];
+        transactionDictionary[VENTransactionStatusKey] = VENTransactionStatusStrings[VENTransactionStatusNotSent];
         
+        NSMutableDictionary *otherTransactionDictionary = [transactionDictionary mutableCopy];
+        otherTransactionDictionary[VENTransactionStatusKey] = VENTransactionStatusStrings[VENTransactionStatusPending];
+        
+        VENTransaction *transaction = [[VENTransaction alloc] initWithDictionary:transactionDictionary];
+        VENTransaction *otherTransaction = [[VENTransaction alloc] initWithDictionary:otherTransactionDictionary];
+        
+        expect(transaction).to.equal(otherTransaction);
     });
     
 });

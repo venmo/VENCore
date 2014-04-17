@@ -12,6 +12,10 @@
 
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 
+NSString *const VENTransactionTypeStrings[] = {@"unknown", @"pay", @"charge"};
+NSString *const VENTransactionStatusStrings[] = {@"not_sent", @"pending", @"settled"};
+NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"public"};
+
 @interface VENTransaction ()
 
 @property (strong, nonatomic) NSMutableOrderedSet *mutableTargets;
@@ -48,12 +52,12 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
         NSString *transactionStatus     = cleanDictionary[VENTransactionStatusKey];
         NSString *transactionAudience   = cleanDictionary[VENTransactionAudienceKey];
         
-        
+
         // Set transaction type enumeration
-        if ([transactionType isEqualToString:@"charge"]) {
+        if ([transactionType isEqualToString:VENTransactionTypeStrings[VENTransactionTypeCharge]]) {
             self.transactionType = VENTransactionTypeCharge;
         }
-        else if ([transactionType isEqualToString:@"pay"]) {
+        else if ([transactionType isEqualToString:VENTransactionTypeStrings[VENTransactionTypePay]]) {
             self.transactionType = VENTransactionTypePay;
         }
         else {
@@ -62,26 +66,26 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
         
         
         // Set status enumeration
-        if ([transactionStatus isEqualToString:@"pending"]) {
+        if ([transactionStatus isEqualToString:VENTransactionStatusStrings[VENTransactionStatusPending]]) {
             self.status = VENTransactionStatusPending;
         }
-        else if ([transactionStatus isEqualToString:@"settled"]) {
+        else if ([transactionStatus isEqualToString:VENTransactionStatusStrings[VENTransactionStatusSettled]]) {
             self.status = VENTransactionStatusSettled;
         }
         #warning make sure that dictionary representation respects this
-        else if ([transactionStatus isEqualToString:@"not_sent"]) {
+        else if ([transactionStatus isEqualToString:VENTransactionStatusStrings[VENTransactionStatusNotSent]]) {
             self.status = VENTransactionStatusNotSent;
         }
         
         
         // Set audience enumeration
-        if ([transactionAudience isEqualToString:@"public"]) {
+        if ([transactionAudience isEqualToString:VENTransactionAudienceStrings[VENTransactionAudiencePublic]]) {
             self.audience = VENTransactionAudiencePublic;
         }
-        else if ([transactionAudience isEqualToString:@"friends"]) {
+        else if ([transactionAudience isEqualToString:VENTransactionAudienceStrings[VENTransactionAudienceFriends]]) {
             self.audience = VENTransactionAudienceFriends;
         }
-        else if ([transactionAudience isEqualToString:@"private"]) {
+        else if ([transactionAudience isEqualToString:VENTransactionAudienceStrings[VENTransactionAudiencePrivate]]) {
             self.audience = VENTransactionAudiencePrivate;
         }
         else {
@@ -113,6 +117,18 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 }
 
 
+- (BOOL)isEqual:(id)object {
+    VENTransaction *otherObject = (VENTransaction *)object;
+    
+    if (![otherObject.transactionID isEqualToString:self.transactionID]
+        || otherObject.transactionType != self.transactionType) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+
 + (BOOL)canInitWithDictionary:(NSDictionary *)dictionary {
     NSArray *requiredKeys = @[VENTransactionAmountKey, VENTransactionNoteKey, VENTransactionActorKey, VENTransactionIDKey, VENTransactionTargetKey];
     for (NSString *key in requiredKeys) {
@@ -125,13 +141,6 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
     return YES;
 }
 
-- (NSDictionary *)dictionaryRepresentation {
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    
-    
-    return dictionary;
-}
-
 
 - (NSOrderedSet *)targets {
     return [self.mutableTargets copy];
@@ -140,9 +149,15 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 
 #pragma mark - Private
 
-- (NSError *)addTarget:(VENTransactionTarget *)target {
-    NSSet *targetSet = [NSSet setWithObject:target];
-    return [self addTargets:targetSet];
+- (BOOL)addTarget:(VENTransactionTarget *)target {
+    if (![target isKindOfClass:[VENTransactionTarget class]]
+        || ![target isValid]
+        || [self containsDuplicateOfTarget:target]) {
+        return NO;
+    }
+
+    [self.mutableTargets addObject:target];
+    return YES;
 }
 
 
@@ -172,6 +187,7 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
     [self.mutableTargets addObjectsFromArray:[targets allObjects]];
     return nil;
 }
+
 
 - (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
                 failure:(void(^)(VENHTTPResponse *reponse, NSError *error))failure {

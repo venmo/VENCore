@@ -6,6 +6,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypePay,
     VENTransactionTypeCharge
 };
+extern NSString *const VENTransactionTypeStrings[];
 
 // TODO: what are the possible transaction statuses?
 // TODO: VENMutableTransaction should not have transactionID, status, fromUserID, or toUserID.
@@ -14,12 +15,14 @@ typedef NS_ENUM(NSUInteger, VENTransactionStatus) {
     VENTransactionStatusPending,
     VENTransactionStatusSettled
 };
+extern NSString *const VENTransactionStatusStrings[];
 
 typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
     VENTransactionAudiencePrivate,
     VENTransactionAudienceFriends,
     VENTransactionAudiencePublic
 };
+extern NSString *const VENTransactionAudienceStrings[];
 
 extern NSString *const VENErrorDomainTransaction;
 
@@ -48,25 +51,13 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 + (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
 
 /**
- * Returns a dictionary representation of the transaction
- */
-- (NSDictionary *)dictionaryRepresentation;
-
-/**
  * Adds a target to a transaction.
  * @note If the target is invalid or a duplicate, addTarget: will return NO
  * and no target will be added to the transaction.
  * @return Returns a Boolean value indicating whether the target was successfully added.
  */
-- (NSError *)addTarget:(VENTransactionTarget *)target;
+- (BOOL)addTarget:(VENTransactionTarget *)target;
 
-/**
- * Adds multiple targets to a transaction.
- * @note If any of the targets are invalid or duplicates, addTargets: will return NO
- * and no targets will be added to the transaction.
- * @return Returns a Boolean value indicating whether the targets were successfully added.
- */
-- (NSError *)addTargets:(NSSet *)targets;
 
 /**
  * Sends a transaction.
