@@ -2,6 +2,7 @@
 #import "VENTestUtilities.h"
 #import "VENTransactionTarget.h"
 #import "VENUser.h"
+#import "VENTransactionPayloadKeys.h"
 
 @interface VENTransaction ()
 
@@ -32,15 +33,51 @@ describe(@"Initialization", ^{
     NSDictionary *paymentObject     = paymentResponse[@"data"][@"payment"];
     
     it(@"should return YES to canInitWithDictionary for a valid transaction dictionary", ^{
+        NSDictionary *validTransactionDictionary = paymentObject;
         
+        expect([VENTransaction canInitWithDictionary:validTransactionDictionary]).to.beTruthy();
     });
     
     it(@"should return NO to canInitWithDictionary for a transaction dictionary without an ID", ^{
+        NSMutableDictionary *invalidTransactionDictionary = [paymentObject mutableCopy];
+        [invalidTransactionDictionary removeObjectForKey:VENTransactionIDKey];
         
+        expect([VENTransaction canInitWithDictionary:invalidTransactionDictionary]).to.beFalsy();
     });
     
     it(@"should return NO to canInitWithDictionary for a transaction dictionary without any transaction targets", ^{
+        NSMutableDictionary *invalidTransactionDictionary = [paymentObject mutableCopy];
+        [invalidTransactionDictionary removeObjectForKey:VENTransactionTargetKey];
         
+        expect([VENTransaction canInitWithDictionary:invalidTransactionDictionary]).to.beFalsy();
+    });
+    
+    it(@"should return NO to canInitWithDictionary for a transaction dictionary without a note", ^{
+        NSMutableDictionary *invalidTransactionDictionary = [paymentObject mutableCopy];
+        [invalidTransactionDictionary removeObjectForKey:VENTransactionNoteKey];
+        
+        expect([VENTransaction canInitWithDictionary:invalidTransactionDictionary]).to.beFalsy();
+    });
+    
+    it(@"should return NO to canInitWithDictionary for a transaction dictionary without an actor", ^{
+        NSMutableDictionary *invalidTransactionDictionary = [paymentObject mutableCopy];
+        [invalidTransactionDictionary removeObjectForKey:VENTransactionActorKey];
+        
+        expect([VENTransaction canInitWithDictionary:invalidTransactionDictionary]).to.beFalsy();
+    });
+    
+    it(@"should return NO to canInitWithDictionary for a transaction dictionary without an amount", ^{
+        NSMutableDictionary *invalidTransactionDictionary = [paymentObject mutableCopy];
+        [invalidTransactionDictionary removeObjectForKey:VENTransactionAmountKey];
+        
+        expect([VENTransaction canInitWithDictionary:invalidTransactionDictionary]).to.beFalsy();
+    });
+    
+    it(@"should return NO to canInitWithDictionary when the note is NSNull", ^{
+        NSMutableDictionary *invalidTransactionDictionary = [paymentObject mutableCopy];
+        invalidTransactionDictionary[VENTransactionNoteKey] = [NSNull null];
+
+        expect([VENTransaction canInitWithDictionary:invalidTransactionDictionary]).to.beFalsy();
     });
     
     it(@"should successfully initialize a transaction from a valid transaction dictionary", ^{
@@ -55,7 +92,6 @@ describe(@"Initialization", ^{
         
         expect([transaction.targets count]).to.equal(1);
         expect(((VENTransactionTarget *)transaction.targets[0]).handle).to.equal(@"nonvenmouser@gmail.com");
-        
     });
     
     
@@ -82,6 +118,7 @@ describe(@"addTarget", ^{
         expect(error).to.equal(mockError);
     });
 });
+
 
 describe(@"addTargets", ^{
     it(@"should add a set of three valid targets to the transaction", ^{
@@ -135,6 +172,7 @@ describe(@"addTargets", ^{
     });
 });
 
+
 describe(@"containsDuplicateOfTarget", ^{
     it(@"should return YES if the transaction already has a target with the same handle", ^{
         NSString *handle = @"handle";
@@ -173,6 +211,7 @@ describe(@"containsDuplicateOfTarget", ^{
         expect(containsDuplicate).to.beFalsy();
     });
 });
+
 
 describe(@"readyToSend", ^{
     it(@"should return YES if transaction has at least one target, has a note, transactionType and status is not sent.", ^{
@@ -243,6 +282,7 @@ describe(@"readyToSend", ^{
     
 });
 
+
 describe(@"dictionaryWithParametersForTarget:", ^{
     it(@"should create a parameters dictionary for positive amounts", ^{
         NSString *emailAddress = @"dasmer@venmo.com";
@@ -304,6 +344,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         expect(postParameters).to.beNil();
     });
 });
+
 
 describe(@"Equality", ^{
     it(@"should consider two identical transactions equal", ^{

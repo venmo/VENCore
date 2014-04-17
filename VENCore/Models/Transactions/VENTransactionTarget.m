@@ -52,13 +52,34 @@
 
 
 + (BOOL)canInitWithDictionary:(NSDictionary *)dictionary {
-    NSString *targetType = dictionary[VENTransactionTargetTypeKey];
-    NSInteger amount = (NSUInteger)[dictionary[VENTransactionAmountKey] doubleValue] * (double)100;
     
-    if (!targetType || !dictionary[targetType] || !amount) {
-        return NO;
+    NSArray *requiredKeys = @[VENTransactionAmountKey, VENTransactionTargetTypeKey];
+
+    for (NSString *key in requiredKeys) {
+        if (!dictionary[key] || [dictionary[key] isKindOfClass:[NSNull class]]) {
+            return NO;
+        }
     }
 
+    NSArray *validTargetTypes = @[VENTransactionTargetPhoneKey, VENTransactionTargetEmailKey, VENTransactionTargetUserKey];
+    
+    NSString *targetType = dictionary[VENTransactionTargetTypeKey];
+    if (![validTargetTypes containsObject:targetType]) {
+        return NO;
+    }
+    
+    id amount = dictionary[VENTransactionAmountKey];
+
+    if ([amount isKindOfClass:[NSString class]] && ![amount intValue]) {
+        return NO;
+    }
+    else if ([amount respondsToSelector:@selector(doubleValue)]) {
+        amount = @([amount doubleValue] * 100.);
+    }
+    else {
+        return NO;
+    }
+    
     return YES;
 }
 

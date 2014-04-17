@@ -113,6 +113,25 @@ NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENT
 }
 
 
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary {
+    NSArray *requiredKeys = @[VENTransactionAmountKey, VENTransactionNoteKey, VENTransactionActorKey, VENTransactionIDKey, VENTransactionTargetKey];
+    for (NSString *key in requiredKeys) {
+        if (!dictionary[key] || [dictionary[key] isKindOfClass:[NSNull class]]
+            || ([dictionary[key] respondsToSelector:@selector(isEqualToString:)]
+                && [dictionary[key] isEqualToString:@""])) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (NSDictionary *)dictionaryRepresentation {
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    
+    
+    return dictionary;
+}
+
 
 - (NSOrderedSet *)targets {
     return [self.mutableTargets copy];

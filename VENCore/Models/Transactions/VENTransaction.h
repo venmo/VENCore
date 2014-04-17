@@ -38,7 +38,19 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 @property (assign, nonatomic) VENTransactionStatus status;
 @property (assign, nonatomic) VENTransactionAudience audience;
 
+/**
+ * Creates a VENTransaction from a dictionary representation
+ * @note should call canInitWithDictionary first
+ * @return Returns an instance of VENTransaction
+ */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ * Returns a dictionary representation of the transaction
+ */
+- (NSDictionary *)dictionaryRepresentation;
 
 /**
  * Adds a target to a transaction.
