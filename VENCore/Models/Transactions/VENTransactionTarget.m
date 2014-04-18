@@ -114,8 +114,9 @@
     return dictionary;
 }
 
+
 - (BOOL)isValid {
-    BOOL hasValidHandle = [self.handle isUserId] || [self.handle isUserId] || [self.handle isEmail];
+    BOOL hasValidHandle = [self.handle isUserId] || [self.handle isUSPhone] || [self.handle isEmail];
     return hasValidHandle && self.targetType != VENTargetTypeUnknown;
 }
 

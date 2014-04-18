@@ -109,7 +109,7 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
         
         if ([VENTransactionTarget canInitWithDictionary:targetDictionary]) {
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithDictionary:targetDictionary];
-            [self addTarget:target];
+            [self addTransactionTarget:target];
         }
     }
     
@@ -149,7 +149,8 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
 
 #pragma mark - Private
 
-- (BOOL)addTarget:(VENTransactionTarget *)target {
+- (BOOL)addTransactionTarget:(VENTransactionTarget *)target {
+
     if (![target isKindOfClass:[VENTransactionTarget class]]
         || ![target isValid]
         || [self containsDuplicateOfTarget:target]) {

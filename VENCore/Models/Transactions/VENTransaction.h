@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
  * and no target will be added to the transaction.
  * @return Returns a Boolean value indicating whether the target was successfully added.
  */
-- (BOOL)addTarget:(VENTransactionTarget *)target;
+- (BOOL)addTransactionTarget:(VENTransactionTarget *)target;
 
 
 /**

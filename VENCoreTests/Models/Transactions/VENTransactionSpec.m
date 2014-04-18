@@ -103,7 +103,7 @@ describe(@"addTarget", ^{
         id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
         [[[mockTarget stub] andReturnValue:@(YES)]isValid];
         VENTransaction *transaction = [[VENTransaction alloc] init];
-        BOOL addedTarget = [transaction addTarget:mockTarget];
+        BOOL addedTarget = [transaction addTransactionTarget:mockTarget];
         expect(addedTarget).to.beTruthy();
         expect([transaction.targets count]).to.equal(1);
     });
@@ -112,7 +112,7 @@ describe(@"addTarget", ^{
         id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
         [[[mockTarget stub] andReturnValue:@(NO)] isValid];
         VENTransaction *transaction = [[VENTransaction alloc] init];
-        BOOL addedTarget = [transaction addTarget:mockTarget];
+        BOOL addedTarget = [transaction addTransactionTarget:mockTarget];
         expect(addedTarget).to.beFalsy();
         expect([transaction.targets count]).to.equal(0);
     });
@@ -123,7 +123,7 @@ describe(@"addTarget", ^{
         id mockTransaction = [OCMockObject partialMockForObject:transaction];
         [[[mockTransaction stub] andReturnValue:@(YES)] containsDuplicateOfTarget:OCMOCK_ANY];
 
-        BOOL addedTarget = [mockTransaction addTarget:mockTarget];
+        BOOL addedTarget = [mockTransaction addTransactionTarget:mockTarget];
         expect(addedTarget).to.beFalsy();
         expect(((VENTransaction *)mockTransaction).targets.count).to.equal(0);
     });
@@ -236,6 +236,17 @@ describe(@"readyToSend", ^{
         ((VENTransaction *)mockTransaction).status = VENTransactionStatusPending;
         expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(NO);
     });
+
+    it(@"should return YES if status is not set", ^{
+        id object = [NSObject new];
+        NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
+        VENTransaction *transaction = [[VENTransaction alloc] init];
+        id mockTransaction = [OCMockObject partialMockForObject:transaction];
+        [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
+        ((VENTransaction *)mockTransaction).note = @"Here is 10 Bucks";
+        ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypePay;
+        expect([((VENTransaction *)mockTransaction) readyToSend]).to.equal(YES);
+    });
     
 });
 
@@ -247,7 +258,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         NSString *amount = @"200";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
         VENTransaction *transaction = [[VENTransaction alloc] init];
-        [transaction addTarget:target];
+        [transaction addTransactionTarget:target];
         transaction.note = note;
         transaction.transactionType = VENTransactionTypePay;
         transaction.audience = VENTransactionAudienceFriends;
@@ -267,7 +278,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         NSString *amount = @"200";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
         VENTransaction *transaction = [[VENTransaction alloc] init];
-        [transaction addTarget:target];
+        [transaction addTransactionTarget:target];
         transaction.note = note;
         transaction.transactionType = VENTransactionTypeCharge;
         transaction.audience = VENTransactionAudiencePrivate;
@@ -291,7 +302,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         VENTransaction *transaction = [[VENTransaction alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transaction];
         [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
-        [transaction addTarget:target];
+        [transaction addTransactionTarget:target];
         ((VENTransaction *)mockTransaction).note = note;
         ((VENTransaction *)mockTransaction).transactionType = VENTransactionTypeCharge;
         ((VENTransaction *)mockTransaction).audience = VENTransactionAudiencePrivate;
@@ -374,5 +385,35 @@ describe(@"Equality", ^{
     });
     
 });
+
+
+fdescribe(@"Sending Payments", ^{
+
+    it(@"should receive a 200 response for sending a valid payment", ^AsyncBlock {
+        VENTransaction *newTransaction = [[VENTransaction alloc] init];
+        newTransaction.note = @"Peter pays me";
+        newTransaction.transactionType = VENTransactionTypePay;
+        newTransaction.status = VENTransactionStatusNotSent;
+
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"9177436332" amount:14];
+        [newTransaction addTransactionTarget:target];
+
+        expect([newTransaction readyToSend]).to.beTruthy();
+
+        //send transaction
+        [newTransaction sendWithSuccess:^(VENTransaction *transaction, VENHTTPResponse *response) {
+
+            NSLog(@"%@", response);
+            expect(transaction).to.equal(newTransaction);
+            done();
+        } failure:
+        ^(VENHTTPResponse *response, NSError *error) {
+
+            expect(YES).to.beFalsy();
+            done();
+        }];
+    });
+
+});\
 
 SpecEnd
