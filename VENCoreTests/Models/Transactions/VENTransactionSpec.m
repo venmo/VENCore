@@ -389,48 +389,188 @@ describe(@"Equality", ^{
 });
 
 
-fdescribe(@"Sending Payments", ^{
+describe(@"Sending Payments", ^{
 
-    NSDictionary *paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
-    NSDictionary *paymentObject     = paymentResponse[@"data"][@"payment"];
+    __block NSDictionary *paymentResponse;
+    __block NSDictionary *paymentObject;
+    __block id mockVENHTTP;
+    __block VENCore *core;
+
+    void(^stubSuccessBlock)(NSInvocation *) = ^(NSInvocation *invocation) {
+        void(^successBlock)(VENHTTPResponse *);
+        [invocation getArgument:&successBlock atIndex:4];
+
+        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:200 responseObject:@{@"data":@{@"payment":paymentObject}}];
+        successBlock(response);
+    };
+
+    void(^stubFailureBlock)(NSInvocation *) = ^(NSInvocation *invocation) {
+        void(^failureBlock)(VENHTTPResponse *, NSError *);
+        [invocation getArgument:&failureBlock atIndex:5];
+
+        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:400 responseObject:nil];
+        id mockError = [OCMockObject mockForClass:[NSError class]];
+        failureBlock(response, mockError);
+    };
+
+    beforeEach(^{
+        paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
+        paymentObject     = paymentResponse[@"data"][@"payment"];
+        mockVENHTTP = [OCMockObject mockForClass:[VENHTTP class]];
+        core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        core.httpClient = mockVENHTTP;
+        [VENCore setDefaultCore:core];
+
+    });
 
     describe(@"sending a transaction with one target", ^{
-        it(@"should POST to the payments endpoint and call the success block", ^AsyncBlock {
-            id mockVENHTTP = [OCMockObject mockForClass:[VENHTTP class]];
-            VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
-            core.httpClient = mockVENHTTP;
-            [VENCore setDefaultCore:core];
-
+        it(@"should POST to the payments endpoint and call the success block when the POST succeeds", ^AsyncBlock {
             VENTransaction *transaction = [[VENTransaction alloc] init];
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
             [transaction addTransactionTarget:target];
             transaction.note = @"hi";
 
             NSDictionary *expectedParameters = [transaction dictionaryWithParametersForTarget:target];
-            [[[mockVENHTTP expect] andDo:^(NSInvocation *invocation) {
-                void(^successBlock)(VENHTTPResponse *);
-                [invocation getArgument:&successBlock atIndex:4];
-
-                VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:200 responseObject:@{@"data":@{@"payment":paymentObject}}];
-                successBlock(response);
-                done();
-            }] POST:@"payments"
+            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
              parameters:expectedParameters
              success:OCMOCK_ANY
              failure:OCMOCK_ANY];
 
             [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
                 expect([sentTransactions count]).to.equal(1);
+                done();
             } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 // The failure block shouldn't be called
                 XCTAssertFalse(YES);
             }];
         });
+
+        it(@"should POST to the payments endpoint and call the failure block when the POST fails", ^AsyncBlock {
+            VENTransaction *transaction = [[VENTransaction alloc] init];
+            VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
+            [transaction addTransactionTarget:target];
+            transaction.note = @"hi";
+
+            NSDictionary *expectedParameters = [transaction dictionaryWithParametersForTarget:target];
+            [[[mockVENHTTP expect] andDo:stubFailureBlock] POST:@"payments"
+             parameters:expectedParameters
+             success:OCMOCK_ANY
+             failure:OCMOCK_ANY];
+
+            [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+                // The success block shouldn't be called
+                XCTAssertFalse(YES);
+            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                expect([sentTransactions count]).to.equal(0);
+                expect(response).toNot.beNil();
+                expect(error).toNot.beNil();
+                done();
+            }];
+
+        });
     });
 
+    describe(@"sending a transaction with two targets",  ^{
+        it(@"should POST twice to the payments endpoint and call the success block twice when both transactions succeed", ^AsyncBlock {
+            VENTransaction *transaction = [[VENTransaction alloc] init];
+            transaction.note = @"hi";
 
-    it(@"should POST to the payments endpoint with the correct parameters for a transaction with one target", ^AsyncBlock {
+            VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
+            [transaction addTransactionTarget:target1];
+
+            VENTransactionTarget *target2 = [[VENTransactionTarget alloc] initWithHandle:@"ben@venmo.com" amount:420];
+            [transaction addTransactionTarget:target2];
+
+            NSDictionary *expectedParameters1 = [transaction dictionaryWithParametersForTarget:target1];
+            NSDictionary *expectedParameters2 = [transaction dictionaryWithParametersForTarget:target2];
+
+
+            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
+                                              parameters:expectedParameters1
+                                                 success:OCMOCK_ANY
+                                                 failure:OCMOCK_ANY];
+            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
+                                              parameters:expectedParameters2
+                                                 success:OCMOCK_ANY
+                                                 failure:OCMOCK_ANY];
+
+            [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+                expect([sentTransactions count]).to.equal(2);
+                done();
+            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                // The failure block shouldn't be called
+                XCTAssertFalse(YES);
+            }];
+        });
+
+        it(@"should call successBlock for successful payment and failureBlock for second payment which fails", ^AsyncBlock {
+            VENTransaction *transaction = [[VENTransaction alloc] init];
+            transaction.note = @"hi";
+
+            VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
+            [transaction addTransactionTarget:target1];
+
+            VENTransactionTarget *target2 = [[VENTransactionTarget alloc] initWithHandle:@"ben@venmo.com" amount:420];
+            [transaction addTransactionTarget:target2];
+
+            NSDictionary *expectedParameters1 = [transaction dictionaryWithParametersForTarget:target1];
+            NSDictionary *expectedParameters2 = [transaction dictionaryWithParametersForTarget:target2];
+
+
+            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
+                                                     parameters:expectedParameters1
+                                                        success:OCMOCK_ANY
+                                                        failure:OCMOCK_ANY];
+
+            [[[mockVENHTTP expect] andDo:stubFailureBlock] POST:@"payments"
+                                                     parameters:expectedParameters2
+                                                        success:OCMOCK_ANY
+                                                        failure:OCMOCK_ANY];
+
+            [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+                XCTAssertFalse(YES);
+            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                // The failure block shouldn't be called
+                expect([sentTransactions count]).to.equal(1);
+                done();
+            }];
+        });
+
+        it(@"should not initiate second payment if the first payment fails", ^AsyncBlock {
+
+            VENTransaction *transaction = [[VENTransaction alloc] init];
+            transaction.note = @"hi";
+
+            VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
+            [transaction addTransactionTarget:target1];
+            NSDictionary *expectedParameters1 = [transaction dictionaryWithParametersForTarget:target1];
+
+            //payment to target 2 should not be sent since the first payment fails
+            VENTransactionTarget *target2 = [[VENTransactionTarget alloc] initWithHandle:@"das@venmo.com" amount:125];
+            [transaction addTransactionTarget:target2];
+
+            [[[mockVENHTTP expect] andDo:stubFailureBlock] POST:@"payments"
+                                                     parameters:expectedParameters1
+                                                        success:OCMOCK_ANY
+                                                        failure:OCMOCK_ANY];
+
+            [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+                // The success block shouldn't be called
+                XCTAssertFalse(YES);
+            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                expect([sentTransactions count]).to.equal(0);
+                expect(response).toNot.beNil();
+                expect(error).toNot.beNil();
+                // Make sure no POSTs are made after the first one.
+                dispatch_after(3, dispatch_get_main_queue(), ^{
+                    done();
+                });
+            }];
+        });
     });
+
+    
+
 
 });
 
