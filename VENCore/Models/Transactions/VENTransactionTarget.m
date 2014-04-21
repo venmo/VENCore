@@ -6,13 +6,16 @@
 
 @implementation VENTransactionTarget
 
-- (instancetype)initWithHandle:(NSString *)phoneEmailOrUserID amount:(NSUInteger)amount {
+- (instancetype)initWithHandle:(NSString *)phoneEmailOrUserID amount:(NSInteger)amount {
+    if (amount < 0) {
+        return nil;
+    }
+
     self = [super init];
     if (self) {
         self.handle = phoneEmailOrUserID;
         self.amount = amount;
         self.targetType = [phoneEmailOrUserID targetType];
-        self.amount = amount;
     }
     return self;
 }
@@ -117,7 +120,7 @@
 
 - (BOOL)isValid {
     BOOL hasValidHandle = [self.handle isUserId] || [self.handle isUSPhone] || [self.handle isEmail];
-    return hasValidHandle && self.targetType != VENTargetTypeUnknown;
+    return hasValidHandle && self.targetType != VENTargetTypeUnknown && self.amount > 0;
 }
 
 

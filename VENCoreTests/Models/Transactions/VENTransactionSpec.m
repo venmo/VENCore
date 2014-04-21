@@ -95,8 +95,6 @@ describe(@"Initialization", ^{
         expect([transaction.targets count]).to.equal(1);
         expect(((VENTransactionTarget *)transaction.targets[0]).handle).to.equal(@"nonvenmouser@gmail.com");
     });
-    
-    
 });
 
 
@@ -389,7 +387,7 @@ describe(@"Equality", ^{
 });
 
 
-describe(@"Sending Payments", ^{
+describe(@"Sending Payments With Stubbed Responses", ^{
 
     __block NSDictionary *paymentResponse;
     __block NSDictionary *paymentObject;
@@ -568,9 +566,6 @@ describe(@"Sending Payments", ^{
             }];
         });
     });
-
-    
-
 
 });
 

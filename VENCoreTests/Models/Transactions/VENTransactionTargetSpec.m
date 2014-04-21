@@ -88,7 +88,7 @@ describe(@"initWithHandle:amount:", ^{
 });
 
 
-describe(@"isValid", ^{
+fdescribe(@"isValid", ^{
     it(@"should return YES if the target has a valid type and nonzero amount", ^{
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"ben@venmo.com" amount:653445];
         expect([target isValid]).to.equal(YES);
@@ -100,12 +100,17 @@ describe(@"isValid", ^{
     });
 
     it(@"should return NO if the target has type VENTargetTypeUnknown and zero amount", ^{
-        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"b2124" amount:01];
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"b2124" amount:0];
         expect([target isValid]).to.equal(NO);
     });
 
-    it(@"should return NO if the target has a valid type and zero amount", ^{
-        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"4104444444" amount:1];
+    it(@"should return NO if the target has a valid type but zero amount", ^{
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"4104444444" amount:0];
+        expect([target isValid]).to.equal(NO);
+    });
+
+    it(@"should return NO if the target has a negative amount" , ^{
+        VENTransactionTarget *target =[[VENTransactionTarget alloc] initWithHandle:@"9177436332" amount:-20];
         expect([target isValid]).to.equal(NO);
     });
 });

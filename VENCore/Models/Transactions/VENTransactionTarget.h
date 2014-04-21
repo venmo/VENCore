@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, VENTargetType) {
  * @param amount The amount in pennies.
  * @return A VENTransactionTarget instance
  */
-- (instancetype)initWithHandle:(NSString *)phoneEmailOrUserID amount:(NSUInteger)amount;
+- (instancetype)initWithHandle:(NSString *)phoneEmailOrUserID amount:(NSInteger)amount;
 
 /**
  * Initializes a target from a payload dictionary
