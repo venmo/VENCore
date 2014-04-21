@@ -80,4 +80,5 @@ describe(@"Shared Instances of VENCore should persist", ^{
 
 });
 
+
 SpecEnd

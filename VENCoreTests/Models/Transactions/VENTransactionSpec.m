@@ -3,6 +3,8 @@
 #import "VENTransactionTarget.h"
 #import "VENUser.h"
 #import "VENTransactionPayloadKeys.h"
+#import "VENCore.h"
+#import "VENHTTPResponse.h"
 
 @interface VENTransaction ()
 
@@ -389,31 +391,47 @@ describe(@"Equality", ^{
 
 fdescribe(@"Sending Payments", ^{
 
-    it(@"should receive a 200 response for sending a valid payment", ^AsyncBlock {
-        VENTransaction *newTransaction = [[VENTransaction alloc] init];
-        newTransaction.note = @"Peter pays me";
-        newTransaction.transactionType = VENTransactionTypePay;
-        newTransaction.status = VENTransactionStatusNotSent;
+    NSDictionary *paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
+    NSDictionary *paymentObject     = paymentResponse[@"data"][@"payment"];
 
-        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"9177436332" amount:14];
-        [newTransaction addTransactionTarget:target];
+    describe(@"sending a transaction with one target", ^{
+        it(@"should POST to the payments endpoint and call the success block", ^AsyncBlock {
+            id mockVENHTTP = [OCMockObject mockForClass:[VENHTTP class]];
+            VENCore *core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+            core.httpClient = mockVENHTTP;
+            [VENCore setDefaultCore:core];
 
-        expect([newTransaction readyToSend]).to.beTruthy();
+            VENTransaction *transaction = [[VENTransaction alloc] init];
+            VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
+            [transaction addTransactionTarget:target];
+            transaction.note = @"hi";
 
-        //send transaction
-        [newTransaction sendWithSuccess:^(VENTransaction *transaction, VENHTTPResponse *response) {
+            NSDictionary *expectedParameters = [transaction dictionaryWithParametersForTarget:target];
+            [[[mockVENHTTP expect] andDo:^(NSInvocation *invocation) {
+                void(^successBlock)(VENHTTPResponse *);
+                [invocation getArgument:&successBlock atIndex:4];
 
-            NSLog(@"%@", response);
-            expect(transaction).to.equal(newTransaction);
-            done();
-        } failure:
-        ^(VENHTTPResponse *response, NSError *error) {
+                VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:200 responseObject:@{@"data":@{@"payment":paymentObject}}];
+                successBlock(response);
+                done();
+            }] POST:@"payments"
+             parameters:expectedParameters
+             success:OCMOCK_ANY
+             failure:OCMOCK_ANY];
 
-            expect(YES).to.beFalsy();
-            done();
-        }];
+            [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+                expect([sentTransactions count]).to.equal(1);
+            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                // The failure block shouldn't be called
+                XCTAssertFalse(YES);
+            }];
+        });
     });
 
-});\
+
+    it(@"should POST to the payments endpoint with the correct parameters for a transaction with one target", ^AsyncBlock {
+    });
+
+});
 
 SpecEnd

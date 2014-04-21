@@ -61,11 +61,14 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 
 /**
  * Sends a transaction.
- * @param success TODO: fill out doc
- * @param failure
+ * @param successBlock The block called after all targets are successfully sent.
+ * @param failureBlock The block called after a target is unable to be sent.
  */
-- (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
-                failure:(void(^)(VENHTTPResponse *response, NSError *error))failure;
+- (void)sendWithSuccess:(void(^)(NSOrderedSet *sentTransactions,
+                                 VENHTTPResponse *response))successBlock
+                failure:(void(^)(NSOrderedSet *sentTransactions,
+                                 VENHTTPResponse *response,
+                                 NSError *error))failureBlock;
 
 
 /**

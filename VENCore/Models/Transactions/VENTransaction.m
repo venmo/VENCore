@@ -9,6 +9,8 @@
 #import "VENTransactionPayloadKeys.h"
 #import "VENUser.h"
 #import "VENTransactionTarget.h"
+#import "NSDictionary+VENCore.h"
+#import "VENHTTPResponse.h"
 
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 
@@ -190,19 +192,62 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
 }
 
 
-- (void)sendWithSuccess:(void(^)(VENTransaction *transaction, VENHTTPResponse *response))success
-                failure:(void(^)(VENHTTPResponse *reponse, NSError *error))failure {
-#warning Unimplemented
-    for (VENTransactionTarget *target in self.targets) {
-        NSDictionary *postParameters = [self dictionaryWithParametersForTarget:target];
-        [[VENCore defaultCore].httpClient POST:@"payments"
-                                    parameters:postParameters
-                                       success:^(VENHTTPResponse *response) {
-                                       }
-                                       failure:^(VENHTTPResponse *response, NSError *error) {
-                                       }];
-    }
+- (void)sendWithSuccess:(void(^)(NSOrderedSet *sentTransactions,
+                                 VENHTTPResponse *response))successBlock
+                failure:(void(^)(NSOrderedSet *sentTransactions,
+                                 VENHTTPResponse *response,
+                                 NSError *error))failureBlock {
+    [self sendTargets:[self.targets mutableCopy]
+     sentTransactions:nil
+          withSuccess:successBlock
+              failure:failureBlock];
 }
+
+
+- (void)sendTargets:(NSMutableOrderedSet *)targets
+   sentTransactions:(NSMutableOrderedSet *)sentTransactions
+        withSuccess:(void (^)(NSOrderedSet *sentTransactions,
+                              VENHTTPResponse *response))successBlock
+            failure:(void(^)(NSOrderedSet *sentTransactions,
+                             VENHTTPResponse *response,
+                             NSError *error))failureBlock {
+    if (!sentTransactions) {
+        sentTransactions = [[NSMutableOrderedSet alloc] init];
+    }
+
+    if ([targets count] == 0) {
+        if (successBlock) {
+            successBlock(sentTransactions, nil);
+        }
+        return;
+    }
+
+    VENTransactionTarget *target = [targets firstObject];
+    [targets removeObjectAtIndex:0];
+    NSDictionary *postParameters = [self dictionaryWithParametersForTarget:target];
+    [[VENCore defaultCore].httpClient POST:@"payments"
+                                parameters:postParameters
+                                   success:^(VENHTTPResponse *response) {
+                                       NSDictionary *data = [response.object objectOrNilForKey:@"data"];
+                                       NSDictionary *payment = [data objectOrNilForKey:@"payment"];
+                                       VENTransaction *newTransaction;
+                                       if (payment) {
+                                           newTransaction = [[VENTransaction alloc] initWithDictionary:payment];
+                                       }
+                                       [sentTransactions addObject:newTransaction];
+
+                                       [self sendTargets:targets
+                                        sentTransactions:sentTransactions
+                                             withSuccess:successBlock
+                                                 failure:failureBlock];
+                                   }
+                                   failure:^(VENHTTPResponse *response, NSError *error) {
+                                       if (failureBlock) {
+                                           failureBlock(sentTransactions, response, error);
+                                       }
+                                   }];
+}
+
 
 
 - (BOOL)readyToSend {
