@@ -13,21 +13,15 @@ NSString *const VENAPIPathUsers     = @"users";
 @interface VENHTTP ()
 
 @property (strong, nonatomic) NSString *accessToken;
-@property (strong, nonatomic, readwrite) NSString *clientID;
-@property (strong, nonatomic, readwrite) NSString *clientSecret;
 
 @end
 
 @implementation VENHTTP
 
-- (instancetype)initWithClientID:(NSString *)clientID
-                    clientSecret:(NSString *)clientSecret
-                         baseURL:(NSURL *)baseURL {
+- (instancetype)initWithBaseURL:(NSURL *)baseURL {
     self = [self init];
     if (self) {
         self.operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-        self.clientID = clientID;
-        self.clientSecret = clientSecret;
 
         // set default header fields
         [self.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

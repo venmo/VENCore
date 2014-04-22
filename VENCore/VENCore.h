@@ -29,16 +29,6 @@ NS_ENUM(NSInteger, VENCoreErrorCode) {
 
 
 /**
- * Initializes a VENCore instance with the given client id and client secret.
- * @param clientID Your client ID
- * @param clientSecret Your client secret
- * @return A VENCore object.
- */
-- (instancetype)initWithClientID:(NSString *)clientID
-                    clientSecret:(NSString *)clientSecret;
-
-
-/**
  * Sets the core object's access token.
  */
 - (void)setAccessToken:(NSString *)accessToken;

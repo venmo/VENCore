@@ -65,4 +65,11 @@
     withBody(responseFileContents);
 }
 
+
++ (NSString *)accessToken {
+    NSString *plistPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"config" ofType:@"plist"];
+    NSDictionary *config = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+    return config[@"access_token"];
+}
+
 @end

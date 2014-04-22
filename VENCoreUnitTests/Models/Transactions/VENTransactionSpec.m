@@ -415,7 +415,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
         paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
         paymentObject     = paymentResponse[@"data"][@"payment"];
         mockVENHTTP = [OCMockObject mockForClass:[VENHTTP class]];
-        core = [[VENCore alloc] initWithClientID:@"123" clientSecret:@"456"];
+        core = [[VENCore alloc] init];
         core.httpClient = mockVENHTTP;
         [VENCore setDefaultCore:core];
 

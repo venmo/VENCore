@@ -46,5 +46,10 @@
     andResponseFilePath:(NSString *)filePath;
 
 
+/**
+ * Returns the value for the key "access_token" in the bundle's config.plist
+ */
++ (NSString *)accessToken;
+
 
 @end

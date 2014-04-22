@@ -1,34 +1,29 @@
-//
-//  VENUserIntegrationSpec.m
-//  VENCore
-//
-//  Created by Ben Guo on 4/22/14.
-//  Copyright (c) 2014 Venmo. All rights reserved.
-//
+#import "VENUser.h"
+#import "VENCore.h"
 
-#import <XCTest/XCTest.h>
+SpecBegin(VENUserIntegration)
 
-@interface VENUserIntegrationSpec : XCTestCase
+NSString *plistPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"config" ofType:@"plist"];
+NSDictionary *config = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+NSString *accessToken = config[@"access_token"];
 
-@end
+beforeAll(^{
+    VENCore *core = [[VENCore alloc] init];
+    [core setAccessToken:accessToken];
+    [VENCore setDefaultCore:core];
+});
 
-@implementation VENUserIntegrationSpec
+describe(@"Fetching a user", ^{
+    it(@"should retrieve a user with a correct external id", ^AsyncBlock{
+        NSString *externalId = @"11063873587118083333"; // (Chris)
+        [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
+            expect(user.externalId).to.equal(externalId);
+            done();
+        } failure:^(NSError *error) {
+            expect(YES).to.beFalsy();
+            done();
+        }];
+    });
+});
 
-- (void)setUp
-{
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
-}
-
-@end
+SpecEnd

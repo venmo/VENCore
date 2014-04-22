@@ -49,8 +49,7 @@ void(^assertUsersAreFieldwiseEqual)(VENUser *, VENUser *) = ^(VENUser *user1, VE
 
 beforeAll(^{
     
-    VENCore *core = [[VENCore alloc] initWithClientID:@"1689" clientSecret:@"Skf89msmXN2JptRuTBR9RhuvAjPMsa5v"];
-    [core setAccessToken:@"XGun8xtBZLufGCZdW558UKqQETmB48Ys"];
+    VENCore *core = [[VENCore alloc] init];
     [VENCore setDefaultCore:core];
     
     [[LSNocilla sharedInstance] start];
@@ -184,18 +183,6 @@ describe(@"Dictionary Representation", ^{
 
 
 describe(@"Fetching a User", ^{
-    xit(@"should retrieve a user with a correct external id", ^AsyncBlock{
-        
-        NSString *externalId = @"11063873587118083333";
-        [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
-            expect(user.externalId).to.equal(externalId);
-            done();
-        } failure:^(NSError *error) {
-            expect(YES).to.beFalsy();
-            done();
-        }];
-    });
-    
     it(@"should retrieve a pre-canned Chris user and create a valid user", ^AsyncBlock{
         
         NSString *externalId = @"1106387358711808333";

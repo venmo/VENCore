@@ -14,13 +14,9 @@ extern NSString *const VENAPIPathUsers;
 
 @interface VENHTTP : NSObject
 
-@property (strong, nonatomic, readonly) NSString *clientID;
-@property (strong, nonatomic, readonly) NSString *clientSecret;
 @property (strong, nonatomic) AFHTTPRequestOperationManager *operationManager;
 
-- (instancetype)initWithClientID:(NSString *)clientID
-                    clientSecret:(NSString *)clientSecret
-                         baseURL:(NSURL *)baseURL;
+- (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void(^)(VENHTTPResponse *response))successBlock
