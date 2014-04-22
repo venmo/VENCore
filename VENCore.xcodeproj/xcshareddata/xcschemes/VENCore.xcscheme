@@ -38,6 +38,16 @@
                ReferencedContainer = "container:VENCore.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EB00DB331906E647001836A8"
+               BuildableName = "VENCoreIntegrationTests.xctest"
+               BlueprintName = "VENCoreIntegrationTests"
+               ReferencedContainer = "container:VENCore.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
