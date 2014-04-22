@@ -109,16 +109,16 @@
 		EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponse.m; path = Networking/VENHTTPResponse.m; sourceTree = "<group>"; };
 		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; };
 		EBBE7E0C18EA022300E47338 /* VENHTTPResponseSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponseSpec.m; path = Networking/VENHTTPResponseSpec.m; sourceTree = "<group>"; };
-		EBBE7E1818EA2D7600E47338 /* VENCoreTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VENCoreTests-Prefix.pch"; sourceTree = "<group>"; };
+		EBBE7E1818EA2D7600E47338 /* VENCoreUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VENCoreUnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		EBCB247418E9FBAF00807472 /* libVENCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVENCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBCB247718E9FBAF00807472 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EBCB247B18E9FBAF00807472 /* VENCore-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VENCore-Prefix.pch"; sourceTree = "<group>"; };
 		EBCB247C18E9FBAF00807472 /* VENCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENCore.h; sourceTree = "<group>"; };
 		EBCB247E18E9FBAF00807472 /* VENCore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENCore.m; sourceTree = "<group>"; };
-		EBCB248418E9FBAF00807472 /* VENCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VENCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBCB248418E9FBAF00807472 /* VENCoreUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VENCoreUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBCB248518E9FBAF00807472 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		EBCB248818E9FBAF00807472 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		EBCB248F18E9FBAF00807472 /* VENCoreTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VENCoreTests-Info.plist"; sourceTree = "<group>"; };
+		EBCB248F18E9FBAF00807472 /* VENCoreUnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VENCoreUnitTests-Info.plist"; sourceTree = "<group>"; };
 		EBCB249118E9FBAF00807472 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EBCB249318E9FBAF00807472 /* VENCoreSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENCoreSpec.m; sourceTree = "<group>"; };
 		EBF84D2818EA5ADE00C0E077 /* NSError+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+VENCore.h"; path = "Categories/NSError+VENCore.h"; sourceTree = "<group>"; };
@@ -303,7 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				EBCB247918E9FBAF00807472 /* VENCore */,
-				EBCB248D18E9FBAF00807472 /* VENCoreTests */,
+				EBCB248D18E9FBAF00807472 /* VENCoreUnitTests */,
 				EBCB247618E9FBAF00807472 /* Frameworks */,
 				EBCB247518E9FBAF00807472 /* Products */,
 				2D4B23F080634FA9923FF691 /* Pods-VENCoreTests.xcconfig */,
@@ -315,7 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				EBCB247418E9FBAF00807472 /* libVENCore.a */,
-				EBCB248418E9FBAF00807472 /* VENCoreTests.xctest */,
+				EBCB248418E9FBAF00807472 /* VENCoreUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,7 +354,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EBCB248D18E9FBAF00807472 /* VENCoreTests */ = {
+		EBCB248D18E9FBAF00807472 /* VENCoreUnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				EB427E5118F8447D0070EDD9 /* API */,
@@ -365,15 +365,15 @@
 				EBCB249318E9FBAF00807472 /* VENCoreSpec.m */,
 				EBCB248E18E9FBAF00807472 /* Supporting Files */,
 			);
-			path = VENCoreTests;
+			path = VENCoreUnitTests;
 			sourceTree = "<group>";
 		};
 		EBCB248E18E9FBAF00807472 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EBCB248F18E9FBAF00807472 /* VENCoreTests-Info.plist */,
+				EBCB248F18E9FBAF00807472 /* VENCoreUnitTests-Info.plist */,
 				EBCB249018E9FBAF00807472 /* InfoPlist.strings */,
-				EBBE7E1818EA2D7600E47338 /* VENCoreTests-Prefix.pch */,
+				EBBE7E1818EA2D7600E47338 /* VENCoreUnitTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -415,9 +415,9 @@
 			productReference = EBCB247418E9FBAF00807472 /* libVENCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		EBCB248318E9FBAF00807472 /* VENCoreTests */ = {
+		EBCB248318E9FBAF00807472 /* VENCoreUnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EBCB249A18E9FBAF00807472 /* Build configuration list for PBXNativeTarget "VENCoreTests" */;
+			buildConfigurationList = EBCB249A18E9FBAF00807472 /* Build configuration list for PBXNativeTarget "VENCoreUnitTests" */;
 			buildPhases = (
 				C3A68FF6659A4FC19DA48CB5 /* Check Pods Manifest.lock */,
 				EBCB248018E9FBAF00807472 /* Sources */,
@@ -430,9 +430,9 @@
 			dependencies = (
 				EBCB248B18E9FBAF00807472 /* PBXTargetDependency */,
 			);
-			name = VENCoreTests;
+			name = VENCoreUnitTests;
 			productName = VENCoreTests;
-			productReference = EBCB248418E9FBAF00807472 /* VENCoreTests.xctest */;
+			productReference = EBCB248418E9FBAF00807472 /* VENCoreUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -457,7 +457,7 @@
 			projectRoot = "";
 			targets = (
 				EBCB247318E9FBAF00807472 /* VENCore */,
-				EBCB248318E9FBAF00807472 /* VENCoreTests */,
+				EBCB248318E9FBAF00807472 /* VENCoreUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -717,12 +717,12 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "VENCoreTests/VENCoreTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "VENCoreUnitTests/VENCoreUnitTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "VENCoreTests/VENCoreTests-Info.plist";
+				INFOPLIST_FILE = "VENCoreUnitTests/VENCoreUnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -738,8 +738,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "VENCoreTests/VENCoreTests-Prefix.pch";
-				INFOPLIST_FILE = "VENCoreTests/VENCoreTests-Info.plist";
+				GCC_PREFIX_HEADER = "VENCoreUnitTests/VENCoreUnitTests-Prefix.pch";
+				INFOPLIST_FILE = "VENCoreUnitTests/VENCoreUnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -766,7 +766,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EBCB249A18E9FBAF00807472 /* Build configuration list for PBXNativeTarget "VENCoreTests" */ = {
+		EBCB249A18E9FBAF00807472 /* Build configuration list for PBXNativeTarget "VENCoreUnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBCB249B18E9FBAF00807472 /* Debug */,
