@@ -15,7 +15,8 @@ extern NSString *const VENTransactionTypeStrings[];
 typedef NS_ENUM(NSUInteger, VENTransactionStatus) {
     VENTransactionStatusNotSent,
     VENTransactionStatusPending,
-    VENTransactionStatusSettled
+    VENTransactionStatusSettled,
+    VENTransactionStatusFailed
 };
 extern NSString *const VENTransactionStatusStrings[];
 

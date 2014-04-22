@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
-
-@class VENUser;
+#import "VENUser.h"
 
 typedef NS_ENUM(NSUInteger, VENTargetType) {
     VENTargetTypeUnknown,

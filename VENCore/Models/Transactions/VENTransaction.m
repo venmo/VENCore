@@ -15,7 +15,7 @@
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 
 NSString *const VENTransactionTypeStrings[] = {@"unknown", @"pay", @"charge"};
-NSString *const VENTransactionStatusStrings[] = {@"not_sent", @"pending", @"settled"};
+NSString *const VENTransactionStatusStrings[] = {@"not_sent", @"pending", @"settled", @"failed"};
 NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"public"};
 
 @interface VENTransaction ()
@@ -74,8 +74,10 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
         else if ([transactionStatus isEqualToString:VENTransactionStatusStrings[VENTransactionStatusSettled]]) {
             self.status = VENTransactionStatusSettled;
         }
-        #warning make sure that dictionary representation respects this
-        else if ([transactionStatus isEqualToString:VENTransactionStatusStrings[VENTransactionStatusNotSent]]) {
+        else if ([transactionStatus isEqualToString:VENTransactionStatusStrings[VENTransactionStatusFailed]]) {
+            self.status = VENTransactionStatusFailed;
+        }
+        else {
             self.status = VENTransactionStatusNotSent;
         }
         

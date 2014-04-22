@@ -12,14 +12,60 @@ beforeAll(^{
 });
 
 describe(@"Settled Payment", ^{
-    fit(@"should make a successful payment to a user", ^AsyncBlock{
-        VENTransaction *transaction = [[VENTransaction alloc] init];
-        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"145434160922624933" amount:10];
-        transaction.note = @"A message to accompany the payment.";
+
+    NSUInteger amount = 10;
+    NSString *note = @"A message to accompany the payment.";
+    __block VENTransaction *transaction;
+
+    beforeEach(^{
+        transaction = [[VENTransaction alloc] init];
+    });
+
+    it(@"should make a successful payment to a user id", ^AsyncBlock{
+        NSString *handle = @"145434160922624933";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
         [transaction addTransactionTarget:target];
 
         [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+    it(@"should make a successful payment to an email", ^AsyncBlock{
+        NSString *handle = @"venmo@venmo.com";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
+
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);           
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+
+    it(@"should make a successful payment to a phone number", ^AsyncBlock{
+        NSString *handle = @"15555555555";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
+
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
@@ -29,30 +75,134 @@ describe(@"Settled Payment", ^{
 });
 
 describe(@"Failed Payment", ^{
-    it(@"should make a failed payment to a user", ^{
 
+    NSUInteger amount = 20;
+    NSString *note = @"A message to accompany the payment.";
+    __block VENTransaction *transaction;
+
+    beforeEach(^{
+        transaction = [[VENTransaction alloc] init];
+    });
+
+    it(@"should make a failed payment to an email", ^AsyncBlock{
+        NSString *handle = @"venmo@venmo.com";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
+
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusFailed);
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];
     });
 });
 
 describe(@"Pending Payment", ^{
-    it(@"should make a pending payment to an email", ^{
+
+    NSUInteger amount = 30;
+    NSString *note = @"A message to accompany the payment.";
+    __block VENTransaction *transaction;
+
+    beforeEach(^{
+        transaction = [[VENTransaction alloc] init];
+    });
+
+    it(@"should make a pending payment to an email", ^AsyncBlock{
+        NSString *handle = @"foo@venmo.com";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
+
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];
 
     });
 
-    it(@"should make a pending payment to a phone", ^{
+    it(@"should make a pending payment to a new phone", ^AsyncBlock{
+        NSString *handle = @"5555555556";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
 
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];       
     });
 });
 
 describe(@"Settled Charge", ^{
-    it(@"should make a settled charge to a trusted friend", ^{
 
+    NSUInteger amount = 10;
+    NSString *note = @"A message to accompany the payment.";
+    __block VENTransaction *transaction;
+
+    beforeEach(^{
+        transaction = [[VENTransaction alloc] init];
+        transaction.transactionType = VENTransactionTypeCharge;
+    });
+
+    it(@"should make a settled charge to a trusted email", ^AsyncBlock{
+        NSString *handle = @"venmo@venmo.com";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
+
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];
     });
 });
 
 describe(@"Pending Charge", ^{
-    it(@"should make a pending charge to a non-trusted friend", ^{
 
+    NSUInteger amount = 20;
+    NSString *note = @"A message to accompany the payment.";
+    __block VENTransaction *transaction;
+
+    beforeEach(^{
+        transaction = [[VENTransaction alloc] init];
+        transaction.transactionType = VENTransactionTypeCharge;
+    });
+
+    it(@"should make a pending charge to a non-trusted friend", ^AsyncBlock{
+        NSString *handle = @"venmo@venmo.com";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
+        transaction.note = note;
+        [transaction addTransactionTarget:target];
+
+        [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            expect(sentTransactions.count).to.equal(1);
+            VENTransaction *sentTransaction = [sentTransactions firstObject];
+            expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
+            done();
+        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            XCTFail();
+            done();
+        }];       
     });
 });
 
