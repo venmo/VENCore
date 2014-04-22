@@ -5,5 +5,5 @@ Pods/
 build/
 xcuserdata
 *.xccheckout
-VENCoreTests/Sandbox.m
+VENCoreIntegrationTests/config.plist
 
