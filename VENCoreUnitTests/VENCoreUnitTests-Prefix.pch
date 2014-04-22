@@ -13,3 +13,5 @@
 #import <OCHamcrest/OCHamcrest.h>
 
 #import <Nocilla/Nocilla.h>
+
+#import "VENTestUtilities.h"

@@ -12,12 +12,6 @@ static VENCore *sharedInstance = nil;
 
 static NSString *const VENAPIBaseURL = @"https://api.venmo.com/v1";
 
-@interface VENCore ()
-
-@property (strong, nonatomic) NSString *accessToken;
-
-@end
-
 @implementation VENCore
 
 #pragma mark - Private

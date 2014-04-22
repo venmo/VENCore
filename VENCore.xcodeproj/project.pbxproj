@@ -22,6 +22,9 @@
 		EB00DB3D1906E647001836A8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB00DB3B1906E647001836A8 /* InfoPlist.strings */; };
 		EB00DB3F1906E647001836A8 /* PaymentSandboxSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DB3E1906E647001836A8 /* PaymentSandboxSpec.m */; };
 		EB10A52D18F7295B007F2119 /* libVENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libVENCore.a */; };
+		EB34431319071EA200B7791E /* paymentToUser.json in Resources */ = {isa = PBXBuildFile; fileRef = EB34431219071EA200B7791E /* paymentToUser.json */; };
+		EB34AA901906FDD600663ECF /* libVENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libVENCore.a */; };
+		EB34AA911907006F00663ECF /* VENTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */; };
 		EB418B9A18EB0DD20003CBF5 /* NSError+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9918EB0DD20003CBF5 /* NSError+VENCoreSpec.m */; };
 		EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */; };
 		EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */; };
@@ -106,6 +109,7 @@
 		EB00DB3C1906E647001836A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EB00DB3E1906E647001836A8 /* PaymentSandboxSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentSandboxSpec.m; sourceTree = "<group>"; };
 		EB00DB401906E647001836A8 /* VENCoreIntegrationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VENCoreIntegrationTests-Prefix.pch"; sourceTree = "<group>"; };
+		EB34431219071EA200B7791E /* paymentToUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = paymentToUser.json; path = API/payments/paymentToUser.json; sourceTree = "<group>"; };
 		EB418B9618EB0DA30003CBF5 /* VENTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionSpec.m; sourceTree = "<group>"; };
 		EB418B9918EB0DD20003CBF5 /* NSError+VENCoreSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+VENCoreSpec.m"; path = "Categories/NSError+VENCoreSpec.m"; sourceTree = "<group>"; };
 		EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+VENCore.h"; path = "Categories/NSDictionary+VENCore.h"; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB34AA901906FDD600663ECF /* libVENCore.a in Frameworks */,
 				EB00DB351906E647001836A8 /* XCTest.framework in Frameworks */,
 				EB00DB371906E647001836A8 /* UIKit.framework in Frameworks */,
 				EB00DB361906E647001836A8 /* Foundation.framework in Frameworks */,
@@ -319,6 +324,7 @@
 		EBA57C4E18FC360600D39D0F /* payments */ = {
 			isa = PBXGroup;
 			children = (
+				EB34431219071EA200B7791E /* paymentToUser.json */,
 				EB427E5218F844910070EDD9 /* paymentToEmail.json */,
 			);
 			name = payments;
@@ -564,6 +570,7 @@
 			files = (
 				EBA57C5418FC362000D39D0F /* invalidAmountError.json in Resources */,
 				EBA57C5318FC362000D39D0F /* invalidAccessTokenError.json in Resources */,
+				EB34431319071EA200B7791E /* paymentToUser.json in Resources */,
 				4796A38718FDD4C6005CABA6 /* fetchInvalidUser.json in Resources */,
 				EB427E5318F844910070EDD9 /* paymentToEmail.json in Resources */,
 				EBCB249218E9FBAF00807472 /* InfoPlist.strings in Resources */,
@@ -672,6 +679,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB34AA911907006F00663ECF /* VENTestUtilities.m in Sources */,
 				EB6A5ADA1906FC44003C067E /* VENUserIntegrationSpec.m in Sources */,
 				EB00DB3F1906E647001836A8 /* PaymentSandboxSpec.m in Sources */,
 			);

@@ -34,4 +34,12 @@
               recoverySuggestion:NSLocalizedString(@"Use setDefaultCore to set the default VENCore instance.", nil)];
 }
 
+
++ (instancetype)noAccessTokenError {
+    return [self errorWithDomain:VENErrorDomainCore
+                            code:VENCoreErrorCodeNoAccessToken
+                     description:NSLocalizedString(@"No access token", nil)
+              recoverySuggestion:NSLocalizedString(@"Set the default core's access token.", nil)];
+}
+
 @end

@@ -109,9 +109,9 @@
                 break;
         }
     }
-    
+
     if (self.amount) {
-        dictionary[VENTransactionAmountKey] = @((double)self.amount / (double)100);
+        dictionary[VENTransactionAmountKey] = @((CGFloat)self.amount/100.);
     }
     
     return dictionary;

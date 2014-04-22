@@ -5,7 +5,8 @@
 NSString *const VENErrorDomainCore;
 
 NS_ENUM(NSInteger, VENCoreErrorCode) {
-    VENCoreErrorCodeNoDefaultCore
+    VENCoreErrorCodeNoDefaultCore,
+    VENCoreErrorCodeNoAccessToken
 };
 
 @class VENTransaction, VENUser;
@@ -13,6 +14,7 @@ NS_ENUM(NSInteger, VENCoreErrorCode) {
 @interface VENCore : NSObject
 
 @property (strong, nonatomic) VENHTTP *httpClient;
+@property (strong, nonatomic) NSString *accessToken;
 
 /**
  * Sets the shared core object.

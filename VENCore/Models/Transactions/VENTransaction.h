@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
-@class VENMutableTransaction, VENUser, VENHTTPResponse, VENTransactionTarget;
+#import "VENTransactionTarget.h"
+
+@class VENMutableTransaction, VENUser, VENHTTPResponse;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypeUnknown,

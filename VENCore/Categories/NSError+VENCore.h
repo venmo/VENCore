@@ -24,4 +24,11 @@
  */
 + (instancetype)noDefaultCoreError;
 
+
+/**
+ * Returns an error indicating that the default VENCore instance
+ * doesn't have an access token.
+ */
++ (instancetype)noAccessTokenError;
+
 @end

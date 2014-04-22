@@ -265,7 +265,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         transaction.status = VENTransactionStatusNotSent;
         NSDictionary *expectedPostParameters = @{@"email": emailAddress,
                                                  @"note": note,
-                                                 @"amount" : amount,
+                                                 @"amount" : @"2.00",
                                                  @"audience" : @"friends"};
         NSDictionary *postParameters = [transaction dictionaryWithParametersForTarget:target];
         expect(postParameters).to.equal(expectedPostParameters);
@@ -285,7 +285,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         transaction.status = VENTransactionStatusNotSent;
         NSDictionary *expectedPostParameters = @{@"email": emailAddress,
                                                  @"note": note,
-                                                 @"amount" : @"-200",
+                                                 @"amount" : @"-2.00",
                                                  @"audience" : @"private"};
         NSDictionary *postParameters = [transaction dictionaryWithParametersForTarget:target];
         expect(postParameters).to.equal(expectedPostParameters);
@@ -389,16 +389,24 @@ describe(@"Equality", ^{
 
 describe(@"Sending Payments With Stubbed Responses", ^{
 
-    __block NSDictionary *paymentResponse;
-    __block NSDictionary *paymentObject;
+    __block NSDictionary *emailPaymentObject;
+    __block NSDictionary *userPaymentObject;
     __block id mockVENHTTP;
     __block VENCore *core;
 
-    void(^stubSuccessBlock)(NSInvocation *) = ^(NSInvocation *invocation) {
+    void(^stubSuccessBlockEmail)(NSInvocation *) = ^(NSInvocation *invocation) {
         void(^successBlock)(VENHTTPResponse *);
         [invocation getArgument:&successBlock atIndex:4];
 
-        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:200 responseObject:@{@"data":@{@"payment":paymentObject}}];
+        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:200 responseObject:@{@"data":@{@"payment":emailPaymentObject}}];
+        successBlock(response);
+    };
+
+    void(^stubSuccessBlockPhone)(NSInvocation *) = ^(NSInvocation *invocation) {
+        void(^successBlock)(VENHTTPResponse *);
+        [invocation getArgument:&successBlock atIndex:4];
+
+        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithStatusCode:200 responseObject:@{@"data":@{@"payment":userPaymentObject}}];
         successBlock(response);
     };
 
@@ -411,12 +419,23 @@ describe(@"Sending Payments With Stubbed Responses", ^{
         failureBlock(response, mockError);
     };
 
+    NSDictionary *(^expectedParameters)(VENTransaction *transaction, VENTransactionTarget *target) =
+    ^(VENTransaction *transaction, VENTransactionTarget *target) {
+        NSMutableDictionary *expectedParams = [[transaction dictionaryWithParametersForTarget:target] mutableCopy];
+        NSDictionary *accessTokenParams = @{@"access_token" : core.accessToken};
+        [expectedParams addEntriesFromDictionary:accessTokenParams];
+        return expectedParams;
+    };
+
     beforeEach(^{
-        paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
-        paymentObject     = paymentResponse[@"data"][@"payment"];
-        mockVENHTTP = [OCMockObject mockForClass:[VENHTTP class]];
+        NSDictionary *emailPaymentResponse = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
+        emailPaymentObject = emailPaymentResponse[@"data"][@"payment"];
+        NSDictionary *userPaymentResponse = [VENTestUtilities objectFromJSONResource:@"paymentToUser"];
+        userPaymentObject = userPaymentResponse[@"data"][@"payment"];
+        mockVENHTTP = [OCMockObject niceMockForClass:[VENHTTP class]];
         core = [[VENCore alloc] init];
         core.httpClient = mockVENHTTP;
+        [core setAccessToken:@"123"];
         [VENCore setDefaultCore:core];
 
     });
@@ -428,9 +447,9 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             [transaction addTransactionTarget:target];
             transaction.note = @"hi";
 
-            NSDictionary *expectedParameters = [transaction dictionaryWithParametersForTarget:target];
-            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
-             parameters:expectedParameters
+            NSDictionary *expectedParams = expectedParameters(transaction, target);
+            [[[mockVENHTTP expect] andDo:stubSuccessBlockEmail] POST:@"payments"
+             parameters:expectedParams
              success:OCMOCK_ANY
              failure:OCMOCK_ANY];
 
@@ -438,8 +457,8 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                 expect([sentTransactions count]).to.equal(1);
                 done();
             } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                // The failure block shouldn't be called
-                XCTAssertFalse(YES);
+                XCTFail();
+                done();
             }];
         });
 
@@ -449,15 +468,15 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             [transaction addTransactionTarget:target];
             transaction.note = @"hi";
 
-            NSDictionary *expectedParameters = [transaction dictionaryWithParametersForTarget:target];
+            NSDictionary *expectedParams = expectedParameters(transaction, target);
             [[[mockVENHTTP expect] andDo:stubFailureBlock] POST:@"payments"
-             parameters:expectedParameters
+             parameters:expectedParams
              success:OCMOCK_ANY
              failure:OCMOCK_ANY];
 
             [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
-                // The success block shouldn't be called
-                XCTAssertFalse(YES);
+                XCTFail();
+                done();
             } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 expect([sentTransactions count]).to.equal(0);
                 expect(response).toNot.beNil();
@@ -469,7 +488,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
     });
 
     describe(@"sending a transaction with two targets",  ^{
-        it(@"should POST twice to the payments endpoint and call the success block twice when both transactions succeed", ^AsyncBlock {
+        fit(@"should POST twice to the payments endpoint and call the success block twice when both transactions succeed", ^AsyncBlock {
             VENTransaction *transaction = [[VENTransaction alloc] init];
             transaction.note = @"hi";
 
@@ -479,15 +498,14 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             VENTransactionTarget *target2 = [[VENTransactionTarget alloc] initWithHandle:@"ben@venmo.com" amount:420];
             [transaction addTransactionTarget:target2];
 
-            NSDictionary *expectedParameters1 = [transaction dictionaryWithParametersForTarget:target1];
-            NSDictionary *expectedParameters2 = [transaction dictionaryWithParametersForTarget:target2];
+            NSDictionary *expectedParameters1 = expectedParameters(transaction, target1);
+            NSDictionary *expectedParameters2 = expectedParameters(transaction, target2);
 
-
-            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
+            [[[mockVENHTTP expect] andDo:stubSuccessBlockEmail] POST:@"payments"
                                               parameters:expectedParameters1
                                                  success:OCMOCK_ANY
                                                  failure:OCMOCK_ANY];
-            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
+            [[[mockVENHTTP expect] andDo:stubSuccessBlockPhone] POST:@"payments"
                                               parameters:expectedParameters2
                                                  success:OCMOCK_ANY
                                                  failure:OCMOCK_ANY];
@@ -496,8 +514,8 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                 expect([sentTransactions count]).to.equal(2);
                 done();
             } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                // The failure block shouldn't be called
-                XCTAssertFalse(YES);
+                XCTFail();
+                done();
             }];
         });
 
@@ -511,11 +529,10 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             VENTransactionTarget *target2 = [[VENTransactionTarget alloc] initWithHandle:@"ben@venmo.com" amount:420];
             [transaction addTransactionTarget:target2];
 
-            NSDictionary *expectedParameters1 = [transaction dictionaryWithParametersForTarget:target1];
-            NSDictionary *expectedParameters2 = [transaction dictionaryWithParametersForTarget:target2];
+            NSDictionary *expectedParameters1 = expectedParameters(transaction, target1);
+            NSDictionary *expectedParameters2 = expectedParameters(transaction, target2);
 
-
-            [[[mockVENHTTP expect] andDo:stubSuccessBlock] POST:@"payments"
+            [[[mockVENHTTP expect] andDo:stubSuccessBlockEmail] POST:@"payments"
                                                      parameters:expectedParameters1
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
@@ -526,7 +543,8 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         failure:OCMOCK_ANY];
 
             [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
-                XCTAssertFalse(YES);
+                XCTFail();
+                done();
             } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 // The failure block shouldn't be called
                 expect([sentTransactions count]).to.equal(1);
@@ -541,7 +559,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
 
             VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
             [transaction addTransactionTarget:target1];
-            NSDictionary *expectedParameters1 = [transaction dictionaryWithParametersForTarget:target1];
+            NSDictionary *expectedParameters1 = expectedParameters(transaction, target1);
 
             //payment to target 2 should not be sent since the first payment fails
             VENTransactionTarget *target2 = [[VENTransactionTarget alloc] initWithHandle:@"das@venmo.com" amount:125];
@@ -553,8 +571,8 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         failure:OCMOCK_ANY];
 
             [transaction sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
-                // The success block shouldn't be called
-                XCTAssertFalse(YES);
+                XCTFail();
+                done();
             } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 expect([sentTransactions count]).to.equal(0);
                 expect(response).toNot.beNil();

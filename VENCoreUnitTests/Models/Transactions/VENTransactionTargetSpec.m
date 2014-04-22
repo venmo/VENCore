@@ -88,7 +88,7 @@ describe(@"initWithHandle:amount:", ^{
 });
 
 
-fdescribe(@"isValid", ^{
+describe(@"isValid", ^{
     it(@"should return YES if the target has a valid type and nonzero amount", ^{
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"ben@venmo.com" amount:653445];
         expect([target isValid]).to.equal(YES);

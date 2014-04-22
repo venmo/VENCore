@@ -14,6 +14,7 @@ end
 
 target 'VENCoreIntegrationTests', :exclusive => true do
   pod 'Expecta'
+  pod 'Nocilla'
   pod 'OCMock'
   pod 'OCHamcrest'
   pod 'Specta'

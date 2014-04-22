@@ -15,12 +15,12 @@ beforeAll(^{
 
 describe(@"Fetching a user", ^{
     it(@"should retrieve a user with a correct external id", ^AsyncBlock{
-        NSString *externalId = @"11063873587118083333"; // (Chris)
+        NSString *externalId = @"1062502213353472181"; // (Ben)
         [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
             expect(user.externalId).to.equal(externalId);
             done();
         } failure:^(NSError *error) {
-            expect(YES).to.beFalsy();
+            XCTFail();
             done();
         }];
     });

@@ -224,8 +224,14 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
 
     VENTransactionTarget *target = [targets firstObject];
     [targets removeObjectAtIndex:0];
-    NSDictionary *postParameters = [self dictionaryWithParametersForTarget:target];
-    [[VENCore defaultCore].httpClient POST:@"payments"
+    NSString *accessToken = [VENCore defaultCore].accessToken;
+    if (!accessToken) {
+        failureBlock([NSOrderedSet new], nil, [NSError noAccessTokenError]);
+        return;
+    }
+    NSMutableDictionary *postParameters = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token" : accessToken}];
+    [postParameters addEntriesFromDictionary:[self dictionaryWithParametersForTarget:target]];
+    [[VENCore defaultCore].httpClient POST:VENAPIPathPayments
                                 parameters:postParameters
                                    success:^(VENHTTPResponse *response) {
                                        NSDictionary *data = [response.object objectOrNilForKey:@"data"];
@@ -301,7 +307,8 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
             audienceString = @"private";
             break;
     }
-    amountString = [NSString stringWithFormat:@"%d", target.amount];
+    CGFloat dollarAmount = (CGFloat)target.amount/100.;
+    amountString = [NSString stringWithFormat:@"%.2f", dollarAmount];
     if (self.transactionType == VENTransactionTypeCharge) {
         amountString = [@"-" stringByAppendingString:amountString];
     }
