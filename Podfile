@@ -4,9 +4,16 @@ target 'VENCore', :exclusive => true do
   pod 'AFNetworking'
 end
 
-target 'VENCoreTests', :exclusive => true do
+target 'VENCoreUnitTests', :exclusive => true do
   pod 'Expecta'
   pod 'Nocilla'
+  pod 'OCMock'
+  pod 'OCHamcrest'
+  pod 'Specta'
+end
+
+target 'VENCoreIntegrationTests', :exclusive => true do
+  pod 'Expecta'
   pod 'OCMock'
   pod 'OCHamcrest'
   pod 'Specta'
