@@ -5,9 +5,9 @@
 #import "VENTransactionPayloadKeys.h"
 #import "VENCore.h"
 #import "VENHTTPResponse.h"
-#import "VENTransactionService.h"
+#import "VENCreateTransactionRequest.h"
 
-@interface VENTransactionService (Private)
+@interface VENCreateTransactionRequest (Private)
 
 @property (strong, nonatomic) NSMutableOrderedSet *mutableTargets;
 
@@ -17,7 +17,7 @@
 
 @end
 
-SpecBegin(VENTransactionService)
+SpecBegin(VENCreateTransactionRequest)
 
 describe(@"Sending Payments With Stubbed Responses", ^{
 
@@ -51,8 +51,8 @@ describe(@"Sending Payments With Stubbed Responses", ^{
         failureBlock(response, mockError);
     };
 
-    NSDictionary *(^expectedParameters)(VENTransactionService *transactionService, VENTransactionTarget *target) =
-    ^(VENTransactionService *transactionService, VENTransactionTarget *target) {
+    NSDictionary *(^expectedParameters)(VENCreateTransactionRequest *transactionService, VENTransactionTarget *target) =
+    ^(VENCreateTransactionRequest *transactionService, VENTransactionTarget *target) {
         NSMutableDictionary *expectedParams = [[transactionService dictionaryWithParametersForTarget:target] mutableCopy];
         NSDictionary *accessTokenParams = @{@"access_token" : core.accessToken};
         [expectedParams addEntriesFromDictionary:accessTokenParams];
@@ -74,7 +74,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
 
     describe(@"sending a transaction with one target", ^{
         it(@"should POST to the payments endpoint and call the success block when the POST succeeds", ^AsyncBlock {
-            VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+            VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
             [transactionService addTransactionTarget:target];
             transactionService.note = @"hi";
@@ -95,7 +95,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
         });
 
         it(@"should POST to the payments endpoint and call the failure block when the POST fails", ^AsyncBlock {
-            VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+            VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
             [transactionService addTransactionTarget:target];
             transactionService.note = @"hi";
@@ -121,7 +121,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
 
     describe(@"sending a transaction with two targets",  ^{
         it(@"should POST twice to the payments endpoint and call the success block twice when both transactions succeed", ^AsyncBlock {
-            VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+            VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             transactionService.note = @"hi";
 
             VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
@@ -152,7 +152,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
         });
 
         it(@"should call successBlock for successful payment and failureBlock for second payment which fails", ^AsyncBlock {
-            VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+            VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             transactionService.note = @"hi";
 
             VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
@@ -186,7 +186,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
 
         it(@"should not initiate second payment if the first payment fails", ^AsyncBlock {
 
-            VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+            VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             transactionService.note = @"hi";
 
             VENTransactionTarget *target1 = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
@@ -223,7 +223,7 @@ describe(@"addTarget", ^{
     it(@"it should add a valid target", ^{
         id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
         [[[mockTarget stub] andReturnValue:@(YES)]isValid];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         BOOL addedTarget = [transactionService addTransactionTarget:mockTarget];
         expect(addedTarget).to.beTruthy();
         expect([transactionService.targets count]).to.equal(1);
@@ -232,7 +232,7 @@ describe(@"addTarget", ^{
     it(@"it should not add a invalid target", ^{
         id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
         [[[mockTarget stub] andReturnValue:@(NO)] isValid];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         BOOL addedTarget = [transactionService addTransactionTarget:mockTarget];
         expect(addedTarget).to.beFalsy();
         expect([transactionService.targets count]).to.equal(0);
@@ -240,13 +240,13 @@ describe(@"addTarget", ^{
 
     it(@"it should not add duplicate targets", ^{
         id mockTarget = [OCMockObject niceMockForClass:[VENTransactionTarget class]];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         [[[mockTransaction stub] andReturnValue:@(YES)] containsDuplicateOfTarget:OCMOCK_ANY];
 
         BOOL addedTarget = [mockTransaction addTransactionTarget:mockTarget];
         expect(addedTarget).to.beFalsy();
-        expect(((VENTransactionService *)mockTransaction).targets.count).to.equal(0);
+        expect(((VENCreateTransactionRequest *)mockTransaction).targets.count).to.equal(0);
     });
 });
 
@@ -255,16 +255,16 @@ describe(@"readyToSend", ^{
     it(@"should return YES if transaction has at least one target, has a note, transactionType and status is not sent.", ^{
         id object = [NSObject new];
         NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
-        ((VENTransactionService *)mockTransaction).note = @"Here is 10 Bucks";
-        ((VENTransactionService *)mockTransaction).transactionType = VENTransactionTypePay;
-        expect([((VENTransactionService *)mockTransaction) readyToSend]).to.equal(YES);
+        ((VENCreateTransactionRequest *)mockTransaction).note = @"Here is 10 Bucks";
+        ((VENCreateTransactionRequest *)mockTransaction).transactionType = VENTransactionTypePay;
+        expect([((VENCreateTransactionRequest *)mockTransaction) readyToSend]).to.equal(YES);
     });
 
     it(@"should return NO if there are 0 targets", ^{
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         transactionService.note = @"Here is 10 Bucks";
         transactionService.transactionType = VENTransactionTypePay;
         expect([transactionService readyToSend]).to.equal(NO);
@@ -273,21 +273,21 @@ describe(@"readyToSend", ^{
     it(@"should return NO if transaction has no note", ^{
         id object = [NSObject new];
         NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
-        ((VENTransactionService *)mockTransaction).transactionType = VENTransactionTypePay;
-        expect([((VENTransactionService *)mockTransaction) readyToSend]).to.equal(NO);
+        ((VENCreateTransactionRequest *)mockTransaction).transactionType = VENTransactionTypePay;
+        expect([((VENCreateTransactionRequest *)mockTransaction) readyToSend]).to.equal(NO);
     });
 
     it(@"should return NO if transactionType has not been set", ^{
         id object = [NSObject new];
         NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:object];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
-        ((VENTransactionService *)mockTransaction).note = @"Here is 10 Bucks";
-        expect([((VENTransactionService *)mockTransaction) readyToSend]).to.equal(NO);
+        ((VENCreateTransactionRequest *)mockTransaction).note = @"Here is 10 Bucks";
+        expect([((VENCreateTransactionRequest *)mockTransaction) readyToSend]).to.equal(NO);
     });
 
 });
@@ -299,7 +299,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         NSString *note = @"Here is two bucks";
         NSString *amount = @"200";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         [transactionService addTransactionTarget:target];
         transactionService.note = note;
         transactionService.transactionType = VENTransactionTypePay;
@@ -318,7 +318,7 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         NSString *note = @"I want your two bucks";
         NSString *amount = @"200";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         [transactionService addTransactionTarget:target];
         transactionService.note = note;
         transactionService.transactionType = VENTransactionTypeCharge;
@@ -339,14 +339,14 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         NSString *amount = @"200";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
         NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithObject:target];
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         [[[mockTransaction stub] andReturn:orderedSet] mutableTargets];
         [transactionService addTransactionTarget:target];
-        ((VENTransactionService *)mockTransaction).note = note;
-        ((VENTransactionService *)mockTransaction).transactionType = VENTransactionTypeCharge;
-        ((VENTransactionService *)mockTransaction).audience = VENTransactionAudiencePrivate;
-        NSDictionary *postParameters = [((VENTransactionService *)mockTransaction) dictionaryWithParametersForTarget:target];
+        ((VENCreateTransactionRequest *)mockTransaction).note = note;
+        ((VENCreateTransactionRequest *)mockTransaction).transactionType = VENTransactionTypeCharge;
+        ((VENCreateTransactionRequest *)mockTransaction).audience = VENTransactionAudiencePrivate;
+        NSDictionary *postParameters = [((VENCreateTransactionRequest *)mockTransaction) dictionaryWithParametersForTarget:target];
         expect(target.targetType).equal(VENTargetTypeUnknown);
         expect(postParameters).to.beNil();
     });
@@ -361,7 +361,7 @@ describe(@"containsDuplicateOfTarget", ^{
         id mockTarget2 = [OCMockObject mockForClass:[VENTransactionTarget class]];
         [[[mockTarget2 stub] andReturn:@"bla"] handle];
 
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         NSMutableOrderedSet *targetSet = [[NSMutableOrderedSet alloc] initWithArray:@[mockTarget2, mockTarget1]];
         [[[mockTransaction stub] andReturn:targetSet] targets];
@@ -379,7 +379,7 @@ describe(@"containsDuplicateOfTarget", ^{
         id mockTarget2 = [OCMockObject mockForClass:[VENTransactionTarget class]];
         [[[mockTarget2 stub] andReturn:@"bar"] handle];
 
-        VENTransactionService *transactionService = [[VENTransactionService alloc] init];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
         id mockTransaction = [OCMockObject partialMockForObject:transactionService];
         NSMutableOrderedSet *targetSet = [[NSMutableOrderedSet alloc] initWithArray:@[mockTarget2, mockTarget1]];
         [[[mockTransaction stub] andReturn:targetSet] targets];

@@ -1,18 +1,18 @@
-#import "VENTransactionService.h"
+#import "VENCreateTransactionRequest.h"
 #import "VENCore.h"
 #import "VENHTTPResponse.h"
 #import "VENTransactionPayloadKeys.h"
 #import "NSDictionary+VENCore.h"
 #import "NSString+VENCore.h"
 
-@interface VENTransactionService ()
+@interface VENCreateTransactionRequest ()
 
 @property (nonatomic, strong) NSMutableOrderedSet *mutableTargets;
 
 @end
 
 
-@implementation VENTransactionService
+@implementation VENCreateTransactionRequest
 
 - (id)init {
     self = [super init];

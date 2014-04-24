@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "VENTransaction.h"
 
-@interface VENTransactionService : NSObject
+@interface VENCreateTransactionRequest : NSObject
 
 @property (strong, nonatomic, readonly) NSOrderedSet *targets;
 @property (strong, nonatomic) NSString *note;

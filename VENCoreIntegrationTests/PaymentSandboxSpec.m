@@ -1,5 +1,5 @@
 #import "VENCore.h"
-#import "VENTransactionService.h"
+#import "VENCreateTransactionRequest.h"
 
 SpecBegin(PaymentSandbox)
 
@@ -15,10 +15,10 @@ describe(@"Settled Payment", ^{
 
     NSUInteger amount = 10;
     NSString *note = @"A message to accompany the payment.";
-    __block VENTransactionService *transactionService;
+    __block VENCreateTransactionRequest *transactionService;
 
     beforeEach(^{
-        transactionService = [[VENTransactionService alloc] init];
+        transactionService = [[VENCreateTransactionRequest alloc] init];
     });
 
     it(@"should make a successful payment to a user id", ^AsyncBlock{
@@ -78,10 +78,10 @@ describe(@"Failed Payment", ^{
 
     NSUInteger amount = 20;
     NSString *note = @"A message to accompany the payment.";
-    __block VENTransactionService *transactionService;
+    __block VENCreateTransactionRequest *transactionService;
 
     beforeEach(^{
-        transactionService = [[VENTransactionService alloc] init];
+        transactionService = [[VENCreateTransactionRequest alloc] init];
     });
 
     it(@"should make a failed payment to an email", ^AsyncBlock{
@@ -106,10 +106,10 @@ describe(@"Pending Payment", ^{
 
     NSUInteger amount = 30;
     NSString *note = @"A message to accompany the payment.";
-    __block VENTransactionService *transactionService;
+    __block VENCreateTransactionRequest *transactionService;
 
     beforeEach(^{
-        transactionService = [[VENTransactionService alloc] init];
+        transactionService = [[VENCreateTransactionRequest alloc] init];
     });
 
     it(@"should make a pending payment to an email", ^AsyncBlock{
@@ -152,20 +152,20 @@ describe(@"Settled Charge", ^{
 
     NSUInteger amount = 10;
     NSString *note = @"A message to accompany the payment.";
-    __block VENTransactionService *transactionService;
+    __block VENCreateTransactionRequest *transactionRequest;
 
     beforeEach(^{
-        transactionService = [[VENTransaction alloc] init];
-        transactionService.transactionType = VENTransactionTypeCharge;
+        transactionRequest = [[VENCreateTransactionRequest alloc] init];
+        transactionRequest.transactionType = VENTransactionTypeCharge;
     });
 
     it(@"should make a settled charge to a trusted email", ^AsyncBlock{
         NSString *handle = @"venmo@venmo.com";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
-        transactionService.note = note;
-        [transactionService addTransactionTarget:target];
+        transactionRequest.note = note;
+        [transactionRequest addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+        [transactionRequest sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
@@ -181,20 +181,20 @@ describe(@"Pending Charge", ^{
 
     NSUInteger amount = 20;
     NSString *note = @"A message to accompany the payment.";
-    __block VENTransactionService *transactionService;
+    __block VENCreateTransactionRequest *transactionRequest;
 
     beforeEach(^{
-        transactionService = [[VENTransactionService alloc] init];
-        transactionService.transactionType = VENTransactionTypeCharge;
+        transactionRequest = [[VENCreateTransactionRequest alloc] init];
+        transactionRequest.transactionType = VENTransactionTypeCharge;
     });
 
     it(@"should make a pending charge to a non-trusted friend", ^AsyncBlock{
         NSString *handle = @"venmo@venmo.com";
         VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:handle amount:amount];
-        transactionService.note = note;
-        [transactionService addTransactionTarget:target];
+        transactionRequest.note = note;
+        [transactionRequest addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+        [transactionRequest sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
