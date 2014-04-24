@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AE56FF0190871DF0054B7EF /* VENTransactionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE56FEF190871DF0054B7EF /* VENTransactionService.m */; };
 		3DED53F413AA485586839756 /* libPods-VENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DC461A27E94407698BE1D38 /* libPods-VENCore.a */; };
 		4796A38718FDD4C6005CABA6 /* fetchInvalidUser.json in Resources */ = {isa = PBXBuildFile; fileRef = 4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */; };
 		4796D62118FC4B6D001461B1 /* VENTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */; };
@@ -88,6 +89,8 @@
 /* Begin PBXFileReference section */
 		1DC461A27E94407698BE1D38 /* libPods-VENCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25B6CD691E644507A1045E0D /* libPods-VENCoreIntegrationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreIntegrationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AE56FEE190871DF0054B7EF /* VENTransactionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionService.h; sourceTree = "<group>"; };
+		3AE56FEF190871DF0054B7EF /* VENTransactionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionService.m; sourceTree = "<group>"; };
 		47136D3A18FF001F00AD63CD /* VENTransactionPayloadKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionPayloadKeys.h; sourceTree = "<group>"; };
 		4779F161125042D590B452A8 /* libPods-VENCoreUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fetchInvalidUser.json; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 		C24E595018F84C67009670F7 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				3AE56FEE190871DF0054B7EF /* VENTransactionService.h */,
+				3AE56FEF190871DF0054B7EF /* VENTransactionService.m */,
 				C24E595318F84C67009670F7 /* VENTransaction.h */,
 				C24E595418F84C67009670F7 /* VENTransaction.m */,
 				EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */,
@@ -698,6 +703,7 @@
 				EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */,
 				EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */,
 				EBB8E3C118FDDB6300A22C6B /* NSString+VENCore.m in Sources */,
+				3AE56FF0190871DF0054B7EF /* VENTransactionService.m in Sources */,
 				EBB8E3B118FD86AB00A22C6B /* VENTransactionTarget.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

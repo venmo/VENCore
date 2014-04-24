@@ -20,7 +20,13 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
 
 @interface VENTransaction ()
 
-@property (strong, nonatomic) NSMutableOrderedSet *mutableTargets;
+@property (copy, nonatomic, readwrite) NSString *transactionID;
+@property (strong, nonatomic, readwrite) NSMutableOrderedSet *mutableTargets;
+@property (copy, nonatomic, readwrite) NSString *note;
+@property (copy, nonatomic, readwrite) VENUser *actor;
+@property (assign, nonatomic, readwrite) VENTransactionType transactionType;
+@property (assign, nonatomic, readwrite) VENTransactionStatus status;
+@property (assign, nonatomic, readwrite) VENTransactionAudience audience;
 
 @end
 

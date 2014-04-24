@@ -36,13 +36,13 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 
 @interface VENTransaction : NSObject
 
-@property (copy, nonatomic) NSString *transactionID;
+@property (copy, nonatomic, readonly) NSString *transactionID;
 @property (strong, nonatomic, readonly) NSOrderedSet *targets;
-@property (copy, nonatomic) NSString *note;
-@property (copy, nonatomic) VENUser *actor;
-@property (assign, nonatomic) VENTransactionType transactionType;
-@property (assign, nonatomic) VENTransactionStatus status;
-@property (assign, nonatomic) VENTransactionAudience audience;
+@property (copy, nonatomic, readonly) NSString *note;
+@property (copy, nonatomic, readonly) VENUser *actor;
+@property (assign, nonatomic, readonly) VENTransactionType transactionType;
+@property (assign, nonatomic, readonly) VENTransactionStatus status;
+@property (assign, nonatomic, readonly) VENTransactionAudience audience;
 
 /**
  * Creates a VENTransaction from a dictionary representation
