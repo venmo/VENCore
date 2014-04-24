@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3AE56FF0190871DF0054B7EF /* VENTransactionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE56FEF190871DF0054B7EF /* VENTransactionService.m */; };
+		3AE56FF21908A0610054B7EF /* VENTransactionServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE56FF11908A0610054B7EF /* VENTransactionServiceSpec.m */; };
 		3DED53F413AA485586839756 /* libPods-VENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DC461A27E94407698BE1D38 /* libPods-VENCore.a */; };
 		4796A38718FDD4C6005CABA6 /* fetchInvalidUser.json in Resources */ = {isa = PBXBuildFile; fileRef = 4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */; };
 		4796D62118FC4B6D001461B1 /* VENTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */; };
@@ -31,7 +32,6 @@
 		EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */; };
 		EB427E5318F844910070EDD9 /* paymentToEmail.json in Resources */ = {isa = PBXBuildFile; fileRef = EB427E5218F844910070EDD9 /* paymentToEmail.json */; };
 		EB427E5918F8451B0070EDD9 /* VENTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */; };
-		EB6A5AD81906F3D2003C067E /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB6A5AD71906F3D2003C067E /* config.plist */; };
 		EB6A5ADA1906FC44003C067E /* VENUserIntegrationSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6A5AD91906FC44003C067E /* VENUserIntegrationSpec.m */; };
 		EB74B2BF18E9FD7B00838A9D /* VENHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */; };
 		EBA57C5318FC362000D39D0F /* invalidAccessTokenError.json in Resources */ = {isa = PBXBuildFile; fileRef = EBA57C5018FC362000D39D0F /* invalidAccessTokenError.json */; };
@@ -91,6 +91,7 @@
 		25B6CD691E644507A1045E0D /* libPods-VENCoreIntegrationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreIntegrationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE56FEE190871DF0054B7EF /* VENTransactionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionService.h; sourceTree = "<group>"; };
 		3AE56FEF190871DF0054B7EF /* VENTransactionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionService.m; sourceTree = "<group>"; };
+		3AE56FF11908A0610054B7EF /* VENTransactionServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionServiceSpec.m; sourceTree = "<group>"; };
 		47136D3A18FF001F00AD63CD /* VENTransactionPayloadKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionPayloadKeys.h; sourceTree = "<group>"; };
 		4779F161125042D590B452A8 /* libPods-VENCoreUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fetchInvalidUser.json; sourceTree = "<group>"; };
@@ -122,7 +123,6 @@
 		EB427E5618F8451B0070EDD9 /* VENTestUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTestUtilities.h; path = Utilities/VENTestUtilities.h; sourceTree = "<group>"; };
 		EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENTestUtilities.m; path = Utilities/VENTestUtilities.m; sourceTree = "<group>"; };
 		EB58F97C18F75B25008A6914 /* VENMutableTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableTransactionSpec.m; sourceTree = "<group>"; };
-		EB6A5AD71906F3D2003C067E /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		EB6A5AD91906FC44003C067E /* VENUserIntegrationSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserIntegrationSpec.m; sourceTree = "<group>"; };
 		EB74B2BD18E9FD7B00838A9D /* VENHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTP.h; path = Networking/VENHTTP.h; sourceTree = "<group>"; };
 		EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTP.m; path = Networking/VENHTTP.m; sourceTree = "<group>"; };
@@ -207,8 +207,9 @@
 		4796D61A18FC4B6D001461B1 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
-				4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */,
 				EBB8E3B218FDA4BB00A22C6B /* VENTransactionTargetSpec.m */,
+				4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */,
+				3AE56FF11908A0610054B7EF /* VENTransactionServiceSpec.m */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -280,7 +281,6 @@
 				EB00DB3A1906E647001836A8 /* VENCoreIntegrationTests-Info.plist */,
 				EB00DB3B1906E647001836A8 /* InfoPlist.strings */,
 				EB00DB401906E647001836A8 /* VENCoreIntegrationTests-Prefix.pch */,
-				EB6A5AD71906F3D2003C067E /* config.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -564,7 +564,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB6A5AD81906F3D2003C067E /* config.plist in Resources */,
 				EB00DB3D1906E647001836A8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -719,6 +718,7 @@
 				4796D62318FC4B6D001461B1 /* VENUserSpec.m in Sources */,
 				EBBE7E0D18EA022300E47338 /* VENHTTPResponseSpec.m in Sources */,
 				EB427E5918F8451B0070EDD9 /* VENTestUtilities.m in Sources */,
+				3AE56FF21908A0610054B7EF /* VENTransactionServiceSpec.m in Sources */,
 				EBB8E3BE18FDB05400A22C6B /* NSString+VENCoreSpec.m in Sources */,
 				EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */,
 				EB418B9A18EB0DD20003CBF5 /* NSError+VENCoreSpec.m in Sources */,

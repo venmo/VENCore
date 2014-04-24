@@ -6,6 +6,43 @@
 
 @implementation VENTransactionTarget
 
+#pragma mark - Class Methods
+
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary {
+
+    NSArray *requiredKeys = @[VENTransactionAmountKey, VENTransactionTargetTypeKey];
+
+    for (NSString *key in requiredKeys) {
+        if (!dictionary[key] || [dictionary[key] isKindOfClass:[NSNull class]]) {
+            return NO;
+        }
+    }
+
+    NSArray *validTargetTypes = @[VENTransactionTargetPhoneKey, VENTransactionTargetEmailKey, VENTransactionTargetUserKey];
+
+    NSString *targetType = dictionary[VENTransactionTargetTypeKey];
+    if (![validTargetTypes containsObject:targetType]) {
+        return NO;
+    }
+
+    id amount = dictionary[VENTransactionAmountKey];
+
+    if ([amount isKindOfClass:[NSString class]] && ![amount intValue]) {
+        return NO;
+    }
+    else if ([amount respondsToSelector:@selector(doubleValue)]) {
+        amount = @([amount doubleValue] * 100.);
+    }
+    else {
+        return NO;
+    }
+
+    return YES;
+}
+
+
+#pragma mark - Public Instance Methods
+
 - (instancetype)initWithHandle:(NSString *)phoneEmailOrUserID amount:(NSInteger)amount {
     if (amount < 0) {
         return nil;
@@ -54,39 +91,6 @@
 }
 
 
-+ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary {
-    
-    NSArray *requiredKeys = @[VENTransactionAmountKey, VENTransactionTargetTypeKey];
-
-    for (NSString *key in requiredKeys) {
-        if (!dictionary[key] || [dictionary[key] isKindOfClass:[NSNull class]]) {
-            return NO;
-        }
-    }
-
-    NSArray *validTargetTypes = @[VENTransactionTargetPhoneKey, VENTransactionTargetEmailKey, VENTransactionTargetUserKey];
-    
-    NSString *targetType = dictionary[VENTransactionTargetTypeKey];
-    if (![validTargetTypes containsObject:targetType]) {
-        return NO;
-    }
-    
-    id amount = dictionary[VENTransactionAmountKey];
-
-    if ([amount isKindOfClass:[NSString class]] && ![amount intValue]) {
-        return NO;
-    }
-    else if ([amount respondsToSelector:@selector(doubleValue)]) {
-        amount = @([amount doubleValue] * 100.);
-    }
-    else {
-        return NO;
-    }
-    
-    return YES;
-}
-
-
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     if (self.handle) {
@@ -124,6 +128,8 @@
 }
 
 
+#pragma mark - Other Methods
+
 - (void)setUser:(VENUser *)user {
     _user = user;
     self.handle = user.externalId;
@@ -147,6 +153,5 @@
     
     return YES;
 }
-
 
 @end

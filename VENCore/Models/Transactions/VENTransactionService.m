@@ -1,9 +1,35 @@
 #import "VENTransactionService.h"
 #import "VENCore.h"
 #import "VENHTTPResponse.h"
+#import "VENTransactionPayloadKeys.h"
 #import "NSDictionary+VENCore.h"
+#import "NSString+VENCore.h"
+
+@interface VENTransactionService ()
+
+@property (nonatomic, strong) NSMutableOrderedSet *mutableTargets;
+
+@end
+
 
 @implementation VENTransactionService
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.mutableTargets = [[NSMutableOrderedSet alloc] init];
+    }
+    return self;
+}
+
+- (BOOL)readyToSend {
+    if (![self.mutableTargets count] ||
+        ![self.note hasContent] ||
+        self.transactionType == VENTransactionTypeUnknown) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)sendWithSuccess:(void(^)(NSOrderedSet *sentTransactions,
                                  VENHTTPResponse *response))successBlock
@@ -67,6 +93,26 @@
                                    }];
 }
 
+
+- (BOOL)addTransactionTarget:(VENTransactionTarget *)target {
+
+    if (![target isKindOfClass:[VENTransactionTarget class]]
+        || ![target isValid]
+        || [self containsDuplicateOfTarget:target]) {
+        return NO;
+    }
+
+    [self.mutableTargets addObject:target];
+    return YES;
+}
+
+
+#pragma mark - Other Methods
+
+- (NSOrderedSet *)targets {
+   return [self.mutableTargets copy];
+}
+
 - (NSDictionary *)dictionaryWithParametersForTarget:(VENTransactionTarget *)target {
     NSString *recipientTypeKey;
     NSString *audienceString;
@@ -109,5 +155,15 @@
     return parameters;
 }
 
+
+- (BOOL)containsDuplicateOfTarget:(VENTransactionTarget *)target {
+    NSString *handle = target.handle;
+    for (VENTransactionTarget *currentTarget in self.targets) {
+        if ([handle isEqualToString:currentTarget.handle]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end

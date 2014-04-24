@@ -15,6 +15,11 @@ typedef NS_ENUM(NSUInteger, VENTargetType) {
 @property (assign, nonatomic) NSUInteger amount;
 @property (copy, nonatomic) VENUser *user;
 
+/**
+ * Determines whether the passed NSDictionary can construct a valid TransactionTarget
+ */
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
+
 
 /**
  * Initializes a target with the given handle.
@@ -24,12 +29,14 @@ typedef NS_ENUM(NSUInteger, VENTargetType) {
  */
 - (instancetype)initWithHandle:(NSString *)phoneEmailOrUserID amount:(NSInteger)amount;
 
+
 /**
  * Initializes a target from a payload dictionary
  * @param dictionary A dictionary supplied in a payload
  * @return A VENTransactionTarget instance
  */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 
 /**
  * Returns YES if the target is valid.
@@ -41,12 +48,6 @@ typedef NS_ENUM(NSUInteger, VENTargetType) {
  * Sets the target's user object and sets the target's handle to the user's external ID.
  */
 - (void)setUser:(VENUser *)user;
-
-
-/** 
- * Determines whether the passed NSDictionary can construct a valid TransactionTarget
- */
-+ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
 
 
 /**
