@@ -36,13 +36,15 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
 
 @interface VENTransaction : NSObject
 
-@property (copy, nonatomic) NSString *transactionID;
-@property (strong, nonatomic, readonly) NSOrderedSet *targets;
-@property (copy, nonatomic) NSString *note;
-@property (copy, nonatomic) VENUser *actor;
-@property (assign, nonatomic) VENTransactionType transactionType;
-@property (assign, nonatomic) VENTransactionStatus status;
-@property (assign, nonatomic) VENTransactionAudience audience;
+@property (copy, nonatomic, readonly) NSString *transactionID;
+@property (strong, nonatomic, readonly) VENTransactionTarget *target;
+@property (copy, nonatomic, readonly) NSString *note;
+@property (copy, nonatomic, readonly) VENUser *actor;
+@property (assign, nonatomic, readonly) VENTransactionType transactionType;
+@property (assign, nonatomic, readonly) VENTransactionStatus status;
+@property (assign, nonatomic, readonly) VENTransactionAudience audience;
+
++ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
 
 /**
  * Creates a VENTransaction from a dictionary representation
@@ -50,33 +52,5 @@ typedef NS_ENUM(NSUInteger, VENErrorCodeTransaction) {
  * @return Returns an instance of VENTransaction
  */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-
-+ (BOOL)canInitWithDictionary:(NSDictionary *)dictionary;
-
-/**
- * Adds a target to a transaction.
- * @note If the target is invalid or a duplicate, addTarget: will return NO
- * and no target will be added to the transaction.
- * @return Returns a Boolean value indicating whether the target was successfully added.
- */
-- (BOOL)addTransactionTarget:(VENTransactionTarget *)target;
-
-
-/**
- * Sends a transaction.
- * @param successBlock The block called after all targets are successfully sent.
- * @param failureBlock The block called after a target is unable to be sent.
- */
-- (void)sendWithSuccess:(void(^)(NSOrderedSet *sentTransactions,
-                                 VENHTTPResponse *response))successBlock
-                failure:(void(^)(NSOrderedSet *sentTransactions,
-                                 VENHTTPResponse *response,
-                                 NSError *error))failureBlock;
-
-
-/**
- * Indicates whether the transaction is valid and ready to post to the service
- */
-- (BOOL)readyToSend;
 
 @end
