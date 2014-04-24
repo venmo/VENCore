@@ -31,9 +31,9 @@
     return YES;
 }
 
-- (void)sendWithSuccess:(void(^)(NSOrderedSet *sentTransactions,
+- (void)sendWithSuccess:(void(^)(NSArray *sentTransactions,
                                  VENHTTPResponse *response))successBlock
-                failure:(void(^)(NSOrderedSet *sentTransactions,
+                failure:(void(^)(NSArray *sentTransactions,
                                  VENHTTPResponse *response,
                                  NSError *error))failureBlock {
     [self sendTargets:[self.targets mutableCopy]
@@ -44,14 +44,14 @@
 
 
 - (void)sendTargets:(NSMutableOrderedSet *)targets
-   sentTransactions:(NSMutableOrderedSet *)sentTransactions
-        withSuccess:(void (^)(NSOrderedSet *sentTransactions,
+   sentTransactions:(NSMutableArray *)sentTransactions
+        withSuccess:(void (^)(NSArray *sentTransactions,
                               VENHTTPResponse *response))successBlock
-            failure:(void(^)(NSOrderedSet *sentTransactions,
+            failure:(void(^)(NSArray *sentTransactions,
                              VENHTTPResponse *response,
                              NSError *error))failureBlock {
     if (!sentTransactions) {
-        sentTransactions = [[NSMutableOrderedSet alloc] init];
+        sentTransactions = [[NSMutableArray alloc] init];
     }
 
     if ([targets count] == 0) {
@@ -65,7 +65,7 @@
     [targets removeObjectAtIndex:0];
     NSString *accessToken = [VENCore defaultCore].accessToken;
     if (!accessToken) {
-        failureBlock([NSOrderedSet new], nil, [NSError noAccessTokenError]);
+        failureBlock(nil, nil, [NSError noAccessTokenError]);
         return;
     }
     NSMutableDictionary *postParameters = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token" : accessToken}];

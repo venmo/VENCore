@@ -27,12 +27,12 @@ describe(@"Settled Payment", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];
@@ -44,12 +44,12 @@ describe(@"Settled Payment", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);           
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];
@@ -62,12 +62,12 @@ describe(@"Settled Payment", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];
@@ -90,12 +90,12 @@ describe(@"Failed Payment", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusFailed);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];
@@ -118,12 +118,12 @@ describe(@"Pending Payment", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];
@@ -136,12 +136,12 @@ describe(@"Pending Payment", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];       
@@ -165,12 +165,12 @@ describe(@"Settled Charge", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];
@@ -194,12 +194,12 @@ describe(@"Pending Charge", ^{
         transactionService.note = note;
         [transactionService addTransactionTarget:target];
 
-        [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+        [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
             expect(sentTransactions.count).to.equal(1);
             VENTransaction *sentTransaction = [sentTransactions firstObject];
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
-        } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+        } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
             XCTFail();
             done();
         }];       

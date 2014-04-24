@@ -20,7 +20,7 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
 @interface VENTransaction ()
 
 @property (copy, nonatomic, readwrite) NSString *transactionID;
-@property (strong, nonatomic, readwrite) NSOrderedSet *targets;
+@property (strong, nonatomic, readwrite) VENTransactionTarget *target;
 @property (copy, nonatomic, readwrite) NSString *note;
 @property (copy, nonatomic, readwrite) VENUser *actor;
 @property (assign, nonatomic, readwrite) VENTransactionType transactionType;
@@ -124,7 +124,7 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
         }
         if ([VENTransactionTarget canInitWithDictionary:targetDictionary]) {
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithDictionary:targetDictionary];
-            self.targets = [NSOrderedSet orderedSetWithObject:target];
+            self.target = target;
         }
     }
     return self;

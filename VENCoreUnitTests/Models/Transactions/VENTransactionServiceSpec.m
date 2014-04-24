@@ -85,10 +85,10 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                              success:OCMOCK_ANY
                                                              failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
                 expect([sentTransactions count]).to.equal(1);
                 done();
-            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 XCTFail();
                 done();
             }];
@@ -106,10 +106,10 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
                 XCTFail();
                 done();
-            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 expect([sentTransactions count]).to.equal(0);
                 expect(response).toNot.beNil();
                 expect(error).toNot.beNil();
@@ -142,10 +142,10 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                              success:OCMOCK_ANY
                                                              failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
                 expect([sentTransactions count]).to.equal(2);
                 done();
-            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 XCTFail();
                 done();
             }];
@@ -174,10 +174,10 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
                 XCTFail();
                 done();
-            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 // The failure block shouldn't be called
                 expect([sentTransactions count]).to.equal(1);
                 done();
@@ -202,10 +202,10 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
             
-            [transactionService sendWithSuccess:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response) {
+            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
                 XCTFail();
                 done();
-            } failure:^(NSOrderedSet *sentTransactions, VENHTTPResponse *response, NSError *error) {
+            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                 expect([sentTransactions count]).to.equal(0);
                 expect(response).toNot.beNil();
                 expect(error).toNot.beNil();

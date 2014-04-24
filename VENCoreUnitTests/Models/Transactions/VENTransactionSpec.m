@@ -16,17 +16,6 @@
 
 SpecBegin(VENTransaction)
 
-void(^assertTransactionsAreFieldwiseEqual)(VENTransaction *, VENTransaction *) = ^(VENTransaction *tx1, VENTransaction *tx2) {
-    expect(tx1.transactionID).to.equal(tx2.transactionID);
-    expect(tx1.targets).to.equal(tx2.targets);
-    expect(tx1.note).to.equal(tx2.note);
-    expect(tx1.actor).to.equal(tx2.actor);
-    expect(tx1.transactionType).to.equal(tx2.transactionType);
-    expect(tx1.status).to.equal(tx2.status);
-    expect(tx1.audience).to.equal(tx2.audience);
-};
-
-
 describe(@"Initialization", ^{
 
     NSDictionary *paymentResponse   = [VENTestUtilities objectFromJSONResource:@"paymentToEmail"];
@@ -89,9 +78,7 @@ describe(@"Initialization", ^{
         expect(transaction.transactionType).to.equal(VENTransactionTypePay);
         expect(transaction.status).to.equal(VENTransactionStatusPending);
         expect(transaction.audience).to.equal(VENTransactionAudiencePublic);
-        
-        expect([transaction.targets count]).to.equal(1);
-        expect(((VENTransactionTarget *)transaction.targets[0]).handle).to.equal(@"nonvenmouser@gmail.com");
+        expect(((VENTransactionTarget *)transaction.target).handle).to.equal(@"nonvenmouser@gmail.com");
     });
 });
 
