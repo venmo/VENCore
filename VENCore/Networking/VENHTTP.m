@@ -4,6 +4,7 @@
 #import <AFNetworking/AFHTTPRequestOperation.h>
 @import AdSupport;
 
+#import "NSError+VENCore.h"
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
