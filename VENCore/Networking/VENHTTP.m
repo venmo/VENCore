@@ -6,6 +6,8 @@
 
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
+#import "NSError+VENCore.h"
+
 
 NSString *const VENAPIPathPayments  = @"payments";
 NSString *const VENAPIPathUsers     = @"users";
