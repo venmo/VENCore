@@ -1,6 +1,14 @@
 #import <Foundation/Foundation.h>
-#import "NSError+VENCore.h"
+#import "VENCore.h"
 #import "VENHTTP.h"
+#import "VENHTTPResponse.h"
+#import "VENUser.h"
+#import "VENUserPayloadKeys.h"
+#import "VENTransactionPayloadKeys.h"
+#import "VENTransactionTarget.h"
+#import "NSError+VENCore.h"
+#import "NSDictionary+VENCore.h"
+#import "NSString+VENCore.h"
 
 NSString *const VENErrorDomainCore;
 

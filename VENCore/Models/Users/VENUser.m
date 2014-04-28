@@ -1,16 +1,5 @@
 #import "VENUser.h"
-#import "VENHTTP.h"
 #import "VENCore.h"
-#import "NSDictionary+VENCore.h"
-#import "VENUserPayloadKeys.h"
-#import "VENHTTPResponse.h"
-
-@interface VENUser ()
-
-@property (nonatomic, copy, readwrite) NSString *internalId;
-@property (nonatomic, copy, readwrite) NSString *externalId;
-
-@end
 
 @implementation VENUser
 

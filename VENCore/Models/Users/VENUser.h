@@ -19,8 +19,8 @@ typedef void(^VENUserFetchFailureBlock)(NSError *error);
 @property (copy, nonatomic) NSString *profileImageUrl;
 @property (copy, nonatomic) NSString *primaryPhone;
 @property (copy, nonatomic) NSString *primaryEmail;
-@property (copy, nonatomic, readonly) NSString *internalId;
-@property (copy, nonatomic, readonly) NSString *externalId;
+@property (copy, nonatomic) NSString *internalId;
+@property (copy, nonatomic) NSString *externalId;
 @property (strong, nonatomic) NSDate *dateJoined;
 
 

@@ -1,10 +1,4 @@
 #import "VENCore.h"
-#import "VENHTTPResponse.h"
-#import "VENHTTP.h"
-#import "VENTransaction.h"
-#import "VENUser.h"
-#import "NSError+VENCore.h"
-#import "NSDictionary+VENCore.h"
 
 NSString *const VENErrorDomainCore = @"com.venmo.VENCore.ErrorDomain.VENCore";
 

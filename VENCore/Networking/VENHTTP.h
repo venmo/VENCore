@@ -5,8 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-#warning These should not be in VENHTTP?
-extern NSString *const VENPrivateAPIPathLogin;
 extern NSString *const VENAPIPathPayments;
 extern NSString *const VENAPIPathUsers;
 
