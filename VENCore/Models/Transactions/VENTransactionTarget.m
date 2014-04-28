@@ -1,8 +1,5 @@
 #import "VENTransactionTarget.h"
-#import "NSString+VENCore.h"
-#import "VENUser.h"
-#import "VENTransactionPayloadKeys.h"
-#import "NSDictionary+VENCore.h"
+#import "VENCore.h"
 
 @implementation VENTransactionTarget
 

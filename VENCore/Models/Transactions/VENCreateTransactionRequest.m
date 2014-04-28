@@ -1,9 +1,5 @@
 #import "VENCreateTransactionRequest.h"
 #import "VENCore.h"
-#import "VENHTTPResponse.h"
-#import "VENTransactionPayloadKeys.h"
-#import "NSDictionary+VENCore.h"
-#import "NSString+VENCore.h"
 
 @interface VENCreateTransactionRequest ()
 

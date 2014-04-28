@@ -97,6 +97,16 @@ describe(@"Initialization", ^{
         BOOL canInit = [VENUser canInitWithDictionary:validUserDictionary1];
         expect(canInit).to.beTruthy();
     });
+
+    it(@"should create a user with minimally a username and externalId for dictionaries that return YES to canInitWithDictionary",^{
+        VENUser *user1 = [[VENUser alloc] initWithDictionary:validUserDictionary1];
+        expect(user1.username).to.equal(@"PeterIsAZakin");
+        expect(user1.externalId).to.equal(@"JLHDSJFIOHh23ioHLH");
+        VENUser *user2 = [[VENUser alloc] initWithDictionary:validUserDictionary2];
+        expect(user2.username).to.equal(@"PetefadsrIsAZakin");
+        expect(user2.externalId).to.equal(@"JLHDSfadJfsdFIOHh23ioHLH");
+    });
+
 });
 
 
