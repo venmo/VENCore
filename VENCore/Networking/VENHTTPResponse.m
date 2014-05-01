@@ -49,7 +49,8 @@ NSString *const VENErrorDomainHTTPResponse = @"com.venmo.VENCore.ErrorDomain.VEN
     NSString *message = [errorObject stringForKey:@"message"];
     NSError *error;
     if (message) {
-        NSInteger code = [[errorObject objectOrNilForKey:@"code"] integerValue];
+        NSString *codeString = [errorObject objectOrNilForKey:@"code"] ?: [errorObject objectOrNilForKey:@"error_code"];
+        NSInteger code = [codeString integerValue];
         error = [NSError errorWithDomain:VENErrorDomainHTTPResponse
                                     code:code
                              description:message
