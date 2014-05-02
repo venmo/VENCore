@@ -24,6 +24,14 @@ extern NSString *const VENAPIPathUsers;
     success:(void(^)(VENHTTPResponse *response))successBlock
      failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
 
+- (void)PUT:(NSString *)path parameters:(NSDictionary *)parameters
+    success:(void(^)(VENHTTPResponse *response))successBlock
+    failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
+
+- (void)DELETE:(NSString *)path parameters:(NSDictionary *)parameters
+     success:(void(^)(VENHTTPResponse *response))successBlock
+     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
+
 - (void)setAccessToken:(NSString *)accessToken;
 
 - (NSDictionary *)defaultHeaders;;

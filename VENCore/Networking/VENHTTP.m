@@ -50,6 +50,13 @@ NSString *const VENAPIPathUsers     = @"users";
     [self sendRequestWithMethod:@"POST" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
+- (void)PUT:(NSString *)path parameters:(NSDictionary *)parameters
+    success:(void (^)(VENHTTPResponse *))successBlock
+    failure:(void (^)(VENHTTPResponse *, NSError *))failureBlock {
+    
+    [self sendRequestWithMethod:@"PUT" path:path parameters:parameters success:successBlock failure:failureBlock];
+}
+
 
 - (void)DELETE:(NSString *)path parameters:(NSDictionary *)parameters
        success:(void(^)(VENHTTPResponse *response))successBlock
