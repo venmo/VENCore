@@ -142,7 +142,7 @@ describe(@"Equality", ^{
     
     it(@"should consider transactions with different statuses EQUAL", ^{
         NSMutableDictionary *transactionDictionary = [paymentObject mutableCopy];
-        transactionDictionary[VENTransactionStatusKey] = VENTransactionStatusStrings[VENTransactionStatusNotSent];
+        transactionDictionary[VENTransactionStatusKey] = VENTransactionStatusStrings[VENTransactionStatusUnknown];
         
         NSMutableDictionary *otherTransactionDictionary = [transactionDictionary mutableCopy];
         otherTransactionDictionary[VENTransactionStatusKey] = VENTransactionStatusStrings[VENTransactionStatusPending];

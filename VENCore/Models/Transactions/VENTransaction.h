@@ -13,7 +13,7 @@ extern NSString *const VENTransactionTypeStrings[];
 // TODO: what are the possible transaction statuses?
 // TODO: VENMutableTransaction should not have transactionID, status, fromUserID, or toUserID.
 typedef NS_ENUM(NSUInteger, VENTransactionStatus) {
-    VENTransactionStatusNotSent,
+    VENTransactionStatusUnknown,
     VENTransactionStatusPending,
     VENTransactionStatusSettled,
     VENTransactionStatusFailed

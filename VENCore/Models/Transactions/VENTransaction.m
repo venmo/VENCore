@@ -79,7 +79,7 @@ NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"pub
             self.status = VENTransactionStatusFailed;
         }
         else {
-            self.status = VENTransactionStatusNotSent;
+            self.status = VENTransactionStatusUnknown;
         }
         
         
