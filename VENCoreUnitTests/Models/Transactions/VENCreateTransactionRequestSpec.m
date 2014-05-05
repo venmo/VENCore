@@ -350,6 +350,26 @@ describe(@"dictionaryWithParametersForTarget:", ^{
         expect(target.targetType).equal(VENTargetTypeUnknown);
         expect(postParameters).to.beNil();
     });
+
+
+    it(@"should not include audience if audience is set to UserDefault", ^{
+        NSString *emailAddress = @"btest@example.com";
+        NSString *note = @"bla";
+        NSString *amount = @"200";
+        VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:emailAddress amount:[amount integerValue]];
+        VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
+        [transactionService addTransactionTarget:target];
+        transactionService.note = note;
+        transactionService.transactionType = VENTransactionTypePay;
+        transactionService.audience = VENTransactionAudienceUserDefault;
+        NSDictionary *expectedPostParameters = @{@"email": emailAddress,
+                                                 @"note": note,
+                                                 @"amount" : @"2.00"};
+        NSDictionary *postParameters = [transactionService dictionaryWithParametersForTarget:target];
+        expect(postParameters).to.equal(expectedPostParameters);
+    });
+
+
 });
 
 describe(@"containsDuplicateOfTarget", ^{

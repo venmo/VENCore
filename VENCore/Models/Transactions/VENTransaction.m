@@ -4,7 +4,7 @@
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 NSString *const VENTransactionTypeStrings[] = {@"unknown", @"pay", @"charge"};
 NSString *const VENTransactionStatusStrings[] = {@"not_sent", @"pending", @"settled", @"failed"};
-NSString *const VENTransactionAudienceStrings[] = {@"private", @"friends", @"public"};
+NSString *const VENTransactionAudienceStrings[] = {@"default", @"private", @"friends", @"public"};
 
 @interface VENTransaction ()
 

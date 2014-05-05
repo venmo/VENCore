@@ -144,10 +144,15 @@
     if (self.transactionType == VENTransactionTypeCharge) {
         amountString = [@"-" stringByAppendingString:amountString];
     }
-    NSDictionary *parameters = @{recipientTypeKey: target.handle,
-                                 @"note"        : self.note,
-                                 @"amount"      : amountString,
-                                 @"audience"    : audienceString};
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:
+                                       @{recipientTypeKey: target.handle,
+                                         @"note": self.note,
+                                         @"amount": amountString}];
+
+    if (self.audience != VENTransactionAudienceUserDefault) {
+        [parameters addEntriesFromDictionary:@{@"audience": audienceString}];
+    }
+
     return parameters;
 }
 

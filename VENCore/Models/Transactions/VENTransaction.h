@@ -10,8 +10,6 @@ typedef NS_ENUM(NSUInteger, VENTransactionType) {
 };
 extern NSString *const VENTransactionTypeStrings[];
 
-// TODO: what are the possible transaction statuses?
-// TODO: VENMutableTransaction should not have transactionID, status, fromUserID, or toUserID.
 typedef NS_ENUM(NSUInteger, VENTransactionStatus) {
     VENTransactionStatusUnknown,
     VENTransactionStatusPending,
@@ -21,6 +19,8 @@ typedef NS_ENUM(NSUInteger, VENTransactionStatus) {
 extern NSString *const VENTransactionStatusStrings[];
 
 typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
+    // Indicates that the transaction uses/should use the user's default sharing setting
+    VENTransactionAudienceUserDefault,
     VENTransactionAudiencePrivate,
     VENTransactionAudienceFriends,
     VENTransactionAudiencePublic
