@@ -1,4 +1,4 @@
-VENCore
+VENCore [![Build Status](https://travis-ci.org/venmo/VENCore.svg?branch=v1.0.0)](https://travis-ci.org/venmo/VENCore) 
 =======
 
 VENCore is the core Objective-C client library for the Venmo API. If you're looking for a simple way to send Venmo payments & charges from your iOS app, you should use the [Venmo iOS SDK](https://github.com/venmo/venmo-ios-sdk).
