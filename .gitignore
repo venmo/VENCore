@@ -1,0 +1,9 @@
+Pods/
+
+.DS_Store
+*.pbxuser
+build/
+xcuserdata
+*.xccheckout
+VENCoreIntegrationTests/config.plist
+
