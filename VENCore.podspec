@@ -3,11 +3,11 @@ Pod::Spec.new do |s|
   s.version      = "1.0.0"
   s.summary      = "Core Venmo client library"
   s.description  = <<-DESC
-                   Core Venmo client library
+                   Core iOS client library for the Venmo api
                    DESC
 
   s.homepage     = "https://github.com/venmo/VENCore"
-  s.license      = { :file => 'LICENSE.md' }
+  s.license      = { :type => 'MIT', :file => 'LICENSE.md' }
   s.author       = { "Ben Guo" => "ben@venmo.com" }
   s.platform     = :ios, '6.0'
   s.source       = { :git => "https://github.com/venmo/VENCore.git",
