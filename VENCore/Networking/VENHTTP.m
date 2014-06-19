@@ -28,6 +28,7 @@ NSString *const VENAPIPathUsers     = @"users";
     return self;
 }
 
+
 - (void)initializeSessionWithHeaders:(NSDictionary *)headers;
 {
     void(^createSessionBlock)() = ^() {
@@ -49,6 +50,13 @@ NSString *const VENAPIPathUsers     = @"users";
 }
 
 
+- (void)setProtocolClasses:(NSArray *)protocolClasses {
+    NSURLSessionConfiguration *configuration = self.session.configuration;
+    configuration.protocolClasses = protocolClasses;
+    self.session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:self.session.delegateQueue];
+}
+
+
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void(^)(VENHTTPResponse *response))successBlock
     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
@@ -63,6 +71,7 @@ NSString *const VENAPIPathUsers     = @"users";
 {
     [self sendRequestWithMethod:@"POST" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
+
 
 - (void)PUT:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void (^)(VENHTTPResponse *))successBlock

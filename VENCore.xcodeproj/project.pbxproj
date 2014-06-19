@@ -27,6 +27,7 @@
 		EB34431319071EA200B7791E /* paymentToUser.json in Resources */ = {isa = PBXBuildFile; fileRef = EB34431219071EA200B7791E /* paymentToUser.json */; };
 		EB34AA901906FDD600663ECF /* libVENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libVENCore.a */; };
 		EB34AA911907006F00663ECF /* VENTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */; };
+		EB403ECC1953A1DA00F23593 /* EXPMatchers+Venmo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB403ECB1953A1DA00F23593 /* EXPMatchers+Venmo.m */; };
 		EB418B9A18EB0DD20003CBF5 /* NSError+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9918EB0DD20003CBF5 /* NSError+VENCoreSpec.m */; };
 		EB418B9D18EB0E060003CBF5 /* NSDictionary+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */; };
 		EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9E18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m */; };
@@ -115,6 +116,8 @@
 		EB00DB3E1906E647001836A8 /* PaymentSandboxSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentSandboxSpec.m; sourceTree = "<group>"; };
 		EB00DB401906E647001836A8 /* VENCoreIntegrationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VENCoreIntegrationTests-Prefix.pch"; sourceTree = "<group>"; };
 		EB34431219071EA200B7791E /* paymentToUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = paymentToUser.json; path = API/payments/paymentToUser.json; sourceTree = "<group>"; };
+		EB403ECA1953A1DA00F23593 /* EXPMatchers+Venmo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+Venmo.h"; path = "Utilities/EXPMatchers+Venmo.h"; sourceTree = "<group>"; };
+		EB403ECB1953A1DA00F23593 /* EXPMatchers+Venmo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+Venmo.m"; path = "Utilities/EXPMatchers+Venmo.m"; sourceTree = "<group>"; };
 		EB418B9618EB0DA30003CBF5 /* VENTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionSpec.m; sourceTree = "<group>"; };
 		EB418B9918EB0DD20003CBF5 /* NSError+VENCoreSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+VENCoreSpec.m"; path = "Categories/NSError+VENCoreSpec.m"; sourceTree = "<group>"; };
 		EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+VENCore.h"; path = "Categories/NSDictionary+VENCore.h"; sourceTree = "<group>"; };
@@ -314,6 +317,8 @@
 			children = (
 				EB427E5618F8451B0070EDD9 /* VENTestUtilities.h */,
 				EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */,
+				EB403ECA1953A1DA00F23593 /* EXPMatchers+Venmo.h */,
+				EB403ECB1953A1DA00F23593 /* EXPMatchers+Venmo.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -726,6 +731,7 @@
 				EBB8E3BE18FDB05400A22C6B /* NSString+VENCoreSpec.m in Sources */,
 				EB418B9F18EB0E1B0003CBF5 /* NSDictionary+VENCoreSpec.m in Sources */,
 				EB418B9A18EB0DD20003CBF5 /* NSError+VENCoreSpec.m in Sources */,
+				EB403ECC1953A1DA00F23593 /* EXPMatchers+Venmo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

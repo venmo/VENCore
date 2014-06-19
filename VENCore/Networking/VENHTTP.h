@@ -16,6 +16,8 @@ extern NSString *const VENAPIPathUsers;
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
+- (void)setProtocolClasses:(NSArray *)protocolClasses;
+
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void(^)(VENHTTPResponse *response))successBlock
     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock;
