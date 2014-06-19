@@ -1,145 +1,203 @@
 #import "VENHTTP.h"
-#import <AFNetworking/AFNetworking.h>
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
-#import <AFNetworking/AFHTTPRequestOperation.h>
-@import AdSupport;
 
 #import "NSError+VENCore.h"
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
 
-
 NSString *const VENAPIPathPayments  = @"payments";
 NSString *const VENAPIPathUsers     = @"users";
 
-@interface VENHTTP ()
+@interface VENHTTP ()<NSURLSessionDelegate>
 
 @property (strong, nonatomic) NSString *accessToken;
+@property (nonatomic, strong) NSURL *baseURL;
+@property (nonatomic, strong) NSURLSession *session;
 
 @end
 
 @implementation VENHTTP
 
-- (instancetype)initWithBaseURL:(NSURL *)baseURL {
+- (instancetype)initWithBaseURL:(NSURL *)baseURL
+{
     self = [self init];
     if (self) {
-        self.operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-
-        // set default header fields
-        [self.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [self.operationManager.requestSerializer setValue:obj forHTTPHeaderField:key];
-        }];
+        self.baseURL = baseURL;
+        [self initializeSessionWithHeaders:self.defaultHeaders];
     }
     return self;
+}
+
+- (void)initializeSessionWithHeaders:(NSDictionary *)headers;
+{
+    void(^createSessionBlock)() = ^() {
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        configuration.HTTPAdditionalHeaders = self.defaultHeaders;
+
+        NSOperationQueue *delegateQueue = [[NSOperationQueue alloc] init];
+        delegateQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+
+        self.session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:delegateQueue];
+    };
+
+    if (self.session) {
+        [self.session resetWithCompletionHandler:createSessionBlock];
+    }
+    else {
+        createSessionBlock();
+    }
 }
 
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void(^)(VENHTTPResponse *response))successBlock
-    failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
-
+    failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
+{
     [self sendRequestWithMethod:@"GET" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
 
 - (void)POST:(NSString *)path parameters:(NSDictionary *)parameters
      success:(void(^)(VENHTTPResponse *response))successBlock
-     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
-
+     failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
+{
     [self sendRequestWithMethod:@"POST" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
 - (void)PUT:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void (^)(VENHTTPResponse *))successBlock
-    failure:(void (^)(VENHTTPResponse *, NSError *))failureBlock {
-    
+    failure:(void (^)(VENHTTPResponse *, NSError *))failureBlock
+{
     [self sendRequestWithMethod:@"PUT" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
 
 - (void)DELETE:(NSString *)path parameters:(NSDictionary *)parameters
        success:(void(^)(VENHTTPResponse *response))successBlock
-       failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
-
+       failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
+{
     [self sendRequestWithMethod:@"DELETE" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
 
-- (AFHTTPRequestOperation *)sendRequestWithMethod:(NSString *)method
-                                             path:(NSString *)path parameters:(NSDictionary *)parameters
-                                          success:(void(^)(VENHTTPResponse *response))successBlock
-                                          failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock {
+#pragma mark - Underlying HTTP
 
-    NSMutableURLRequest *request =
-    [self.operationManager.requestSerializer requestWithMethod:method
-                                                     URLString:[[NSURL URLWithString:path
-                                                                       relativeToURL:self.operationManager.baseURL] absoluteString]
-                                                    parameters:parameters
-                                                         error:nil];
+// Modified from BTHTTP
+- (void)sendRequestWithMethod:(NSString *)method
+                         path:(NSString *)aPath
+                   parameters:(NSDictionary *)parameters
+                      success:(void(^)(VENHTTPResponse *response))successBlock
+                      failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
+{
+    NSURL *fullPathURL = [self.baseURL URLByAppendingPathComponent:aPath];
+    NSURLComponents *components = [NSURLComponents componentsWithString:fullPathURL.absoluteString];
 
-    void(^operationSuccessBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSMutableURLRequest *request;
 
-        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithOperation:operation];
+    if ([method isEqualToString:@"GET"] || [method isEqualToString:@"DELETE"]) {
+        NSString *encodedParametersString = [[self class] queryStringWithDictionary:parameters];
+        components.percentEncodedQuery = encodedParametersString;
+        request = [NSMutableURLRequest requestWithURL:components.URL];
+    } else {
+        request = [NSMutableURLRequest requestWithURL:components.URL];
 
-        if ([response didError]) {
-            if (failureBlock) {
-                NSError *error = [response error] ?: [NSError defaultResponseError];
-                failureBlock(response, error);
-            }
-        }
-        else {
-            if (successBlock) {
-                successBlock(response);
-            }
-        }
-    };
-
-
-    void(^operationFailureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (!failureBlock) {
+        NSError *jsonSerializationError;
+        NSData *bodyData = [NSJSONSerialization dataWithJSONObject:parameters
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&jsonSerializationError];
+        if (jsonSerializationError != nil) {
+            failureBlock(nil, jsonSerializationError);
             return;
+        } else {
+            [request setHTTPBody:bodyData];
         }
+        NSDictionary *headers = @{@"Content-Type": @"application/json; charset=utf-8"};
+        [request setAllHTTPHeaderFields:headers];
+    }
+    [request setHTTPMethod:method];
 
-        VENHTTPResponse *response = [[VENHTTPResponse alloc] initWithOperation:operation];
-        if ([response didError]) {
-            NSError *error = [response error] ?: [NSError defaultResponseError];
-            failureBlock(response, error);
-        }
-        else {
-            failureBlock(response, error);
-        }
-    };
-
-
-    AFHTTPRequestOperation *operation = [self.operationManager HTTPRequestOperationWithRequest:request
-                                                                                       success:operationSuccessBlock
-                                                                                       failure:operationFailureBlock];
-
-    [self.operationManager.operationQueue addOperation:operation];
-    return operation;
+    // Perform the actual request
+    NSURLSessionTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        [[self class] handleRequestCompletion:data response:response error:error success:successBlock failure:failureBlock];
+    }];
+    [task resume];
 }
 
++ (void)handleRequestCompletion:(NSData *)data
+                       response:(NSURLResponse *)response
+                          error:(NSError *)error
+                        success:(void(^)(VENHTTPResponse *response))successBlock
+                        failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
+{
+    // Handle nil or non-HTTP requests, which are an unknown type of error
+    if (![response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSDictionary *userInfo = error ? @{NSUnderlyingErrorKey: error} : nil;
+        NSError *error = [NSError errorWithDomain:VENErrorDomainHTTPResponse
+                                             code:VENErrorCodeHTTPResponseBadResponse
+                                         userInfo:userInfo];
+        [self callFailureBlock:failureBlock response:nil error:error];
+        return;
+    }
 
-- (void)setAccessToken:(NSString *)accessToken {
-    NSDictionary *cookieProperties = @{ NSHTTPCookieDomain : [self.operationManager.baseURL host],
+    // Attempt to parse, and return an error if parsing fails
+    NSError *jsonParseError;
+    NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+    if (jsonParseError != nil) {
+        [self callFailureBlock:failureBlock response:nil error:jsonParseError];
+        return;
+    }
+
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:responseObject];
+    if ([venHTTPResponse didError]) {
+        [self callFailureBlock:failureBlock
+                      response:venHTTPResponse
+                         error:[venHTTPResponse error]];
+    }
+    else {
+        [self callSuccessBlock:successBlock response:venHTTPResponse];
+    }
+}
+
++ (void)callSuccessBlock:(void(^)(VENHTTPResponse *response))successBlock
+                response:(VENHTTPResponse *)response
+{
+    if (!successBlock) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        successBlock(response);
+    });
+}
+
++ (void)callFailureBlock:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
+                response:(VENHTTPResponse *)response
+                   error:(NSError *)error {
+    if (!failureBlock) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        failureBlock(response, error);
+    });
+}
+
+- (void)setAccessToken:(NSString *)accessToken
+{
+    NSDictionary *cookieProperties = @{ NSHTTPCookieDomain : [self.baseURL host],
                                         NSHTTPCookiePath: @"/",
                                         NSHTTPCookieName : @"api_access_token",
                                         NSHTTPCookieValue : accessToken };
     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
     // add cookie to cookiestorage for webview requests
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    NSDictionary * cookieHeaders = [NSHTTPCookie requestHeaderFieldsWithCookies:@[cookie]];
-
-    // set access token header fields
-    [cookieHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [self.operationManager.requestSerializer setValue:obj forHTTPHeaderField:key];
-    }];
+    NSMutableDictionary *headers = [NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie requestHeaderFieldsWithCookies:@[cookie]]];
+    [headers addEntriesFromDictionary:[self defaultHeaders]];
+    [self initializeSessionWithHeaders:headers];
 }
 
 
-- (NSDictionary *)defaultHeaders {
+- (NSDictionary *)defaultHeaders
+{
     NSMutableDictionary *defaultHeaders = [[NSMutableDictionary alloc] init];
     [defaultHeaders addEntriesFromDictionary:@{@"User-Agent" : [self userAgentString],
                                                @"Accept": [self acceptString],
@@ -160,16 +218,66 @@ NSString *const VENAPIPathUsers     = @"users";
 }
 
 
-- (NSString *)acceptString {
+- (NSString *)acceptString
+{
     return @"application/json";
 }
 
 
-- (NSString *)acceptLanguageString {
+- (NSString *)acceptLanguageString
+{
     NSLocale *locale = [NSLocale currentLocale];
     return [NSString stringWithFormat:@"%@-%@",
             [locale objectForKey:NSLocaleLanguageCode],
             [locale objectForKey:NSLocaleCountryCode]];
+}
+
+// From BTHTTP
++ (NSString *)stringByURLEncodingAllCharactersInString:(NSString *)aString {
+    NSString *encodedString = (__bridge_transfer NSString * ) CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                                      (__bridge CFStringRef)aString,
+                                                                                                      NULL,
+                                                                                                      (CFStringRef)@"&()<>@,;:\\\"/[]?=+$|^~`{}",
+                                                                                                      kCFStringEncodingUTF8);
+    return encodedString;
+}
+
+
+// From BTHTTP
++ (NSString *)queryStringWithDictionary:(NSDictionary *)dict
+{
+    NSMutableString *queryString = [NSMutableString string];
+    for(id key in dict) {
+        NSString *encodedKey = [self stringByURLEncodingAllCharactersInString:[key description]];
+        id value = [dict objectForKey:key];
+        if([value isKindOfClass:[NSArray class]]) {
+            for(id obj in value) {
+                [queryString appendFormat:@"%@=%@&",
+                 encodedKey,
+                 [self stringByURLEncodingAllCharactersInString:[obj description]]
+                 ];
+            }
+        } else if([value isKindOfClass:[NSDictionary class]]) {
+            for(id subkey in value) {
+                [queryString appendFormat:@"%@%%5B%@%%5D=%@&",
+                 encodedKey,
+                 [self stringByURLEncodingAllCharactersInString:[subkey description]],
+                 [self stringByURLEncodingAllCharactersInString:[[value objectForKey:subkey] description]]
+                 ];
+            }
+        } else if([value isKindOfClass:[NSNull class]]) {
+            [queryString appendFormat:@"%@=&", encodedKey];
+        } else {
+            [queryString appendFormat:@"%@=%@&",
+             encodedKey,
+             [self stringByURLEncodingAllCharactersInString:[value description]]
+             ];
+        }
+    }
+    if([queryString length] > 0) {
+        [queryString deleteCharactersInRange:NSMakeRange([queryString length] - 1, 1)]; // remove trailing &
+    }
+    return queryString;
 }
 
 

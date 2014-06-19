@@ -8,11 +8,9 @@
 extern NSString *const VENAPIPathPayments;
 extern NSString *const VENAPIPathUsers;
 
-@class AFHTTPRequestOperationManager, AFHTTPRequestOperation, VENHTTPResponse;
+@class VENHTTPResponse;
 
 @interface VENHTTP : NSObject
-
-@property (strong, nonatomic) AFHTTPRequestOperationManager *operationManager;
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
