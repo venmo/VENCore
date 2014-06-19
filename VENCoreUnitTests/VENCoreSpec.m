@@ -11,32 +11,7 @@ NSString *path;
 
 SpecBegin(VENCore)
 
-    [Expecta setAsynchronousTestTimeout:1];
-
-/*beforeAll(^{
-    [[LSNocilla sharedInstance] start];
-    accessToken = @"12345678";
-    baseURL = [NSURL URLWithString:@"https://venmo.com"];
-    path = [NSString stringWithFormat:@"%@/%@", baseURL, VENPrivateAPIPathLogin];
-    responseDictionary = @{@"access_token" : accessToken,
-                           @"id" : @"4"};
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseDictionary
-                                                       options:0
-                                                         error:nil];
-    responseString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-});
-afterAll(^{
-    [[LSNocilla sharedInstance] stop];
-    accessToken = nil;
-    baseURL = nil;
-    path = nil;
-    responseDictionary = nil;
-    responseString = nil;
-});
-afterEach(^{
-    [[LSNocilla sharedInstance] clearStubs];
-});
-*/
+[Expecta setAsynchronousTestTimeout:1];
 
 describe(@"Shared Instances of VENCore should persist", ^{
 
