@@ -12,6 +12,8 @@ extern NSString *const VENAPIPathUsers;
 
 @interface VENHTTP : NSObject
 
+@property (nonatomic, strong, readonly) NSURL *baseURL;
+
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters

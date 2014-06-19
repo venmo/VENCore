@@ -11,8 +11,8 @@ NSString *const VENAPIPathUsers     = @"users";
 @interface VENHTTP ()<NSURLSessionDelegate>
 
 @property (strong, nonatomic) NSString *accessToken;
-@property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong, readwrite) NSURL *baseURL;
 
 @end
 

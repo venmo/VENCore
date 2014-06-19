@@ -198,10 +198,10 @@ describe(@"Fetching a User", ^{
         NSString *externalId = @"1106387358711808333";
         
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@%@/%@?", baseURLString, VENAPIPathUsers, externalId];
-        
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/%@/%@?", baseURLString, VENAPIPathUsers, externalId];
+
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchChrisUser"];
-        
+
         [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
             
             expect(user.externalId).to.equal(externalId);
@@ -217,7 +217,7 @@ describe(@"Fetching a User", ^{
         NSString *externalId = @"1106387358711808339"; //invalid external id
         
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@%@/%@?", baseURLString, VENAPIPathUsers, externalId];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/%@/%@?", baseURLString, VENAPIPathUsers, externalId];
         
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidUser"];
         
