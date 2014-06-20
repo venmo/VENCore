@@ -294,19 +294,17 @@ describe(@"performing a request", ^{
         __block NSDictionary *parameterDictionary;
 
         beforeEach(^{
-            parameterDictionary = @{@"stringParameter": @"value",
-                                    @"crazyStringParameter[]": @"crazy%20and&value",
-                                    @"numericParameter": @42,
-                                    @"trueBooleanParameter": @YES,
-                                    @"falseBooleanParameter": @NO,
-                                    @"dictionaryParameter":  @{ @"dictionaryKey": @"dictionaryValue" },
-                                    @"arrayParameter": @[@"arrayItem1", @"arrayItem2"]
+            parameterDictionary = @{@"stringParam": @"value",
+                                    @"numericParam": @42,
+                                    @"trueBoolParam": @YES,
+                                    @"falseBoolParam": @NO,
+                                    @"arrayParam": @[@"i1", @"i2"]
                                     };
         });
 
         describe(@"in GET requests", ^{
-            it(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
-                NSString *encodedParameters = @"numericParameter=42&falseBooleanParameter=0&dictionaryParameter%5BdictionaryKey%5D=dictionaryValue&trueBooleanParameter=1&stringParameter=value&crazyStringParameter%5B%5D=crazy%2520and%26value&arrayParameter%5B%5D=arrayItem1&arrayParameter%5B%5D=arrayItem2";
+            fit(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
+                NSString *encodedParameters = @"arrayParam%5B%5D=i1&arrayParam%5B%5D=i2&stringParam=value&numericParam=42&trueBoolParam=1&falseBoolParam=0";
 
                 [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];

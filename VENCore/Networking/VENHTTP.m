@@ -5,6 +5,8 @@
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
 
+#import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
+
 NSString *const VENAPIPathPayments  = @"payments";
 NSString *const VENAPIPathUsers     = @"users";
 
@@ -104,8 +106,8 @@ NSString *const VENAPIPathUsers     = @"users";
     NSMutableURLRequest *request;
 
     if ([method isEqualToString:@"GET"] || [method isEqualToString:@"DELETE"]) {
-        NSString *encodedParametersString = [[self class] queryStringWithDictionary:parameters];
-        components.percentEncodedQuery = encodedParametersString;
+        NSString *encodedParametersString = [CMDQueryStringSerialization queryStringWithDictionary:parameters];
+        components.percentEncodedQuery = [encodedParametersString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         request = [NSMutableURLRequest requestWithURL:components.URL];
     } else {
         request = [NSMutableURLRequest requestWithURL:components.URL];
@@ -240,54 +242,5 @@ NSString *const VENAPIPathUsers     = @"users";
             [locale objectForKey:NSLocaleLanguageCode],
             [locale objectForKey:NSLocaleCountryCode]];
 }
-
-// From BTHTTP
-+ (NSString *)stringByURLEncodingAllCharactersInString:(NSString *)aString {
-    NSString *encodedString = (__bridge_transfer NSString * ) CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                                      (__bridge CFStringRef)aString,
-                                                                                                      NULL,
-                                                                                                      (CFStringRef)@"&()<>@,;:\\\"/[]?=+$|^~`{}",
-                                                                                                      kCFStringEncodingUTF8);
-    return encodedString;
-}
-
-
-// From BTHTTP
-+ (NSString *)queryStringWithDictionary:(NSDictionary *)dict
-{
-    NSMutableString *queryString = [NSMutableString string];
-    for(id key in dict) {
-        NSString *encodedKey = [self stringByURLEncodingAllCharactersInString:[key description]];
-        id value = [dict objectForKey:key];
-        if([value isKindOfClass:[NSArray class]]) {
-            for(id obj in value) {
-                [queryString appendFormat:@"%@=%@&",
-                 encodedKey,
-                 [self stringByURLEncodingAllCharactersInString:[obj description]]
-                 ];
-            }
-        } else if([value isKindOfClass:[NSDictionary class]]) {
-            for(id subkey in value) {
-                [queryString appendFormat:@"%@%%5B%@%%5D=%@&",
-                 encodedKey,
-                 [self stringByURLEncodingAllCharactersInString:[subkey description]],
-                 [self stringByURLEncodingAllCharactersInString:[[value objectForKey:subkey] description]]
-                 ];
-            }
-        } else if([value isKindOfClass:[NSNull class]]) {
-            [queryString appendFormat:@"%@=&", encodedKey];
-        } else {
-            [queryString appendFormat:@"%@=%@&",
-             encodedKey,
-             [self stringByURLEncodingAllCharactersInString:[value description]]
-             ];
-        }
-    }
-    if([queryString length] > 0) {
-        [queryString deleteCharactersInRange:NSMakeRange([queryString length] - 1, 1)]; // remove trailing &
-    }
-    return queryString;
-}
-
 
 @end
