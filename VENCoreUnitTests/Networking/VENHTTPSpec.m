@@ -218,7 +218,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.path).to.match(@"200.json$");
                 expect(httpRequest.HTTPBody).to.beNil();
                 expect(httpRequest.HTTPMethod).to.equal(@"DELETE");
-                expect(httpRequest.URL.query).to.equal(@"");
+                expect(httpRequest.URL.query).to.equal(nil);
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
                 XCTFail();
@@ -303,7 +303,7 @@ describe(@"performing a request", ^{
         });
 
         describe(@"in GET requests", ^{
-            fit(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
+            it(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
                 NSString *encodedParameters = @"arrayParam%5B%5D=i1&arrayParam%5B%5D=i2&stringParam=value&numericParam=42&trueBoolParam=1&falseBoolParam=0";
 
                 [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
@@ -318,7 +318,7 @@ describe(@"performing a request", ^{
 
         describe(@"in non-GET requests", ^{
             it(@"transmits the parameters as JSON", ^AsyncBlock{
-                NSString *encodedParameters = @"{\n  \"numericParameter\" : 42,\n  \"falseBooleanParameter\" : false,\n  \"dictionaryParameter\" : {\n    \"dictionaryKey\" : \"dictionaryValue\"\n  },\n  \"trueBooleanParameter\" : true,\n  \"stringParameter\" : \"value\",\n  \"crazyStringParameter[]\" : \"crazy%20and&value\",\n  \"arrayParameter\" : [\n    \"arrayItem1\",\n    \"arrayItem2\"\n  ]\n}";
+                NSString *encodedParameters = @"{\n  \"arrayParam\" : [\n    \"i1\",\n    \"i2\"\n  ],\n  \"stringParam\" : \"value\",\n  \"numericParam\" : 42,\n  \"trueBoolParam\" : true,\n  \"falseBoolParam\" : false\n}";
 
                 [http POST:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
