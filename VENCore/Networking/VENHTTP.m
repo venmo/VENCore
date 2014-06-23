@@ -105,24 +105,16 @@ NSString *const VENAPIPathUsers     = @"users";
 
     NSMutableURLRequest *request;
 
+    NSString *encodedParametersString = [CMDQueryStringSerialization queryStringWithDictionary:parameters];
+    NSString *percentEncodedQuery = [encodedParametersString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     if ([method isEqualToString:@"GET"] || [method isEqualToString:@"DELETE"]) {
-        NSString *encodedParametersString = [CMDQueryStringSerialization queryStringWithDictionary:parameters];
-        components.percentEncodedQuery = [encodedParametersString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        components.percentEncodedQuery = percentEncodedQuery;
         request = [NSMutableURLRequest requestWithURL:components.URL];
     } else {
         request = [NSMutableURLRequest requestWithURL:components.URL];
-
-        NSError *jsonSerializationError;
-        NSData *bodyData = [NSJSONSerialization dataWithJSONObject:parameters
-                                                           options:NSJSONWritingPrettyPrinted
-                                                             error:&jsonSerializationError];
-        if (jsonSerializationError != nil) {
-            failureBlock(nil, jsonSerializationError);
-            return;
-        } else {
-            [request setHTTPBody:bodyData];
-        }
-        NSDictionary *headers = @{@"Content-Type": @"application/json; charset=utf-8"};
+        NSData *body = [encodedParametersString dataUsingEncoding:NSUTF8StringEncoding];
+        [request setHTTPBody:body];
+        NSDictionary *headers = @{@"Content-Type": @"application/x-www-form-urlencoded; charset=utf-8"};
         [request setAllHTTPHeaderFields:headers];
     }
     [request setHTTPMethod:method];

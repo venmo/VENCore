@@ -175,7 +175,7 @@ describe(@"performing a request", ^{
                 NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                 NSString *httpRequestBody = [VENHTTPTestProtocol parseRequestBodyFromTestResponse:response];
                 expect(httpRequest.URL.path).to.match(@"/200.json$");
-                expect(httpRequestBody).to.equal(@"{\n  \"param\" : \"value\"\n}");
+                expect(httpRequestBody).to.equal(@"param=value");
                 expect(httpRequest.HTTPMethod).to.equal(@"POST");
                 expect(httpRequest.URL.query).to.beNil();
                 done();
@@ -202,7 +202,7 @@ describe(@"performing a request", ^{
                 NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                 NSString *httpRequestBody = [VENHTTPTestProtocol parseRequestBodyFromTestResponse:response];
                 expect(httpRequest.URL.path).to.match(@"200.json$");
-                expect(httpRequestBody).to.equal(@"{\n  \"param\" : \"value\"\n}");
+                expect(httpRequestBody).to.equal(@"param=value");
                 expect(httpRequest.HTTPMethod).to.equal(@"PUT");
                 expect(httpRequest.URL.query).to.beNil();
                 done();
@@ -318,13 +318,13 @@ describe(@"performing a request", ^{
 
         describe(@"in non-GET requests", ^{
             it(@"transmits the parameters as JSON", ^AsyncBlock{
-                NSString *encodedParameters = @"{\n  \"arrayParam\" : [\n    \"i1\",\n    \"i2\"\n  ],\n  \"stringParam\" : \"value\",\n  \"numericParam\" : 42,\n  \"trueBoolParam\" : true,\n  \"falseBoolParam\" : false\n}";
+                NSString *encodedParameters = @"arrayParam[]=i1&arrayParam[]=i2&stringParam=value&numericParam=42&trueBoolParam=1&falseBoolParam=0";
 
                 [http POST:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                     NSString *httpRequestBody = [VENHTTPTestProtocol parseRequestBodyFromTestResponse:response];
 
-                    expect([httpRequest valueForHTTPHeaderField:@"Content-type"]).to.equal(@"application/json; charset=utf-8");
+                    expect([httpRequest valueForHTTPHeaderField:@"Content-type"]).to.equal(@"application/x-www-form-urlencoded; charset=utf-8");
                     expect(httpRequestBody).to.equal(encodedParameters);
                     
                     done();
