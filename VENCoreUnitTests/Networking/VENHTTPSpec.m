@@ -11,8 +11,8 @@
 
 @implementation VENHTTPTestProtocol
 
-+ (BOOL)canInitWithRequest:(NSURLRequest *)request {
-
++ (BOOL)canInitWithRequest:(NSURLRequest *)request
+{
     BOOL hasCorrectScheme = [request.URL.scheme isEqualToString:kVENHTTPTestProtocolScheme];
     BOOL hasCorrectHost = [request.URL.host isEqualToString:kVENHTTPTestProtocolHost];
     BOOL hasCorrectPort = [request.URL.port isEqual:kVENHTTPTestProtocolPort];
