@@ -4,16 +4,14 @@ PODS:
   - Nocilla (0.8.1)
   - OCHamcrest (3.0.1)
   - OCMock (2.2.4)
-  - OHHTTPStubs (3.1.2)
   - Specta (0.2.1)
 
 DEPENDENCIES:
-  - CMDQueryStringSerialization
+  - CMDQueryStringSerialization (~> 0.2.0)
   - Expecta
   - Nocilla
   - OCHamcrest
   - OCMock
-  - OHHTTPStubs (~> 3.1.0)
   - Specta
 
 SPEC CHECKSUMS:
@@ -22,7 +20,6 @@ SPEC CHECKSUMS:
   Nocilla: e573c2bf9113c8d77782b695a2f9362b7bc44e72
   OCHamcrest: 207233b7d7a44dadd66aca398947cc7e029c9be5
   OCMock: 6db79185520e24f9f299548f2b8b07e41d881bd5
-  OHHTTPStubs: c1c2007839687eaf9b80f061ce84440515080ebb
   Specta: 9141310f46b1f68b676650ff2854e1ed0b74163a
 
 COCOAPODS: 0.33.1

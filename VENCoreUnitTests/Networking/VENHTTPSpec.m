@@ -1,5 +1,6 @@
 #import "VENHTTP.h"
 #import "VENHTTPResponse.h"
+#import "VENCore.h"
 
 #define kVENHTTPTestProtocolScheme @"ven-http-test"
 #define kVENHTTPTestProtocolHost @"base.example.com"
@@ -241,23 +242,8 @@ describe(@"performing a request", ^{
     });
 
     describe(@"default headers", ^{
-        __block id<OHHTTPStubsDescriptor>stubDescriptor;
-
-        beforeEach(^{
-            stubDescriptor = [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-                return YES;
-            } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
-                NSData *jsonResponse = [NSJSONSerialization dataWithJSONObject:@{@"requestHeaders": [request allHTTPHeaderFields]} options:NSJSONWritingPrettyPrinted error:nil];
-                return [OHHTTPStubsResponse responseWithData:jsonResponse statusCode:200 headers:@{@"Content-type": @"application/json"}];
-            }];
-        });
-
-        afterEach(^{
-            [OHHTTPStubs removeStub:stubDescriptor];
-        });
-
         it(@"include Accept", ^AsyncBlock{
-            [http GET:@"stub://200/resource" parameters:nil success:^(VENHTTPResponse *response) {
+            [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
                 NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                 NSDictionary *requestHeaders = httpRequest.allHTTPHeaderFields;
                 expect(requestHeaders[@"Accept"]).to.equal(@"application/json");
@@ -268,7 +254,7 @@ describe(@"performing a request", ^{
         });
 
         it(@"include User-Agent", ^AsyncBlock{
-            [http GET:@"stub://200/resource" parameters:nil success:^(VENHTTPResponse *response) {
+            [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
                 NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                 NSDictionary *requestHeaders = httpRequest.allHTTPHeaderFields;
                 expect(requestHeaders[@"User-Agent"]).to.contain(@"iOS");
@@ -279,7 +265,7 @@ describe(@"performing a request", ^{
         });
 
         it(@"include Accept-Language", ^AsyncBlock{
-            [http GET:@"stub://200/resource" parameters:nil success:^(VENHTTPResponse *response) {
+            [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
                 NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                 NSDictionary *requestHeaders = httpRequest.allHTTPHeaderFields;
                 expect(requestHeaders[@"Accept-Language"]).to.equal(@"en-US");
