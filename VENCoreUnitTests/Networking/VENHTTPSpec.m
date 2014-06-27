@@ -1,6 +1,9 @@
 #import "VENHTTP.h"
 #import "VENHTTPResponse.h"
 #import "VENCore.h"
+#import "NSString+VENCore.h"
+
+#import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
 
 #define kVENHTTPTestProtocolScheme @"ven-http-test"
 #define kVENHTTPTestProtocolHost @"base.example.com"
@@ -290,10 +293,10 @@ describe(@"performing a request", ^{
 
         describe(@"in GET requests", ^{
             it(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
-                NSString *encodedParameters = @"trueBoolParam=1&stringParam=value&arrayParam%5B%5D=i1&arrayParam%5B%5D=i2&numericParam=42&falseBoolParam=0";
-
                 [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
+                    NSString *encodedParameters = [[CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary]
+                                                   stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     expect(httpRequest.URL.query).to.equal(encodedParameters);
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
@@ -304,11 +307,10 @@ describe(@"performing a request", ^{
 
         describe(@"in non-GET requests", ^{
             it(@"transmits the parameters as JSON", ^AsyncBlock{
-                NSString *encodedParameters = @"trueBoolParam=1&stringParam=value&arrayParam[]=i1&arrayParam[]=i2&numericParam=42&falseBoolParam=0";
-
                 [http POST:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                     NSString *httpRequestBody = [VENHTTPTestProtocol parseRequestBodyFromTestResponse:response];
+                    NSString *encodedParameters = [CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary];
 
                     expect([httpRequest valueForHTTPHeaderField:@"Content-type"]).to.equal(@"application/x-www-form-urlencoded; charset=utf-8");
                     expect(httpRequestBody).to.equal(encodedParameters);
