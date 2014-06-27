@@ -5,3 +5,4 @@ before_install:
 xcode_workspace: VENCore.xcworkspace
 xcode_scheme: VENCore
 xcode_sdk: iphonesimulator
+after_success: slather
