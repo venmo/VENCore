@@ -304,7 +304,7 @@ describe(@"performing a request", ^{
 
         describe(@"in GET requests", ^{
             it(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
-                NSString *encodedParameters = @"arrayParam%5B%5D=i1&arrayParam%5B%5D=i2&stringParam=value&numericParam=42&trueBoolParam=1&falseBoolParam=0";
+                NSString *encodedParameters = @"trueBoolParam=1&stringParam=value&arrayParam%5B%5D=i1&arrayParam%5B%5D=i2&numericParam=42&falseBoolParam=0";
 
                 [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
@@ -318,7 +318,7 @@ describe(@"performing a request", ^{
 
         describe(@"in non-GET requests", ^{
             it(@"transmits the parameters as JSON", ^AsyncBlock{
-                NSString *encodedParameters = @"arrayParam[]=i1&arrayParam[]=i2&stringParam=value&numericParam=42&trueBoolParam=1&falseBoolParam=0";
+                NSString *encodedParameters = @"trueBoolParam=1&stringParam=value&arrayParam[]=i1&arrayParam[]=i2&numericParam=42&falseBoolParam=0";
 
                 [http POST:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
