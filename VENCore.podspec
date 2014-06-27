@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "VENCore"
-  s.version      = "1.0.0"
+  s.version      = "2.0.0"
   s.summary      = "Core Venmo client library"
   s.description  = <<-DESC
                    Core iOS client library for the Venmo api
@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
                      :tag => "v#{s.version}"
   }
   s.source_files = 'VENCore/**/*.{h,m}'
-  s.dependency 'AFNetworking'
+  s.dependency 'CMDQueryStringSerialization', '~>0.2.0'
   s.requires_arc = true
 end

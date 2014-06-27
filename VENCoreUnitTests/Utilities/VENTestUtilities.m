@@ -1,6 +1,4 @@
 #import "VENTestUtilities.h"
-#import <AFNetworking/AFURLRequestSerialization.h>
-#import <AFNetworking/AFNetworking.h>
 #import "VENCore.h"
 
 @implementation VENTestUtilities
@@ -20,15 +18,8 @@
 }
 
 
-+ (NSString *)queryStringFromParameters:(NSDictionary *)parameters {
-    AFHTTPRequestSerializer *serializer = [[AFHTTPRequestSerializer alloc] init];
-    NSURLRequest *request = [serializer requestWithMethod:@"GET" URLString:@"" parameters:parameters error:nil];
-    return request.URL.query;
-}
-
-
 + (NSString *)baseURLStringForCore:(VENCore *)core {
-    return [core.httpClient.operationManager.baseURL absoluteString];
+    return [core.httpClient.baseURL absoluteString];
 }
 
 
@@ -39,8 +30,7 @@
     NSString *responseFileContents = [self stringFromJSONResource:filePath];
     
     NSMutableDictionary *headers = [[[VENCore defaultCore].httpClient defaultHeaders] mutableCopy];
-    headers[@"Content-Type"] = @"application/json";
-    
+
     stubRequest(@"GET", path).
     andReturn(statusCode).
     withHeaders(headers).

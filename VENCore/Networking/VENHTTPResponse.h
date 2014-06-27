@@ -22,11 +22,6 @@ NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
 - (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(NSDictionary *)object;
 
 
-/**
- * Initializes a response object with an AFHTTPRequestOperation.
- */
-- (instancetype)initWithOperation:(AFHTTPRequestOperation *)operation;
-
 
 /**
  * Returns YES if the response represents an error state.

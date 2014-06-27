@@ -1,23 +1,5 @@
 PODS:
-  - AFNetworking (2.2.3):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-    - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.3):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.3)
-  - AFNetworking/Security (2.2.3)
-  - AFNetworking/Serialization (2.2.3)
-  - AFNetworking/UIKit (2.2.3):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
+  - CMDQueryStringSerialization (0.2.0)
   - Expecta (0.3.0)
   - Nocilla (0.8.1)
   - OCHamcrest (3.0.1)
@@ -25,7 +7,7 @@ PODS:
   - Specta (0.2.1)
 
 DEPENDENCIES:
-  - AFNetworking
+  - CMDQueryStringSerialization (~> 0.2.0)
   - Expecta
   - Nocilla
   - OCHamcrest
@@ -33,7 +15,7 @@ DEPENDENCIES:
   - Specta
 
 SPEC CHECKSUMS:
-  AFNetworking: 47947303319594706f48a55185ea95a95159ab94
+  CMDQueryStringSerialization: e53570ccbce6004acba30b1c1210e254644cdb92
   Expecta: ce8a51b9fad15a2cd573b291cb2909aaed865350
   Nocilla: e573c2bf9113c8d77782b695a2f9362b7bc44e72
   OCHamcrest: 207233b7d7a44dadd66aca398947cc7e029c9be5
