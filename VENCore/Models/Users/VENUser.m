@@ -1,5 +1,7 @@
 #import "VENUser.h"
 #import "VENCore.h"
+#import "NSArray+VENCore.h"
+
 
 @implementation VENUser
 
@@ -208,17 +210,8 @@
                                     success:^(VENHTTPResponse *response) {
                                         NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
                                         if([self canMakeFriendsArray:friendsPayload] && successBlock){
-                                            for(int i=0; i<[friendsPayload count]; i++){
-                                                NSDictionary *cleanDictionary = [friendsPayload[i] dictionaryByCleansingResponseDictionary];
-                                                friendsPayload[i][@"username"]           = cleanDictionary[VENUserKeyUsername];
-                                                friendsPayload[i][@"firstName"]          = cleanDictionary[VENUserKeyFirstName];
-                                                friendsPayload[i][@"lastName"]           = cleanDictionary[VENUserKeyLastName];
-                                                friendsPayload[i][@"displayName"]        = cleanDictionary[VENUserKeyDisplayName];
-                                                friendsPayload[i][@"about"]              = cleanDictionary[VENUserKeyAbout];
-                                                friendsPayload[i][@"externalId"]         = cleanDictionary[VENUserKeyExternalId];
-                                                friendsPayload[i][@"profileImageUrl"]    = cleanDictionary[VENUserKeyProfileImageUrl];
-                                            }
-                                            successBlock(friendsPayload);
+                                            NSArray *cleanArray = [friendsPayload arrayByCleansingResponseArray];
+                                            successBlock(cleanArray);
                                         }
                                         else if (failureBlock){
                                             failureBlock(response.error);
@@ -236,8 +229,6 @@
 
                                     }];
 }
-
-
 
 
 @end

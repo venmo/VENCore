@@ -124,7 +124,6 @@ describe(@"cleanseResponseDictionary", ^{
         NSMutableDictionary *cleansedMutableDictionary = [mutableDictionary mutableCopy];
         [cleansedMutableDictionary setObject:cleansedMemberDictionary
                                       forKey:@"dictionary"];
-        
         [mutableDictionary cleanseResponseDictionary];
         expect(mutableDictionary).to.equal(cleansedMutableDictionary);
     });

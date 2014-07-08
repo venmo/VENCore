@@ -253,11 +253,62 @@ describe(@"Fetching a User", ^{
     
 });
 
-describe(@"Fetching Friends", ^{
+fdescribe(@"Fetching Friends", ^{
     it(@"should retrieve a pre-canned list of friends and create a valid array of friends", ^AsyncBlock{
-        [VENTestUtilities stubNetworkGET:@"url" withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        NSString *externalId = @"1106387358711808339"; //invalid external id
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            expect([friendsArray count]).to.equal(5);
+            done();
+ 
+        } failure:^(NSError *error){
+            XCTFail();
+            done();
+
+        }];
         
     });
+    
+    it(@"should call failure when cannot find a user with that external Id", ^AsyncBlock{
+        NSString *externalId = @"1106387358711808339"; //invalid external id
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect([error localizedDescription]).to.equal(@"Resource not found.");
+            done();
+        }];
+        
+    });
+    
+    it(@"should call failure when not passed an external id", ^AsyncBlock{
+        [VENUser fetchFriendsWithExternalId:nil success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
+    
+    it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
+        [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
+
+    
 });
 
 SpecEnd
