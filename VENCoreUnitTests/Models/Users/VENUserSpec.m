@@ -253,4 +253,11 @@ describe(@"Fetching a User", ^{
     
 });
 
+describe(@"Fetching Friends", ^{
+    it(@"should retrieve a pre-canned list of friends and create a valid array of friends", ^AsyncBlock{
+        [VENTestUtilities stubNetworkGET:@"url" withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        
+    });
+});
+
 SpecEnd

@@ -82,6 +82,24 @@
     return YES;
 }
 
++(BOOL)canMakeFriendsArray:(NSArray *)array{
+    if(![array isKindOfClass:[NSArray class]]){
+        return NO;
+    }
+    NSArray *requiredKeys = @[VENUserKeyExternalId, VENUserKeyUsername];
+
+    for(int i = 0; i<[array count]; i++){
+        if(![array[i] isKindOfClass:[NSDictionary class]]){
+            for(NSString *key in requiredKeys){
+                if(!array[i][key] || [array[i][key] isEqualToString:@""]){
+                    return NO;
+                }
+            }
+        }
+    }
+    return YES;
+}
+
 
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
@@ -173,5 +191,53 @@
                                         }
                                     }];
 }
+
++ (void)fetchFriendsWithExternalId:(NSString *)externalId
+                           success:(VENFriendsFetchSuccessBlock)successBlock
+                           failure:(VENFriendsFetchFailureBlock)failureBlock {
+    if((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
+        NSError *error = [[NSError alloc] initWithDomain:VENErrorDomainCore
+                                                    code:-999
+                                                userInfo:@{}];
+        failureBlock(error);
+        return;
+    }
+    NSDictionary *parameters = @{@"limit": @"1000"};
+    [[[VENCore defaultCore] httpClient] GET:[NSString stringWithFormat:@"users/%@/friends", externalId]
+                                 parameters:parameters
+                                    success:^(VENHTTPResponse *response) {
+                                        NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
+                                        if([self canMakeFriendsArray:friendsPayload] && successBlock){
+                                            for(int i=0; i<[friendsPayload count]; i++){
+                                                NSDictionary *cleanDictionary = [friendsPayload[i] dictionaryByCleansingResponseDictionary];
+                                                friendsPayload[i][@"username"]           = cleanDictionary[VENUserKeyUsername];
+                                                friendsPayload[i][@"firstName"]          = cleanDictionary[VENUserKeyFirstName];
+                                                friendsPayload[i][@"lastName"]           = cleanDictionary[VENUserKeyLastName];
+                                                friendsPayload[i][@"displayName"]        = cleanDictionary[VENUserKeyDisplayName];
+                                                friendsPayload[i][@"about"]              = cleanDictionary[VENUserKeyAbout];
+                                                friendsPayload[i][@"externalId"]         = cleanDictionary[VENUserKeyExternalId];
+                                                friendsPayload[i][@"profileImageUrl"]    = cleanDictionary[VENUserKeyProfileImageUrl];
+                                            }
+                                            successBlock(friendsPayload);
+                                        }
+                                        else if (failureBlock){
+                                            failureBlock(response.error);
+                                        }
+                                    }
+                                    failure:^(VENHTTPResponse *response, NSError *error){
+                                        
+                                        if ([response error]) {
+                                            error = [response error];
+                                        }
+                                        
+                                        if (failureBlock) {
+                                            failureBlock(error);
+                                        }
+
+                                    }];
+}
+
+
+
 
 @end

@@ -14,6 +14,12 @@
         else if ([(NSObject *)self[key] isKindOfClass:[NSDictionary class]]) {
             self[key] = [((NSDictionary *)self[key]) dictionaryByCleansingResponseDictionary];
         }
+        else if([(NSObject *)self[key] isKindOfClass:[NSArray class]]){
+            for(int i = 0; i<[self[key] count]; i++){
+                self[key][i] = [((NSDictionary *)self[key]) dictionaryByCleansingResponseDictionary];
+            }
+            
+        }
     }
 }
 
