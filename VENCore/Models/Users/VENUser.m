@@ -1,6 +1,6 @@
 #import "VENUser.h"
 #import "VENCore.h"
-#import "NSArray+VENCore.h"
+
 
 
 @implementation VENUser
@@ -84,25 +84,6 @@
     return YES;
 }
 
-+(BOOL)canMakeFriendsArray:(NSArray *)array{
-    if(![array isKindOfClass:[NSArray class]]){
-        return NO;
-    }
-    NSArray *requiredKeys = @[VENUserKeyExternalId, VENUserKeyUsername];
-
-    for(int i = 0; i<[array count]; i++){
-        if(![array[i] isKindOfClass:[NSDictionary class]]){
-            for(NSString *key in requiredKeys){
-                if(!array[i][key] || [array[i][key] isEqualToString:@""]){
-                    return NO;
-                }
-            }
-        }
-    }
-    return YES;
-}
-
-
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 
@@ -152,7 +133,6 @@
 
     return dictionary;
 }
-
 
 + (void)fetchUserWithExternalId:(NSString *)externalId
                         success:(VENUserFetchSuccessBlock)successBlock
@@ -209,9 +189,18 @@
                                  parameters:parameters
                                     success:^(VENHTTPResponse *response) {
                                         NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
-                                        if([self canMakeFriendsArray:friendsPayload] && successBlock){
-                                            NSArray *cleanArray = [friendsPayload arrayByCleansingResponseArray];
-                                            successBlock(cleanArray);
+                                        if(successBlock){
+                                            NSMutableArray *friendsArray = [[NSMutableArray alloc] init];
+                                            for (id object in friendsPayload) {
+                                                if ([object isKindOfClass:[NSDictionary class]]) {
+                                                    NSDictionary *friendDictionary = (NSDictionary *)object;
+                                                    if ([VENUser canInitWithDictionary:friendDictionary]) {
+                                                        VENUser *friend = [[VENUser alloc] initWithDictionary:friendDictionary];
+                                                        [friendsArray addObject:friend];
+                                                    }
+                                                }
+                                            }
+                                            successBlock(friendsArray);
                                         }
                                         else if (failureBlock){
                                             failureBlock(response.error);
@@ -229,6 +218,5 @@
 
                                     }];
 }
-
 
 @end

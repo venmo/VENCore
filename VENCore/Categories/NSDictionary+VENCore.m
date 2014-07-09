@@ -1,5 +1,4 @@
 #import "NSDictionary+VENCore.h"
-#import "NSArray+VENCore.h"
 
 @implementation NSMutableDictionary (VENCore)
 
@@ -13,10 +12,6 @@
         }
         else if ([(NSObject *)self[key] isKindOfClass:[NSDictionary class]]) {
             self[key] = [((NSDictionary *)self[key]) dictionaryByCleansingResponseDictionary];
-        }
-        else if([(NSObject *)self[key] isKindOfClass:[NSArray class]]) {
-            NSArray *array = [(NSArray *)self[key] copy];
-            self[key] = [array arrayByCleansingResponseArray];
         }
     }
 }
