@@ -48,7 +48,7 @@
     NSMutableDictionary *dictionary  = [self mutableCopy];
     [dictionary cleanseResponseDictionary];
 
-    return [NSDictionary dictionaryWithDictionary:dictionary];
+    return [[self class] dictionaryWithDictionary:dictionary];
 }
 
 @end
