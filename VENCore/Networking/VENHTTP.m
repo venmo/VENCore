@@ -4,7 +4,7 @@
 #import "VENHTTPResponse.h"
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
-
+#import "NSDictionary+VENCore.h"
 #import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
 
 NSString *const VENAPIPathPayments  = @"payments";
@@ -71,6 +71,7 @@ NSString *const VENAPIPathUsers     = @"users";
      success:(void(^)(VENHTTPResponse *response))successBlock
      failure:(void(^)(VENHTTPResponse *response, NSError *error))failureBlock
 {
+    
     [self sendRequestWithMethod:@"POST" path:path parameters:parameters success:successBlock failure:failureBlock];
 }
 
@@ -144,21 +145,34 @@ NSString *const VENAPIPathUsers     = @"users";
 
     // Attempt to parse, and return an error if parsing fails
     NSError *jsonParseError;
-    NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+    
     if (jsonParseError != nil) {
         [self callFailureBlock:failureBlock response:nil error:jsonParseError];
         return;
     }
 
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:responseObject];
-    if ([venHTTPResponse didError]) {
-        [self callFailureBlock:failureBlock
-                      response:venHTTPResponse
-                         error:[venHTTPResponse error]];
+    if ([responseObject isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *responseDictionary = (NSDictionary *)responseObject;
+        NSDictionary *cleansedDictionary = [responseDictionary dictionaryByCleansingResponseDictionary];
+
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:cleansedDictionary];
+        if ([venHTTPResponse didError]) {
+            [self callFailureBlock:failureBlock
+                          response:venHTTPResponse
+                             error:[venHTTPResponse error]];
+        }
+        else {
+            [self callSuccessBlock:successBlock response:venHTTPResponse];
+        }
     }
     else {
-        [self callSuccessBlock:successBlock response:venHTTPResponse];
+        NSDictionary *userInfo = error ? @{NSUnderlyingErrorKey: error} : nil;
+        NSError *error = [NSError errorWithDomain:VENErrorDomainHTTPResponse
+                                             code:VENErrorCodeHTTPResponseInvalidObjectType
+                                         userInfo:userInfo];
+        [self callFailureBlock:failureBlock response:nil error:error];
     }
 }
 
