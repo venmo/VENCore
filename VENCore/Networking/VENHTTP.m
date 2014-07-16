@@ -5,7 +5,6 @@
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
-
 #import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
 
 NSString *const VENAPIPathPayments  = @"payments";
@@ -147,15 +146,15 @@ NSString *const VENAPIPathUsers     = @"users";
     // Attempt to parse, and return an error if parsing fails
     NSError *jsonParseError;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+    
+    if (jsonParseError != nil) {
+        [self callFailureBlock:failureBlock response:nil error:jsonParseError];
+        return;
+    }
 
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *responseDictionary = (NSDictionary *) responseObject;
+        NSDictionary *responseDictionary = (NSDictionary *)responseObject;
         NSDictionary *cleansedDictionary = [responseDictionary dictionaryByCleansingResponseDictionary];
-
-        if (jsonParseError != nil) {
-            [self callFailureBlock:failureBlock response:nil error:jsonParseError];
-            return;
-        }
 
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:cleansedDictionary];

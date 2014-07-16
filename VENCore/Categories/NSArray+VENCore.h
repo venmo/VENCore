@@ -1,4 +1,3 @@
-//
 //  NSArray+VENCore.h
 //  VENCore
 //
@@ -9,10 +8,12 @@
 #import <Foundation/Foundation.h>
 
 @interface NSMutableArray (VENCore)
+
 /**
 * Removes all elements which have NULL values from the array
 */
 - (void)cleanseResponseArray;
+
 @end
 
 @interface NSArray (VENCore)

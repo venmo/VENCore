@@ -35,7 +35,7 @@ describe(@"cleanseResponseArray", ^{
     });
 
     it(@"should not modify NSArray memebers that dont contain NSNull/NSNumber values or NSArray members", ^{
-        NSArray *array = @[@"Lucas",@"uses",@"Venmo"];
+        NSArray *array = @[@"Lucas", @"uses", @"Venmo"];
         NSDictionary *dictionary = @{@1: @"one",
                                      @2: @"two",
                                      @3: @"3"};
@@ -48,7 +48,7 @@ describe(@"cleanseResponseArray", ^{
     });
 
     it(@"should cleanse NSDictionary and NSArray members that contain NSNull/NSNumber values", ^{
-        NSArray *memberArray = @[@"Lucas",@"uses",@"Venmo"];
+        NSArray *memberArray = @[@"Lucas", @"uses", @"Venmo"];
         NSDictionary *memberDictionary = @{@1: @"one",
                                            @2: [NSNull null],
                                            @3: @3};
