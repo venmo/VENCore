@@ -1,11 +1,3 @@
-//
-//  NSArray+VENCore.m
-//  VENCore
-//
-//  Created by Leah Steinberg on 7/10/14.
-//  Copyright (c) 2014 Venmo. All rights reserved.
-//
-
 #import "NSArray+VENCore.h"
 #import "NSDictionary+VENCore.h"
 
