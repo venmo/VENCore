@@ -1,5 +1,6 @@
 #import "NSDictionary+VENCore.h"
 
+
 SpecBegin(NSDictionaryVENCore)
 
 describe(@"objectOrNilForKey:", ^{
@@ -122,8 +123,8 @@ describe(@"cleanseResponseDictionary", ^{
         NSDictionary *cleansedMemberDictionary = @{@1: @"one",
                                                    @3: @"3"};
         NSMutableDictionary *cleansedMutableDictionary = [mutableDictionary mutableCopy];
-        [cleansedMutableDictionary setObject:cleansedMemberDictionary
-                                      forKey:@"dictionary"];
+        [cleansedMutableDictionary setObject:cleansedMemberDictionary forKey:@"dictionary"];
+
         [mutableDictionary cleanseResponseDictionary];
         expect(mutableDictionary).to.equal(cleansedMutableDictionary);
     });
