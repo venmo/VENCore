@@ -118,6 +118,11 @@ NSString *const VENAPIPathUsers     = @"users";
         NSDictionary *headers = @{@"Content-Type": @"application/x-www-form-urlencoded; charset=utf-8"};
         [request setAllHTTPHeaderFields:headers];
     }
+    // add headers
+    NSMutableDictionary *currentHeaders = [NSMutableDictionary dictionaryWithDictionary:request.allHTTPHeaderFields];
+    [currentHeaders addEntriesFromDictionary:[self headersWithAccessToken:self.accessToken]];
+    [request setAllHTTPHeaderFields:currentHeaders];
+
     [request setHTTPMethod:method];
 
     // Perform the actual request
@@ -198,17 +203,24 @@ NSString *const VENAPIPathUsers     = @"users";
     });
 }
 
-- (void)setAccessToken:(NSString *)accessToken
+- (NSDictionary *)headersWithAccessToken:(NSString *)accessToken
 {
     NSDictionary *cookieProperties = @{ NSHTTPCookieDomain : [self.baseURL host],
                                         NSHTTPCookiePath: @"/",
-                                        NSHTTPCookieName : @"api_access_token",
-                                        NSHTTPCookieValue : accessToken };
+                                        NSHTTPCookieName: @"api_access_token",
+                                        NSHTTPCookieValue: accessToken };
     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
-    // add cookie to cookiestorage for webview requests
+    // add cookie to shared cookie storage for webview requests
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     NSMutableDictionary *headers = [NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie requestHeaderFieldsWithCookies:@[cookie]]];
     [headers addEntriesFromDictionary:[self defaultHeaders]];
+    return headers;
+}
+
+- (void)setAccessToken:(NSString *)accessToken
+{
+    self.accessToken = accessToken;
+    NSDictionary *headers = [self headersWithAccessToken:accessToken];
     [self initializeSessionWithHeaders:headers];
 }
 
