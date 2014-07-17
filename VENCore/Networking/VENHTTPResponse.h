@@ -11,7 +11,8 @@ NSString *const VENErrorDomainHTTPResponse;
 
 NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
     VENErrorCodeHTTPResponseUnauthorizedRequest,
-    VENErrorCodeHTTPResponseBadResponse
+    VENErrorCodeHTTPResponseBadResponse,
+    VENErrorCodeHTTPResponseInvalidObjectType
 };
 
 @interface VENHTTPResponse : NSObject
