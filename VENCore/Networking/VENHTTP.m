@@ -220,6 +220,10 @@ NSString *const VENAPIPathUsers     = @"users";
 
 - (NSDictionary *)headersWithAccessToken:(NSString *)accessToken
 {
+    if (!accessToken) {
+        return [self defaultHeaders];
+    }
+
     NSDictionary *cookieProperties = @{ NSHTTPCookieDomain : [self.baseURL host],
                                         NSHTTPCookiePath: @"/",
                                         NSHTTPCookieName: @"api_access_token",
