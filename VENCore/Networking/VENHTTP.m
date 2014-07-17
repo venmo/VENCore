@@ -5,6 +5,7 @@
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
+#import "NSArray+VENCore.h"
 #import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
 
 NSString *const VENAPIPathPayments  = @"payments";
@@ -163,6 +164,20 @@ NSString *const VENAPIPathUsers     = @"users";
 
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:cleansedDictionary];
+        if ([venHTTPResponse didError]) {
+            [self callFailureBlock:failureBlock
+                          response:venHTTPResponse
+                             error:[venHTTPResponse error]];
+        }
+        else {
+            [self callSuccessBlock:successBlock response:venHTTPResponse];
+        }
+    }
+    else if ([responseObject isKindOfClass:[NSArray class]]) {
+        NSArray *responseArray = (NSArray *)responseObject;
+        NSArray *cleansedArray = [responseArray arrayByCleansingResponseArray];
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:cleansedArray];
         if ([venHTTPResponse didError]) {
             [self callFailureBlock:failureBlock
                           response:venHTTPResponse
