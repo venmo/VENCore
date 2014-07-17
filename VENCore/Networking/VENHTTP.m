@@ -219,7 +219,7 @@ NSString *const VENAPIPathUsers     = @"users";
 
 - (void)setAccessToken:(NSString *)accessToken
 {
-    self.accessToken = accessToken;
+    _accessToken = accessToken;
     NSDictionary *headers = [self headersWithAccessToken:accessToken];
     [self initializeSessionWithHeaders:headers];
 }
