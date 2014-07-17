@@ -19,6 +19,13 @@ NSDictionary *validUserDictionary2 = @{VENUserKeyUsername: @"PetefadsrIsAZakin",
                                        VENUserKeyLastName: @"Mafadsddern",
                                        VENUserKeyAbout: @"Happifasdly married!"};
 
+NSDictionary *validUserDictionary3 = @{VENUserKeyUsername: @"PetefadsrIsAZakin",
+                                       VENUserKeyInternalId: @"234223434",
+                                       VENUserKeyExternalId: @"JLHDSJFIOHh23ioHLH",
+                                       VENUserKeyFirstName: @"Pefadster",
+                                       VENUserKeyLastName: @"Mafadsddern",
+                                       VENUserKeyAbout: @"Happifasdly married!"};
+
 NSDictionary *invalidUserDictionary1 = @{VENUserKeyInternalId: @"234234",
                                          VENUserKeyExternalId: @"JLHDSJFIOHh23ioHLH",
                                          VENUserKeyFirstName: @"Peter",
@@ -74,7 +81,6 @@ describe(@"Initialization", ^{
         expect(usr.firstName).to.beNil();
         expect(usr.lastName).to.beNil();
         expect(usr.profileImageUrl).to.beNil();
-
     });
 
     it(@"should return NO to canInitWithDictionary for an invalid dictionary", ^{
@@ -134,12 +140,14 @@ describe(@"Copying", ^{
 describe(@"Equality", ^{
 
     it(@"should correctly validate two equal objects", ^{
-
         VENUser *user1 = [[VENUser alloc] initWithDictionary:validUserDictionary1];
         VENUser *user2 = [user1 copy];
 
         expect([user1 isEqual:user2]).to.beTruthy();
 
+        VENUser *user3 = [[VENUser alloc] initWithDictionary:validUserDictionary3];
+
+        expect([user1 isEqual:user3]).to.beTruthy();
     });
 
     it(@"should not indicate that two different users are the same", ^{
@@ -161,7 +169,6 @@ describe(@"Equality", ^{
 
         expect([user1 isEqual:user2]).to.beTruthy();
         expect([user2 isEqual:user1]).to.beTruthy();
-
     });
 
     it(@"should follow the rule that two users are equal ONLY if their external Ids are the same", ^{
@@ -174,7 +181,15 @@ describe(@"Equality", ^{
         VENUser *copiedInvalidUser = [invalidUser copy];
         
         expect(invalidUser).toNot.equal(copiedInvalidUser);
-        
+    });
+
+    it(@"should perform correct set operations", ^{
+        VENUser *user1 = [[VENUser alloc] initWithDictionary:validUserDictionary1];
+        VENUser *user3 = [[VENUser alloc] initWithDictionary:validUserDictionary3];
+        NSSet *set1 = [NSSet setWithArray:@[user1]];
+        NSSet *set2 = [NSSet setWithArray:@[user3]];
+        NSSet *combinedSet = [set1 setByAddingObjectsFromSet:set2];
+        expect([combinedSet count]).to.equal(1);
     });
 });
 

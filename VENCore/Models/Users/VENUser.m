@@ -60,7 +60,8 @@
     }
     VENUser *comparisonUser = (VENUser *)object;
 
-    return [self.externalId isEqualToString:comparisonUser.externalId];
+    BOOL result = [self.externalId isEqualToString:comparisonUser.externalId];
+    return result;
 }
 
 
