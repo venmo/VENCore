@@ -244,6 +244,16 @@ describe(@"performing a request", ^{
         });
     });
 
+    describe(@"JSON deserialization", ^{
+        it(@"correctly handles a dictionary response object", ^{
+#warning UNIMPLEMENTED
+        });
+
+        it(@"correctly handles an array response object", ^{
+#warning UNIMPLEMENTED
+        });
+    });
+
     describe(@"default headers", ^{
         it(@"include Accept", ^AsyncBlock{
             [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {

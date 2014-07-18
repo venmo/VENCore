@@ -5,6 +5,7 @@
 #import "UIDevice+VENCore.h"
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
+#import "NSArray+VENCore.h"
 #import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
 
 NSString *const VENAPIPathPayments  = @"payments";
@@ -118,6 +119,11 @@ NSString *const VENAPIPathUsers     = @"users";
         NSDictionary *headers = @{@"Content-Type": @"application/x-www-form-urlencoded; charset=utf-8"};
         [request setAllHTTPHeaderFields:headers];
     }
+    // add headers
+    NSMutableDictionary *currentHeaders = [NSMutableDictionary dictionaryWithDictionary:request.allHTTPHeaderFields];
+    [currentHeaders addEntriesFromDictionary:[self headersWithAccessToken:self.accessToken]];
+    [request setAllHTTPHeaderFields:currentHeaders];
+
     [request setHTTPMethod:method];
 
     // Perform the actual request
@@ -167,6 +173,20 @@ NSString *const VENAPIPathUsers     = @"users";
             [self callSuccessBlock:successBlock response:venHTTPResponse];
         }
     }
+    else if ([responseObject isKindOfClass:[NSArray class]]) {
+        NSArray *responseArray = (NSArray *)responseObject;
+        NSArray *cleansedArray = [responseArray arrayByCleansingResponseArray];
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        VENHTTPResponse *venHTTPResponse = [[VENHTTPResponse alloc] initWithStatusCode:httpResponse.statusCode responseObject:cleansedArray];
+        if ([venHTTPResponse didError]) {
+            [self callFailureBlock:failureBlock
+                          response:venHTTPResponse
+                             error:[venHTTPResponse error]];
+        }
+        else {
+            [self callSuccessBlock:successBlock response:venHTTPResponse];
+        }
+    }
     else {
         NSDictionary *userInfo = error ? @{NSUnderlyingErrorKey: error} : nil;
         NSError *error = [NSError errorWithDomain:VENErrorDomainHTTPResponse
@@ -198,17 +218,28 @@ NSString *const VENAPIPathUsers     = @"users";
     });
 }
 
-- (void)setAccessToken:(NSString *)accessToken
+- (NSDictionary *)headersWithAccessToken:(NSString *)accessToken
 {
+    if (!accessToken) {
+        return [self defaultHeaders];
+    }
+
     NSDictionary *cookieProperties = @{ NSHTTPCookieDomain : [self.baseURL host],
                                         NSHTTPCookiePath: @"/",
-                                        NSHTTPCookieName : @"api_access_token",
-                                        NSHTTPCookieValue : accessToken };
+                                        NSHTTPCookieName: @"api_access_token",
+                                        NSHTTPCookieValue: accessToken };
     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
-    // add cookie to cookiestorage for webview requests
+    // add cookie to shared cookie storage for webview requests
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     NSMutableDictionary *headers = [NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie requestHeaderFieldsWithCookies:@[cookie]]];
     [headers addEntriesFromDictionary:[self defaultHeaders]];
+    return headers;
+}
+
+- (void)setAccessToken:(NSString *)accessToken
+{
+    _accessToken = accessToken;
+    NSDictionary *headers = [self headersWithAccessToken:accessToken];
     [self initializeSessionWithHeaders:headers];
 }
 
