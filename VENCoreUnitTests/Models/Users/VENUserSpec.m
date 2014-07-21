@@ -5,6 +5,8 @@
 
 SpecBegin(VENUser)
 
+NSString *accessToken = @"0000000000";
+
 NSDictionary *validUserDictionary1 = @{VENUserKeyUsername: @"PeterIsAZakin",
                                        VENUserKeyInternalId: @"234234",
                                        VENUserKeyExternalId: @"JLHDSJFIOHh23ioHLH",
@@ -48,10 +50,9 @@ void(^assertUsersAreFieldwiseEqual)(VENUser *, VENUser *) = ^(VENUser *user1, VE
 
 
 beforeAll(^{
-    
     VENCore *core = [[VENCore alloc] init];
+    [core setAccessToken:accessToken];
     [VENCore setDefaultCore:core];
-    
     [[LSNocilla sharedInstance] start];
 });
 
@@ -69,7 +70,6 @@ describe(@"Initialization", ^{
     it(@"should succesfully create an empty object from init", ^{
         VENUser *usr = [[VENUser alloc] init];
         expect(usr).toNot.beNil();
-
         expect(usr.username).to.beNil();
         expect(usr.firstName).to.beNil();
         expect(usr.lastName).to.beNil();
@@ -257,7 +257,7 @@ describe(@"Fetching Friends", ^{
     it(@"should retrieve a pre-canned list of friends and create a valid array of friends", ^AsyncBlock{
         NSString *externalId = @"110638735871180833";
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
 
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
@@ -276,7 +276,7 @@ describe(@"Fetching Friends", ^{
     it(@"should retrieve a pre-canned list of friends and deletes the NSNull key and value from the friend", ^AsyncBlock{
         NSString *externalId = @"110638735871180833";
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
         
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
@@ -298,7 +298,7 @@ describe(@"Fetching Friends", ^{
     it(@"should retrieve a pre-canned list of friends and the users should be in the same order as the JSON and their values should be consistent with the JSON values", ^AsyncBlock{
         NSString *externalId = @"110638735871180833";
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
         
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
@@ -317,7 +317,7 @@ describe(@"Fetching Friends", ^{
     it(@"should call failure when cannot find a user with that external Id", ^AsyncBlock{
         NSString *externalId = @"1106387358711808339"; //invalid external id
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidFriends"];
         
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
@@ -340,6 +340,10 @@ describe(@"Fetching Friends", ^{
     });
     
     it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
+        NSString *externalId = @"";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
+
         [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
             XCTFail();
             done();

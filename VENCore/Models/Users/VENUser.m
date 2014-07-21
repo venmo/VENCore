@@ -218,14 +218,14 @@
                                                     }
                                                 }
                                             }
+                                            NSArray *arrayToPass = [friendsArray arrayByAddingObjectsFromArray:newFriendsArray];
                                             if ([[response.object valueForKey:@"pagination"] count] && [response.object[@"pagination"] valueForKey:@"next"]) {
                                                 NSMutableDictionary *newParameters =[parameters mutableCopy];
                                                 newParameters[@"after"] = [friendsPayload lastObject][@"id"];
-                                                NSArray *arrayToPass = [friendsArray arrayByAddingObjectsFromArray:newFriendsArray];
                                                 [VENUser fetchFriendsWithExternalId: externalId URLString:URLString parameters:newParameters friends:arrayToPass success:successBlock failure:failureBlock];
                                             }
                                             else {
-                                                successBlock(friendsArray);
+                                                successBlock(arrayToPass);
                                             }
                                         }
                                         else if (failureBlock) {

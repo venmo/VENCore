@@ -1,7 +1,4 @@
 {
-    "pagination":{
-        "next":"https://api.venmo.com/v1/users/1088551785594880949/friends?after=161568197181440668&limit=3"
-    },
     "data":[
             {
             "username":"kortina",
