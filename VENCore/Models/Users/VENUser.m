@@ -134,6 +134,7 @@
     return dictionary;
 }
 
+
 + (void)fetchUserWithExternalId:(NSString *)externalId
                         success:(VENUserFetchSuccessBlock)successBlock
                         failure:(VENUserFetchFailureBlock)failureBlock {
@@ -175,48 +176,72 @@
 }
 
 + (void)fetchFriendsWithExternalId:(NSString *)externalId
-                           success:(VENFriendsFetchSuccessBlock)successBlock
-                           failure:(VENFriendsFetchFailureBlock)failureBlock {
-    if((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
+                            success:(VENFriendsFetchSuccessBlock)successBlock
+                            failure:(VENFriendsFetchFailureBlock)failureBlock
+{
+    if ((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
         NSError *error = [[NSError alloc] initWithDomain:VENErrorDomainCore
                                                     code:-999
                                                 userInfo:@{}];
         failureBlock(error);
         return;
     }
-    NSDictionary *parameters = @{@"limit": @"1000"};
-    [[[VENCore defaultCore] httpClient] GET:[NSString stringWithFormat:@"users/%@/friends", externalId]
+    NSString *urlString = [NSString stringWithFormat:@"users/%@/friends", externalId];
+    [VENUser fetchFriendsWithExternalId:externalId URLString:urlString parameters:nil friends:nil success:successBlock failure:failureBlock];
+
+}
+
++ (void)fetchFriendsWithExternalId:(NSString *)externalId
+                         URLString:(NSString *)URLString
+                        parameters:(NSDictionary *)parameters
+                           friends:(NSArray *)friendsArray
+                           success:(VENFriendsFetchSuccessBlock)successBlock
+                           failure:(VENFriendsFetchFailureBlock)failureBlock {
+    if (!friendsArray) {
+        friendsArray = [[NSArray alloc] init];
+    }
+    if (!parameters) {
+        parameters = @{@"access_token" : [VENCore defaultCore].accessToken};
+    }
+    [[[VENCore defaultCore] httpClient] GET:URLString
                                  parameters:parameters
                                     success:^(VENHTTPResponse *response) {
                                         NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
-                                        if(successBlock){
-                                            NSMutableArray *friendsArray = [[NSMutableArray alloc] init];
+                                        if (successBlock) {
+                                            NSMutableArray *newFriendsArray = [[NSMutableArray alloc] init];
                                             for (id object in friendsPayload) {
                                                 if ([object isKindOfClass:[NSDictionary class]]) {
                                                     NSDictionary *friendDictionary = (NSDictionary *)object;
                                                     if ([VENUser canInitWithDictionary:friendDictionary]) {
                                                         VENUser *friend = [[VENUser alloc] initWithDictionary:friendDictionary];
-                                                        [friendsArray addObject:friend];
+                                                        [newFriendsArray addObject:friend];
                                                     }
                                                 }
                                             }
-                                            successBlock(friendsArray);
+                                            if ([[response.object valueForKey:@"pagination"] count] && [response.object[@"pagination"] valueForKey:@"next"]) {
+                                                NSMutableDictionary *newParameters =[parameters mutableCopy];
+                                                newParameters[@"after"] = [friendsPayload lastObject][@"id"];
+                                                NSArray *arrayToPass = [friendsArray arrayByAddingObjectsFromArray:newFriendsArray];
+                                                [VENUser fetchFriendsWithExternalId: externalId URLString:URLString parameters:newParameters friends:arrayToPass success:successBlock failure:failureBlock];
+                                            }
+                                            else {
+                                                successBlock(friendsArray);
+                                            }
                                         }
-                                        else if (failureBlock){
+                                        else if (failureBlock) {
                                             failureBlock(response.error);
                                         }
                                     }
-                                    failure:^(VENHTTPResponse *response, NSError *error){
+                                    failure:^(VENHTTPResponse *response, NSError *error) {
                                         
                                         if ([response error]) {
                                             error = [response error];
                                         }
-                                        
                                         if (failureBlock) {
                                             failureBlock(error);
                                         }
-
                                     }];
 }
+
 
 @end

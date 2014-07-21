@@ -26,4 +26,20 @@ describe(@"Fetching a user", ^{
     });
 });
 
+
+describe(@"Fetching friends", ^{
+    it(@"should retrieve a user's friends with a correct external id", ^AsyncBlock{
+        NSString *externalId = @"1367430278414336360"; // (Leah)
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friends) {
+            VENUser *firstFriend = [friends firstObject];
+            expect(firstFriend.externalId).to.equal(@"343986547982336794");
+            done();
+        } failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+});
+
 SpecEnd
