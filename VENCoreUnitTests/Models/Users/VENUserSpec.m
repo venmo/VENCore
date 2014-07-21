@@ -340,10 +340,6 @@ describe(@"Fetching Friends", ^{
     });
     
     it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
-        NSString *externalId = @"";
-        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
-
         [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
             XCTFail();
             done();
