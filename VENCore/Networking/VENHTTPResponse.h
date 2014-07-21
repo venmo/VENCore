@@ -17,10 +17,10 @@ NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
 
 @interface VENHTTPResponse : NSObject
 
-@property (nonatomic, readonly, strong) NSDictionary *object;
+@property (nonatomic, readonly, strong) id object;
 @property (nonatomic, readonly, assign) NSInteger statusCode;
 
-- (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(NSDictionary *)object;
+- (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(id)object;
 
 
 
