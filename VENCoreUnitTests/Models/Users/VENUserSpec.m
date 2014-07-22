@@ -253,7 +253,7 @@ describe(@"Fetching a User", ^{
     
 });
 
-describe(@"Fetching Friends", ^{
+describe(@"fetchFriendsWithExternalId:Success", ^{
     it(@"should retrieve a pre-canned list of friends and create a valid array of friends", ^AsyncBlock{
         NSString *externalId = @"110638735871180833";
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
@@ -269,7 +269,6 @@ describe(@"Fetching Friends", ^{
         } failure:^(NSError *error){
             XCTFail();
             done();
-
         }];
     });
 
