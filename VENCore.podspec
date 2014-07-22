@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
                    DESC
 
   s.homepage     = "https://github.com/venmo/VENCore"
-  s.license      = { :type => 'MIT', :file => 'LICENSE.md' }
+  s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Ben Guo" => "ben@venmo.com" }
   s.platform     = :ios, '6.0'
   s.source       = { :git => "https://github.com/venmo/VENCore.git",
