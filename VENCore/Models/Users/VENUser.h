@@ -5,6 +5,7 @@
 
 typedef void(^VENUserFetchSuccessBlock)(VENUser *user);
 typedef void(^VENUserFetchFailureBlock)(NSError *error);
+
 typedef void(^VENFriendsFetchSuccessBlock)(NSArray *friends);
 typedef void(^VENFriendsFetchFailureBlock)(NSError *error);
 /**

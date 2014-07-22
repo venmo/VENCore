@@ -279,14 +279,8 @@ describe(@"fetchFriendsWithExternalId:Success", ^{
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
         
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
-            for (id object in friendsArray) {
-                if ([object isKindOfClass:[VENUser class]]) {
-                    VENUser *user = (VENUser *) object;
-                    if ([user.username isEqualToString:@"great-friend"]) {
-                        expect(user.profileImageUrl).to.beNil();
-                    }
-                }
-            }
+            VENUser *lastFriend = (VENUser *) [friendsArray lastObject];
+            expect(lastFriend.profileImageUrl).to.beNil();
             done();
         } failure:^(NSError *error) {
             XCTFail();
@@ -301,11 +295,9 @@ describe(@"fetchFriendsWithExternalId:Success", ^{
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
         
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
-            if ([friendsArray[0] isKindOfClass:[VENUser class]]){
-                VENUser *friend = (VENUser *) friendsArray[0];
-                expect(friend.username).to.equal(@"kortina");
-                expect(friend.about).to.equal(@"make a joyful sound, la da da da");
-            }
+            VENUser *friend = (VENUser *) friendsArray[0];
+            expect(friend.username).to.equal(@"kortina");
+            expect(friend.about).to.equal(@"make a joyful sound, la da da da");
             done();
         } failure:^(NSError *error) {
             XCTFail();

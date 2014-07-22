@@ -140,9 +140,7 @@
                         failure:(VENUserFetchFailureBlock)failureBlock {
     
     if((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
-        NSError *error = [[NSError alloc] initWithDomain:VENErrorDomainCore
-                                                    code:-999
-                                                userInfo:@{}];
+        NSError *error = [NSError errorWithDomain:VENErrorDomainCore code:VENCoreErrorCodeMissingParameter description:@"Missing parameter externalId" recoverySuggestion:@"Please pass a valid externalId"];
         failureBlock(error);
         return;
     }
@@ -180,9 +178,7 @@
                             failure:(VENFriendsFetchFailureBlock)failureBlock
 {
     if ((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
-        NSError *error = [[NSError alloc] initWithDomain:VENErrorDomainCore
-                                                    code:-999
-                                                userInfo:@{}];
+        NSError *error = [NSError errorWithDomain:VENErrorDomainCore code:VENCoreErrorCodeMissingParameter description:@"Missing parameter externalId" recoverySuggestion:@"Please pass a valid externalId"];
         failureBlock(error);
         return;
     }
@@ -196,44 +192,47 @@
                         parameters:(NSDictionary *)parameters
                            friends:(NSArray *)friendsArray
                            success:(VENFriendsFetchSuccessBlock)successBlock
-                           failure:(VENFriendsFetchFailureBlock)failureBlock {
+                           failure:(VENFriendsFetchFailureBlock)failureBlock
+{
     if (!friendsArray) {
         friendsArray = [[NSArray alloc] init];
     }
     if (!parameters) {
         parameters = @{@"access_token" : [VENCore defaultCore].accessToken};
     }
+    
+    void (^successHandler)(VENHTTPResponse *response) = ^void(VENHTTPResponse *response){
+        NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
+        if (successBlock) {
+            NSMutableArray *newFriendsArray = [[NSMutableArray alloc] init];
+            for (id object in friendsPayload) {
+                if ([object isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *friendDictionary = (NSDictionary *)object;
+                    if ([VENUser canInitWithDictionary:friendDictionary]) {
+                        VENUser *friend = [[VENUser alloc] initWithDictionary:friendDictionary];
+                        [newFriendsArray addObject:friend];
+                    }
+                }
+            }
+            NSArray *arrayToPass = [friendsArray arrayByAddingObjectsFromArray:newFriendsArray];
+            if ([[response.object valueForKey:@"pagination"] count] && [response.object[@"pagination"] valueForKey:@"next"]) {
+                NSMutableDictionary *newParameters =[parameters mutableCopy];
+                newParameters[@"after"] = [friendsPayload lastObject][@"id"];
+                [VENUser fetchFriendsWithExternalId: externalId URLString:URLString parameters:newParameters friends:arrayToPass success:successBlock failure:failureBlock];
+            }
+            else {
+                successBlock(arrayToPass);
+            }
+        }
+        else if (failureBlock) {
+            failureBlock(response.error);
+        }
+    };
+    
     [[[VENCore defaultCore] httpClient] GET:URLString
                                  parameters:parameters
-                                    success:^(VENHTTPResponse *response) {
-                                        NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
-                                        if (successBlock) {
-                                            NSMutableArray *newFriendsArray = [[NSMutableArray alloc] init];
-                                            for (id object in friendsPayload) {
-                                                if ([object isKindOfClass:[NSDictionary class]]) {
-                                                    NSDictionary *friendDictionary = (NSDictionary *)object;
-                                                    if ([VENUser canInitWithDictionary:friendDictionary]) {
-                                                        VENUser *friend = [[VENUser alloc] initWithDictionary:friendDictionary];
-                                                        [newFriendsArray addObject:friend];
-                                                    }
-                                                }
-                                            }
-                                            NSArray *arrayToPass = [friendsArray arrayByAddingObjectsFromArray:newFriendsArray];
-                                            if ([[response.object valueForKey:@"pagination"] count] && [response.object[@"pagination"] valueForKey:@"next"]) {
-                                                NSMutableDictionary *newParameters =[parameters mutableCopy];
-                                                newParameters[@"after"] = [friendsPayload lastObject][@"id"];
-                                                [VENUser fetchFriendsWithExternalId: externalId URLString:URLString parameters:newParameters friends:arrayToPass success:successBlock failure:failureBlock];
-                                            }
-                                            else {
-                                                successBlock(arrayToPass);
-                                            }
-                                        }
-                                        else if (failureBlock) {
-                                            failureBlock(response.error);
-                                        }
-                                    }
+                                    success:successHandler
                                     failure:^(VENHTTPResponse *response, NSError *error) {
-                                        
                                         if ([response error]) {
                                             error = [response error];
                                         }

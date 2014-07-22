@@ -27,7 +27,7 @@ describe(@"Fetching a user", ^{
 });
 
 
-describe(@"Fetching friends", ^{
+describe(@"fetchFriendsWithExternalId:success:", ^{
     it(@"should retrieve a user's friends with a correct external id", ^AsyncBlock{
         NSString *externalId = @"1367430278414336360"; // (Leah)
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friends) {
