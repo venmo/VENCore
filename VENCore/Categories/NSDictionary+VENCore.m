@@ -1,24 +1,18 @@
 #import "NSDictionary+VENCore.h"
-#import "NSArray+VENCore.h"
 
 
 @implementation NSMutableDictionary (VENCore)
 
 - (void)cleanseResponseDictionary {
     for (NSString *key in [self allKeys]) {
-        NSObject *object = (NSObject *) self[key];
-        if (object == [NSNull null]) {
+        if (self[key] == [NSNull null]) {
             [self removeObjectForKey:key];
         }
-        else if ([object isKindOfClass:[NSNumber class]]) {
-            self[key] = [((NSNumber *)object) stringValue];
+        else if ([(NSObject *)self[key] isKindOfClass:[NSNumber class]]) {
+            self[key] = [((NSNumber *)self[key]) stringValue];
         }
-        else if ([object isKindOfClass:[NSDictionary class]]) {
-            self[key] = [((NSDictionary *)object) dictionaryByCleansingResponseDictionary];
-        }
-        else if([object isKindOfClass:[NSArray class]]) {
-            NSArray *array = [(NSArray *)object copy];
-            self[key] = [array arrayByCleansingResponseArray];
+        else if ([(NSObject *)self[key] isKindOfClass:[NSDictionary class]]) {
+            self[key] = [((NSDictionary *)self[key]) dictionaryByCleansingResponseDictionary];
         }
     }
 }

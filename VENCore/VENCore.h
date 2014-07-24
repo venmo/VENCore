@@ -26,7 +26,6 @@ NS_ENUM(NSInteger, VENCoreErrorCode) {
 @property (strong, nonatomic) VENHTTP *httpClient;
 @property (strong, nonatomic) NSString *accessToken;
 
-
 /**
  * Sets the shared core object.
  * @param core The core object to share.
