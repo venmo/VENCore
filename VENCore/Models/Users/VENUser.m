@@ -174,4 +174,27 @@
                                     }];
 }
 
++ (void) searchUsersWithString:(NSString *)searchString
+                       success:(VENSearchUsersSuccessBlock)successBlock
+                       failure:(VENSearchUsersFailureBlock)failureBlock
+{
+    NSString *urlString = @"https://api.venmo.com/v1/users";
+    NSDictionary *parameters = @{@"query": searchString};
+    [[[VENCore defaultCore] httpClient] GET:urlString
+                                 parameters:parameters
+                                    success:^(VENHTTPResponse *response) {
+                                        NSArray *usersPayload = [NSArray arrayWithArray:response.object[@"data"]];
+
+                                    }
+                                    failure:^(VENHTTPResponse *response, NSError *error) {
+                                        if ([response error]) {
+                                            error = [response error];
+                                        }
+                                        if (failureBlock) {
+                                            failureBlock(error);
+                                        }
+                                    }];
+
+}
+
 @end

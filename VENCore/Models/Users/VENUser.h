@@ -6,6 +6,9 @@
 typedef void(^VENUserFetchSuccessBlock)(VENUser *user);
 typedef void(^VENUserFetchFailureBlock)(NSError *error);
 
+typedef void(^VENSearchUsersSuccessBlock)(NSArray *users);
+typedef void(^VENSearchUsersFailureBlock)(NSError *error);
+
 /**
  * @note Users are considered equal if and only if their external IDs are the same
  */
