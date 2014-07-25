@@ -66,4 +66,16 @@ typedef void(^VENSearchUsersFailureBlock)(NSError *error);
                         failure:(VENUserFetchFailureBlock)failureBlock;
 
 
+/**
+ * Asynchronously search for users with a query string
+ * @param searchString An NSString of the query
+ * @param successBlock A block to be executed with the array of searched users
+ * @param failureBlock A block to be executed in case of failure / error
+ * @note This may return from a cache or pull from the network
+ */
++ (void) searchUsersWithQuery:(NSString *)searchString
+                      success:(VENSearchUsersSuccessBlock)successBlock
+                      failure:(VENSearchUsersFailureBlock)failureBlock;
+
+
 @end

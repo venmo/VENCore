@@ -252,4 +252,31 @@ describe(@"Fetching a User", ^{
     
 });
 
+
+fdescribe(@"SearchUsersWithSearchQuery", ^{
+    it(@"should fetch users with search string 'john'", ^AsyncBlock{
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+            NSString *urlToStub = @"https://api.venmo.com/v1/users?query=john";
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"searchUsers"];
+
+
+        [VENUser searchUsersWithQuery:@"john" success:^
+         (NSArray *users) {
+
+            
+            
+            done();
+            
+        }failure:^(NSError *error) {
+            
+            done();
+            
+        }];
+    });
+    
+    //it(@"", ^{});
+    //it(@"", ^{});
+
+});
+
 SpecEnd

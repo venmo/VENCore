@@ -174,11 +174,11 @@
                                     }];
 }
 
-+ (void) searchUsersWithString:(NSString *)searchString
++ (void) searchUsersWithQuery:(NSString *)searchString
                        success:(VENSearchUsersSuccessBlock)successBlock
                        failure:(VENSearchUsersFailureBlock)failureBlock
 {
-    NSString *urlString = @"https://api.venmo.com/v1/users";
+    NSString *urlString = @"users";
     NSDictionary *parameters = @{@"query": searchString};
     [[[VENCore defaultCore] httpClient] GET:urlString
                                  parameters:parameters
