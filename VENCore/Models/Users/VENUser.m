@@ -184,7 +184,17 @@
                                  parameters:parameters
                                     success:^(VENHTTPResponse *response) {
                                         NSArray *usersPayload = [NSArray arrayWithArray:response.object[@"data"]];
-
+                                        NSMutableArray *usersArray = [[NSMutableArray alloc] init];
+                                        for (id object in usersPayload) {
+                                            if ([object isKindOfClass:[NSDictionary class]]) {
+                                                NSDictionary *userDictionary = (NSDictionary *)object;
+                                                if([VENUser canInitWithDictionary:userDictionary]) {
+                                                    VENUser *user = [[VENUser alloc] initWithDictionary:userDictionary];
+                                                    [usersArray addObject:user];
+                                                }
+                                            }
+                                        }
+                                        successBlock(usersArray);
                                     }
                                     failure:^(VENHTTPResponse *response, NSError *error) {
                                         if ([response error]) {
