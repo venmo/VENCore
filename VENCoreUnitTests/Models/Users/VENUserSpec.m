@@ -255,28 +255,34 @@ describe(@"Fetching a User", ^{
 
 fdescribe(@"SearchUsersWithSearchQuery", ^{
     it(@"should fetch users with search string 'john'", ^AsyncBlock{
+        NSString *query = @"john";
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
-            NSString *urlToStub = @"https://api.venmo.com/v1/users?query=john";
-        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"searchUsers"];
-
-
-        [VENUser searchUsersWithQuery:@"john" success:^
-         (NSArray *users) {
-
-            
-            
+            NSString *urlToStub = [NSString stringWithFormat:@"%@/users?query=%@", baseURLString, query];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"searchUsers"];
+        [VENUser searchUsersWithQuery:query success:^(NSArray *users) {
+            expect([users count]).to.equal(@(20));
             done();
             
         }failure:^(NSError *error) {
-            
+            XCTFail();
             done();
-            
         }];
     });
     
-    //it(@"", ^{});
-    //it(@"", ^{});
-
+    it(@"should return 20 users when given an empy string search query", ^AsyncBlock{
+        NSString *query = @"";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users?query=%@", baseURLString, query];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"searchUsers"];
+        [VENUser searchUsersWithQuery:query success:^(NSArray *users) {
+            expect([users count]).to.equal(@(20));
+            done();
+        }failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
 });
+
 
 SpecEnd

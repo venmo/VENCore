@@ -174,14 +174,15 @@
                                     }];
 }
 
-+ (void) searchUsersWithQuery:(NSString *)searchString
++ (void)searchUsersWithQuery:(NSString *)searchString
                        success:(VENSearchUsersSuccessBlock)successBlock
                        failure:(VENSearchUsersFailureBlock)failureBlock
 {
     NSString *urlString = @"users";
-    NSDictionary *parameters = @{@"query": searchString};
+    NSMutableDictionary *getParameters = [NSMutableDictionary dictionaryWithDictionary:@{@"query" : searchString}];
+
     [[[VENCore defaultCore] httpClient] GET:urlString
-                                 parameters:parameters
+                                 parameters:getParameters
                                     success:^(VENHTTPResponse *response) {
                                         NSArray *usersPayload = [NSArray arrayWithArray:response.object[@"data"]];
                                         NSMutableArray *usersArray = [[NSMutableArray alloc] init];
