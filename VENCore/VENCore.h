@@ -16,7 +16,8 @@ NSString *const VENErrorDomainCore;
 
 NS_ENUM(NSInteger, VENCoreErrorCode) {
     VENCoreErrorCodeNoDefaultCore,
-    VENCoreErrorCodeNoAccessToken
+    VENCoreErrorCodeNoAccessToken,
+    VENCoreErrorCodeMissingParameter
 };
 
 @class VENTransaction, VENUser;

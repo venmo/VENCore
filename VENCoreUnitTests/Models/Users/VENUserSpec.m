@@ -5,6 +5,8 @@
 
 SpecBegin(VENUser)
 
+NSString *accessToken = @"0000000000";
+
 NSDictionary *validUserDictionary1 = @{VENUserKeyUsername: @"PeterIsAZakin",
                                        VENUserKeyInternalId: @"234234",
                                        VENUserKeyExternalId: @"JLHDSJFIOHh23ioHLH",
@@ -49,8 +51,8 @@ void(^assertUsersAreFieldwiseEqual)(VENUser *, VENUser *) = ^(VENUser *user1, VE
 
 beforeAll(^{
     VENCore *core = [[VENCore alloc] init];
+    [core setAccessToken:accessToken];
     [VENCore setDefaultCore:core];
-    
     [[LSNocilla sharedInstance] start];
 });
 
@@ -68,7 +70,6 @@ describe(@"Initialization", ^{
     it(@"should succesfully create an empty object from init", ^{
         VENUser *usr = [[VENUser alloc] init];
         expect(usr).toNot.beNil();
-
         expect(usr.username).to.beNil();
         expect(usr.firstName).to.beNil();
         expect(usr.lastName).to.beNil();
@@ -250,6 +251,94 @@ describe(@"Fetching a User", ^{
         }];
     });
     
+});
+
+describe(@"fetchFriendsWithExternalId:Success", ^{
+    it(@"should retrieve a pre-canned list of friends and create a valid array of friends", ^AsyncBlock{
+        NSString *externalId = @"110638735871180833";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            expect([friendsArray count]).to.equal(5);
+            expect([friendsArray[0] class]).to.equal([VENUser class]);
+            expect([friendsArray[2] class]).to.equal([VENUser class]);
+            done();
+ 
+        } failure:^(NSError *error){
+            XCTFail();
+            done();
+        }];
+    });
+
+    it(@"should retrieve a pre-canned list of friends and deletes the NSNull key and value from the friend", ^AsyncBlock{
+        NSString *externalId = @"110638735871180833";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            VENUser *lastFriend = (VENUser *) [friendsArray lastObject];
+            expect(lastFriend.profileImageUrl).to.beNil();
+            done();
+        } failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+    it(@"should retrieve a pre-canned list of friends and the users should be in the same order as the JSON and their values should be consistent with the JSON values", ^AsyncBlock{
+        NSString *externalId = @"110638735871180833";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            VENUser *friend = (VENUser *) friendsArray[0];
+            expect(friend.username).to.equal(@"kortina");
+            expect(friend.about).to.equal(@"make a joyful sound, la da da da");
+            done();
+        } failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+    it(@"should call failure when cannot find a user with that external Id", ^AsyncBlock{
+        NSString *externalId = @"1106387358711808339"; //invalid external id
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?access_token=%@", baseURLString, externalId, accessToken];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect([error localizedDescription]).to.equal(@"Resource not found.");
+            done();
+        }];
+    });
+    
+    it(@"should call failure when not passed an external id", ^AsyncBlock{
+        [VENUser fetchFriendsWithExternalId:nil success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
+    
+    it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
+        [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
 });
 
 SpecEnd
