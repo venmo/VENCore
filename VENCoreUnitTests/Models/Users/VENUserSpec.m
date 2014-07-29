@@ -253,7 +253,7 @@ describe(@"Fetching a User", ^{
 });
 
 
-fdescribe(@"SearchUsersWithSearchQuery", ^{
+describe(@"SearchUsersWithSearchQuery", ^{
     it(@"should fetch users with search string 'john'", ^AsyncBlock{
         NSString *query = @"john";
         NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];

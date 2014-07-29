@@ -26,4 +26,24 @@ describe(@"Fetching a user", ^{
     });
 });
 
+describe(@"Searching for a user", ^{
+    it(@"should retrieve an arary of users with a search query", ^AsyncBlock{
+    NSString *query = @"Leah";
+        [VENUser searchUsersWithQuery:query success:^(NSArray *users) {
+            if ([users count]) {
+                for (VENUser *user in users){
+                    expect(user.displayName).notTo.beNil();
+                    expect(user.externalId).notTo.beNil();
+                    expect(user.firstName).notTo.beNil();
+                    expect(user.lastName).notTo.beNil();
+                }
+            }
+            done();
+        } failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+});
+
 SpecEnd
