@@ -252,4 +252,37 @@ describe(@"Fetching a User", ^{
     
 });
 
+
+describe(@"SearchUsersWithSearchQuery", ^{
+    it(@"should fetch users with search string 'john'", ^AsyncBlock{
+        NSString *query = @"john";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+            NSString *urlToStub = [NSString stringWithFormat:@"%@/users?query=%@", baseURLString, query];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"searchUsers"];
+        [VENUser searchUsersWithQuery:query success:^(NSArray *users) {
+            expect([users count]).to.equal(@(20));
+            done();
+            
+        }failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+    
+    it(@"should return 20 users when given an empy string search query", ^AsyncBlock{
+        NSString *query = @"";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users?query=%@", baseURLString, query];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"searchUsers"];
+        [VENUser searchUsersWithQuery:query success:^(NSArray *users) {
+            expect([users count]).to.equal(@(20));
+            done();
+        }failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+});
+
+
 SpecEnd

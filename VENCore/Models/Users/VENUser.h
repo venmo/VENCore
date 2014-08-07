@@ -6,6 +6,9 @@
 typedef void(^VENUserFetchSuccessBlock)(VENUser *user);
 typedef void(^VENUserFetchFailureBlock)(NSError *error);
 
+typedef void(^VENSearchUsersSuccessBlock)(NSArray *users);
+typedef void(^VENSearchUsersFailureBlock)(NSError *error);
+
 /**
  * @note Users are considered equal if and only if their external IDs are the same
  */
@@ -61,6 +64,18 @@ typedef void(^VENUserFetchFailureBlock)(NSError *error);
 + (void)fetchUserWithExternalId:(NSString *)externalId
                         success:(VENUserFetchSuccessBlock)successBlock
                         failure:(VENUserFetchFailureBlock)failureBlock;
+
+
+/**
+ * Asynchronously search for users with a query string
+ * @param searchString An NSString of the query
+ * @param successBlock A block to be executed with the array of searched users
+ * @param failureBlock A block to be executed in case of failure / error
+ * @note This may return from a cache or pull from the network
+ */
++ (void) searchUsersWithQuery:(NSString *)searchString
+                      success:(VENSearchUsersSuccessBlock)successBlock
+                      failure:(VENSearchUsersFailureBlock)failureBlock;
 
 
 @end

@@ -16,6 +16,7 @@
 		47BD36E018FDBA4500DE4554 /* fetchChrisUser.json in Resources */ = {isa = PBXBuildFile; fileRef = 47BD36DF18FDBA4500DE4554 /* fetchChrisUser.json */; };
 		9B2C2D06196ED75400D1B241 /* NSArray+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C2D05196ED75400D1B241 /* NSArray+VENCore.m */; };
 		9B2C2D09196EDC3000D1B241 /* NSArray+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C2D08196EDC3000D1B241 /* NSArray+VENCoreSpec.m */; };
+		9B6220EB1982DFB8001E4E3E /* searchUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B6220EA1982DFB8001E4E3E /* searchUsers.json */; };
 		C24E595918F84C67009670F7 /* VENTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595418F84C67009670F7 /* VENTransaction.m */; };
 		C24E595A18F84C67009670F7 /* VENUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595718F84C67009670F7 /* VENUser.m */; };
 		E84803CCC64F49DB9C88AD75 /* libPods-VENCoreIntegrationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B6CD691E644507A1045E0D /* libPods-VENCoreIntegrationTests.a */; };
@@ -104,6 +105,7 @@
 		9B2C2D04196ED75400D1B241 /* NSArray+VENCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VENCore.h"; path = "Categories/NSArray+VENCore.h"; sourceTree = "<group>"; };
 		9B2C2D05196ED75400D1B241 /* NSArray+VENCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+VENCore.m"; path = "Categories/NSArray+VENCore.m"; sourceTree = "<group>"; };
 		9B2C2D08196EDC3000D1B241 /* NSArray+VENCoreSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+VENCoreSpec.m"; path = "Categories/NSArray+VENCoreSpec.m"; sourceTree = "<group>"; };
+		9B6220EA1982DFB8001E4E3E /* searchUsers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = searchUsers.json; sourceTree = "<group>"; };
 		A1AE1BF8A82F4124AD872FD8 /* Pods-VENCore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCore.xcconfig"; path = "Pods/Pods-VENCore.xcconfig"; sourceTree = "<group>"; };
 		B5284720DE944039BF66DD7A /* Pods-VENCoreUnitTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCoreUnitTests.xcconfig"; path = "Pods/Pods-VENCoreUnitTests.xcconfig"; sourceTree = "<group>"; };
 		BB802D1BBF75489EBAC57A1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,6 +237,7 @@
 			children = (
 				4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */,
 				47BD36DF18FDBA4500DE4554 /* fetchChrisUser.json */,
+				9B6220EA1982DFB8001E4E3E /* searchUsers.json */,
 			);
 			name = users;
 			path = API/users;
@@ -551,6 +554,9 @@
 					EB00DB331906E647001836A8 = {
 						TestTargetID = EBCB247318E9FBAF00807472;
 					};
+					EBCB248318E9FBAF00807472 = {
+						TestTargetID = EBCB247318E9FBAF00807472;
+					};
 				};
 			};
 			buildConfigurationList = EBCB246F18E9FBAF00807472 /* Build configuration list for PBXProject "VENCore" */;
@@ -588,6 +594,7 @@
 				EBA57C5418FC362000D39D0F /* invalidAmountError.json in Resources */,
 				EBA57C5318FC362000D39D0F /* invalidAccessTokenError.json in Resources */,
 				EB34431319071EA200B7791E /* paymentToUser.json in Resources */,
+				9B6220EB1982DFB8001E4E3E /* searchUsers.json in Resources */,
 				4796A38718FDD4C6005CABA6 /* fetchInvalidUser.json in Resources */,
 				EB427E5318F844910070EDD9 /* paymentToEmail.json in Resources */,
 				EBCB249218E9FBAF00807472 /* InfoPlist.strings in Resources */,
