@@ -554,6 +554,9 @@
 					EB00DB331906E647001836A8 = {
 						TestTargetID = EBCB247318E9FBAF00807472;
 					};
+					EBCB248318E9FBAF00807472 = {
+						TestTargetID = EBCB247318E9FBAF00807472;
+					};
 				};
 			};
 			buildConfigurationList = EBCB246F18E9FBAF00807472 /* Build configuration list for PBXProject "VENCore" */;
