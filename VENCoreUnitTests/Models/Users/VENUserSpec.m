@@ -182,14 +182,6 @@ describe(@"Equality", ^{
         expect(invalidUser).toNot.equal(copiedInvalidUser);
     });
 
-    it(@"should perform correct set operations", ^{
-        VENUser *user1 = [[VENUser alloc] initWithDictionary:validUserDictionary1];
-        VENUser *user3 = [[VENUser alloc] initWithDictionary:validUserDictionary3];
-        NSSet *set1 = [NSSet setWithArray:@[user1]];
-        NSSet *set2 = [NSSet setWithArray:@[user3]];
-        NSSet *combinedSet = [set1 setByAddingObjectsFromSet:set2];
-        expect([combinedSet count]).to.equal(1);
-    });
 });
 
 describe(@"Dictionary Representation", ^{
