@@ -11,9 +11,13 @@ static NSString *const VENAPIBaseURL = @"https://api.venmo.com/v1";
 #pragma mark - Private
 
 - (instancetype)init {
+    return [self initWithBaseURL:[NSURL URLWithString:VENAPIBaseURL]];
+}
+
+- (instancetype)initWithBaseURL:(NSURL *)baseURL {
     self = [super init];
     if (self) {
-        self.httpClient = [[VENHTTP alloc] initWithBaseURL:[NSURL URLWithString:VENAPIBaseURL]];
+        self.httpClient = [[VENHTTP alloc] initWithBaseURL:baseURL];
     }
     return self;
 }

@@ -55,7 +55,6 @@ void(^assertUsersAreFieldwiseEqual)(VENUser *, VENUser *) = ^(VENUser *user1, VE
 
 
 beforeAll(^{
-    
     VENCore *core = [[VENCore alloc] init];
     [VENCore setDefaultCore:core];
     

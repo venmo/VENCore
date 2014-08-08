@@ -119,7 +119,7 @@ NSString *const VENAPIPathUsers     = @"users";
         NSDictionary *headers = @{@"Content-Type": @"application/x-www-form-urlencoded; charset=utf-8"};
         [request setAllHTTPHeaderFields:headers];
     }
-    // add headers
+    // Add headers
     NSMutableDictionary *currentHeaders = [NSMutableDictionary dictionaryWithDictionary:request.allHTTPHeaderFields];
     [currentHeaders addEntriesFromDictionary:[self headersWithAccessToken:self.accessToken]];
     [request setAllHTTPHeaderFields:currentHeaders];
@@ -229,7 +229,7 @@ NSString *const VENAPIPathUsers     = @"users";
                                         NSHTTPCookieName: @"api_access_token",
                                         NSHTTPCookieValue: accessToken };
     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
-    // add cookie to shared cookie storage for webview requests
+    // Add cookie to shared cookie storage for webview requests
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     NSMutableDictionary *headers = [NSMutableDictionary dictionaryWithDictionary:[NSHTTPCookie requestHeaderFieldsWithCookies:@[cookie]]];
     [headers addEntriesFromDictionary:[self defaultHeaders]];
