@@ -1,7 +1,6 @@
 #import "NSDictionary+VENCore.h"
 #import "NSArray+VENCore.h"
 
-
 @implementation NSMutableDictionary (VENCore)
 
 - (void)cleanseResponseDictionary {

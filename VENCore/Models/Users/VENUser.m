@@ -1,6 +1,8 @@
 #import "VENUser.h"
 #import "VENCore.h"
 
+
+
 @implementation VENUser
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -58,7 +60,8 @@
     }
     VENUser *comparisonUser = (VENUser *)object;
 
-    return [self.externalId isEqualToString:comparisonUser.externalId];
+    BOOL result = [self.externalId isEqualToString:comparisonUser.externalId];
+    return result;
 }
 
 
@@ -81,7 +84,6 @@
     }
     return YES;
 }
-
 
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
@@ -133,7 +135,6 @@
     return dictionary;
 }
 
-
 + (void)fetchUserWithExternalId:(NSString *)externalId
                         success:(VENUserFetchSuccessBlock)successBlock
                         failure:(VENUserFetchFailureBlock)failureBlock {
@@ -171,6 +172,51 @@
                                         if (failureBlock) {
                                             failureBlock(error);
                                         }
+                                    }];
+}
+
++ (void)fetchFriendsWithExternalId:(NSString *)externalId
+                           success:(VENFriendsFetchSuccessBlock)successBlock
+                           failure:(VENFriendsFetchFailureBlock)failureBlock {
+    if((![externalId isKindOfClass:[NSString class]] || ![externalId length]) && failureBlock) {
+        NSError *error = [[NSError alloc] initWithDomain:VENErrorDomainCore
+                                                    code:-999
+                                                userInfo:@{}];
+        failureBlock(error);
+        return;
+    }
+    NSDictionary *parameters = @{@"limit": @"1000"};
+    [[[VENCore defaultCore] httpClient] GET:[NSString stringWithFormat:@"users/%@/friends", externalId]
+                                 parameters:parameters
+                                    success:^(VENHTTPResponse *response) {
+                                        NSArray *friendsPayload = [NSArray arrayWithArray:response.object[@"data"]];
+                                        if(successBlock){
+                                            NSMutableArray *friendsArray = [[NSMutableArray alloc] init];
+                                            for (id object in friendsPayload) {
+                                                if ([object isKindOfClass:[NSDictionary class]]) {
+                                                    NSDictionary *friendDictionary = (NSDictionary *)object;
+                                                    if ([VENUser canInitWithDictionary:friendDictionary]) {
+                                                        VENUser *friend = [[VENUser alloc] initWithDictionary:friendDictionary];
+                                                        [friendsArray addObject:friend];
+                                                    }
+                                                }
+                                            }
+                                            successBlock(friendsArray);
+                                        }
+                                        else if (failureBlock){
+                                            failureBlock(response.error);
+                                        }
+                                    }
+                                    failure:^(VENHTTPResponse *response, NSError *error){
+                                        
+                                        if ([response error]) {
+                                            error = [response error];
+                                        }
+                                        
+                                        if (failureBlock) {
+                                            failureBlock(error);
+                                        }
+
                                     }];
 }
 

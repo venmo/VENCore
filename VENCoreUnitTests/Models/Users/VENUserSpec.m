@@ -19,6 +19,13 @@ NSDictionary *validUserDictionary2 = @{VENUserKeyUsername: @"PetefadsrIsAZakin",
                                        VENUserKeyLastName: @"Mafadsddern",
                                        VENUserKeyAbout: @"Happifasdly married!"};
 
+NSDictionary *validUserDictionary3 = @{VENUserKeyUsername: @"PetefadsrIsAZakin",
+                                       VENUserKeyInternalId: @"234223434",
+                                       VENUserKeyExternalId: @"JLHDSJFIOHh23ioHLH",
+                                       VENUserKeyFirstName: @"Pefadster",
+                                       VENUserKeyLastName: @"Mafadsddern",
+                                       VENUserKeyAbout: @"Happifasdly married!"};
+
 NSDictionary *invalidUserDictionary1 = @{VENUserKeyInternalId: @"234234",
                                          VENUserKeyExternalId: @"JLHDSJFIOHh23ioHLH",
                                          VENUserKeyFirstName: @"Peter",
@@ -73,7 +80,6 @@ describe(@"Initialization", ^{
         expect(usr.firstName).to.beNil();
         expect(usr.lastName).to.beNil();
         expect(usr.profileImageUrl).to.beNil();
-
     });
 
     it(@"should return NO to canInitWithDictionary for an invalid dictionary", ^{
@@ -133,12 +139,14 @@ describe(@"Copying", ^{
 describe(@"Equality", ^{
 
     it(@"should correctly validate two equal objects", ^{
-
         VENUser *user1 = [[VENUser alloc] initWithDictionary:validUserDictionary1];
         VENUser *user2 = [user1 copy];
 
         expect([user1 isEqual:user2]).to.beTruthy();
 
+        VENUser *user3 = [[VENUser alloc] initWithDictionary:validUserDictionary3];
+
+        expect([user1 isEqual:user3]).to.beTruthy();
     });
 
     it(@"should not indicate that two different users are the same", ^{
@@ -160,7 +168,6 @@ describe(@"Equality", ^{
 
         expect([user1 isEqual:user2]).to.beTruthy();
         expect([user2 isEqual:user1]).to.beTruthy();
-
     });
 
     it(@"should follow the rule that two users are equal ONLY if their external Ids are the same", ^{
@@ -173,8 +180,8 @@ describe(@"Equality", ^{
         VENUser *copiedInvalidUser = [invalidUser copy];
         
         expect(invalidUser).toNot.equal(copiedInvalidUser);
-        
     });
+
 });
 
 describe(@"Dictionary Representation", ^{
@@ -250,6 +257,103 @@ describe(@"Fetching a User", ^{
         }];
     });
     
+});
+
+describe(@"Fetching Friends", ^{
+    it(@"should retrieve a pre-canned list of friends and create a valid array of friends", ^AsyncBlock{
+        NSString *externalId = @"110638735871180833";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            expect([friendsArray count]).to.equal(5);
+            expect([friendsArray[0] class]).to.equal([VENUser class]);
+            expect([friendsArray[2] class]).to.equal([VENUser class]);
+            done();
+ 
+        } failure:^(NSError *error){
+            XCTFail();
+            done();
+
+        }];
+    });
+
+    it(@"should retrieve a pre-canned list of friends and deletes the NSNull key and value from the friend", ^AsyncBlock{
+        NSString *externalId = @"110638735871180833";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            for (id object in friendsArray) {
+                if ([object isKindOfClass:[VENUser class]]) {
+                    VENUser *user = (VENUser *) object;
+                    if ([user.username isEqualToString:@"great-friend"]) {
+                        expect(user.profileImageUrl).to.beNil();
+                    }
+                }
+            }
+            done();
+        } failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+    it(@"should retrieve a pre-canned list of friends and the users should be in the same order as the JSON and their values should be consistent with the JSON values", ^AsyncBlock{
+        NSString *externalId = @"110638735871180833";
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:200 andResponseFilePath:@"fetchFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            if ([friendsArray[0] isKindOfClass:[VENUser class]]){
+                VENUser *friend = (VENUser *) friendsArray[0];
+                expect(friend.username).to.equal(@"kortina");
+                expect(friend.about).to.equal(@"make a joyful sound, la da da da");
+            }
+            done();
+        } failure:^(NSError *error) {
+            XCTFail();
+            done();
+        }];
+    });
+
+    it(@"should call failure when cannot find a user with that external Id", ^AsyncBlock{
+        NSString *externalId = @"1106387358711808339"; //invalid external id
+        NSString *baseURLString = [VENTestUtilities baseURLStringForCore:[VENCore defaultCore]];
+        NSString *urlToStub = [NSString stringWithFormat:@"%@/users/%@/friends?limit=1000", baseURLString, externalId];
+        [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidFriends"];
+        
+        [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect([error localizedDescription]).to.equal(@"Resource not found.");
+            done();
+        }];
+    });
+    
+    it(@"should call failure when not passed an external id", ^AsyncBlock{
+        [VENUser fetchFriendsWithExternalId:nil success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
+    
+    it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
+        [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
+            XCTFail();
+            done();
+        } failure:^(NSError *error) {
+            expect(error).notTo.beNil();
+            done();
+        }];
+    });
 });
 
 SpecEnd

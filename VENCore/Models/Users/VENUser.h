@@ -5,7 +5,8 @@
 
 typedef void(^VENUserFetchSuccessBlock)(VENUser *user);
 typedef void(^VENUserFetchFailureBlock)(NSError *error);
-
+typedef void(^VENFriendsFetchSuccessBlock)(NSArray *friends);
+typedef void(^VENFriendsFetchFailureBlock)(NSError *error);
 /**
  * @note Users are considered equal if and only if their external IDs are the same
  */
@@ -61,6 +62,17 @@ typedef void(^VENUserFetchFailureBlock)(NSError *error);
 + (void)fetchUserWithExternalId:(NSString *)externalId
                         success:(VENUserFetchSuccessBlock)successBlock
                         failure:(VENUserFetchFailureBlock)failureBlock;
+
+
+/**
+ * Asynchronously fetch a user's friends with a given externalId
+ * @param externalID An NSString of the desired user's externalId
+ * @param successBlock A block to be executed with the fetched array of friends
+ * @param failureBlock A block to be executed in case of failure / error
+ */
++ (void)fetchFriendsWithExternalId:(NSString *)externalId
+                           success:(VENFriendsFetchSuccessBlock)successBlock
+                           failure:(VENFriendsFetchFailureBlock)failureBlock;
 
 
 @end
