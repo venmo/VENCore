@@ -123,6 +123,10 @@ NSString *const VENTransactionAudienceStrings[] = {@"default", @"private", @"fri
 #pragma mark - Private Instance Methods
 
 - (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) {
+        return NO;
+    }
+
     VENTransaction *otherObject = (VENTransaction *)object;
 
     if (![otherObject.transactionID isEqualToString:self.transactionID]
