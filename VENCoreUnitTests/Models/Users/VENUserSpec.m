@@ -213,7 +213,7 @@ describe(@"Fetching a User", ^{
             expect(user.externalId).to.equal(externalId);
             done();
         } failure:^(NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
 
@@ -228,7 +228,7 @@ describe(@"Fetching a User", ^{
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidUser"];
         
         [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
-            XCTFail();
+            VENFail();
             done();
         } failure:^(NSError *error) {
             expect([error localizedDescription]).to.equal(@"Resource not found.");
@@ -239,7 +239,7 @@ describe(@"Fetching a User", ^{
     
     it(@"should call failure when not passed an external id", ^AsyncBlock{
         [VENUser fetchUserWithExternalId:nil success:^(VENUser *user) {
-            XCTFail();
+            VENFail();
             done();
         } failure:^(NSError *error) {
             expect(error).notTo.beNil();
@@ -249,7 +249,7 @@ describe(@"Fetching a User", ^{
     
     it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
         [VENUser fetchUserWithExternalId:@"" success:^(VENUser *user) {
-            XCTFail();
+            VENFail();
             done();
         } failure:^(NSError *error) {
             expect(error).notTo.beNil();
@@ -273,7 +273,7 @@ describe(@"Fetching Friends", ^{
             done();
  
         } failure:^(NSError *error){
-            XCTFail();
+            VENFail();
             done();
 
         }];
@@ -296,7 +296,7 @@ describe(@"Fetching Friends", ^{
             }
             done();
         } failure:^(NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -315,7 +315,7 @@ describe(@"Fetching Friends", ^{
             }
             done();
         } failure:^(NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -327,7 +327,7 @@ describe(@"Fetching Friends", ^{
         [VENTestUtilities stubNetworkGET:urlToStub withStatusCode:400 andResponseFilePath:@"fetchInvalidFriends"];
         
         [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
-            XCTFail();
+            VENFail();
             done();
         } failure:^(NSError *error) {
             expect([error localizedDescription]).to.equal(@"Resource not found.");
@@ -337,7 +337,7 @@ describe(@"Fetching Friends", ^{
     
     it(@"should call failure when not passed an external id", ^AsyncBlock{
         [VENUser fetchFriendsWithExternalId:nil success:^(NSArray *friendsArray) {
-            XCTFail();
+            VENFail();
             done();
         } failure:^(NSError *error) {
             expect(error).notTo.beNil();
@@ -347,7 +347,7 @@ describe(@"Fetching Friends", ^{
     
     it(@"should call failure when passed an empty-string external id", ^AsyncBlock{
         [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
-            XCTFail();
+            VENFail();
             done();
         } failure:^(NSError *error) {
             expect(error).notTo.beNil();
