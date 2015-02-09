@@ -108,7 +108,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.scheme).to.equal(@"ven-http-test");
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -119,7 +119,7 @@ describe(@"performing a request", ^{
 
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -130,7 +130,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.path).to.equal(@"/base/path/200.json");
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
     });
@@ -144,7 +144,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.HTTPBody).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -157,7 +157,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.HTTPBody).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -170,7 +170,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.query).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -184,7 +184,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.query).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -197,7 +197,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.query).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -211,7 +211,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.query).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -225,7 +225,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.URL.query).to.equal(nil);
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -239,7 +239,7 @@ describe(@"performing a request", ^{
                 expect(httpRequest.HTTPBody).to.beNil();
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
     });
@@ -252,7 +252,7 @@ describe(@"performing a request", ^{
                 expect(requestHeaders[@"Accept"]).to.equal(@"application/json");
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -263,7 +263,7 @@ describe(@"performing a request", ^{
                 expect(requestHeaders[@"User-Agent"]).to.contain(@"iOS");
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
 
@@ -274,7 +274,7 @@ describe(@"performing a request", ^{
                 expect(requestHeaders[@"Accept-Language"]).to.equal(@"en-US");
                 done();
             } failure:^(VENHTTPResponse *response, NSError *error) {
-                XCTFail();
+                VENFail();
             }];
         });
     });
@@ -300,7 +300,7 @@ describe(@"performing a request", ^{
                     expect(httpRequest.URL.query).to.equal(encodedParameters);
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
-                    XCTFail();
+                    VENFail();
                 }];
             });
         });
@@ -317,7 +317,7 @@ describe(@"performing a request", ^{
                     
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
-                    XCTFail();
+                    VENFail();
                 }];
             });
         });

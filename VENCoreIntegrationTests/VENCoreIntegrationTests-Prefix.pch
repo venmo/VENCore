@@ -16,3 +16,4 @@
 
 #import "VENTestUtilities.h"
 
+#define VENFail() expect(YES).to.equal(NO)

@@ -33,7 +33,7 @@ describe(@"Settled Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -50,7 +50,7 @@ describe(@"Settled Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);           
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -68,7 +68,7 @@ describe(@"Settled Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -96,7 +96,7 @@ describe(@"Failed Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusFailed);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -124,7 +124,7 @@ describe(@"Pending Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
 
@@ -142,7 +142,7 @@ describe(@"Pending Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];       
     });
@@ -171,7 +171,7 @@ describe(@"Settled Charge", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];
     });
@@ -200,7 +200,7 @@ describe(@"Pending Charge", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            XCTFail();
+            VENFail();
             done();
         }];       
     });
