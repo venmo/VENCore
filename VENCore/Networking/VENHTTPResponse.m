@@ -2,24 +2,31 @@
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
 
+#import <AFNetworking/AFHTTPRequestOperation.h>
+
 NSString *const VENErrorDomainHTTPResponse = @"com.venmo.VENCore.ErrorDomain.VENHTTPResponse";
 
 @interface VENHTTPResponse ()
 
-@property (nonatomic, readwrite, strong) id object;
+@property (nonatomic, readwrite, strong) NSDictionary *object;
 @property (nonatomic, readwrite, assign) NSInteger statusCode;
 
 @end
 
 @implementation VENHTTPResponse
 
-- (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(id)object {
+- (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(NSDictionary *)object {
     self = [self init];
     if (self) {
         self.statusCode = statusCode;
         self.object = object;
     }
     return self;
+}
+
+
+- (instancetype)initWithOperation:(AFHTTPRequestOperation *)operation {
+    return [[VENHTTPResponse alloc] initWithStatusCode:operation.response.statusCode responseObject:operation.responseObject];
 }
 
 

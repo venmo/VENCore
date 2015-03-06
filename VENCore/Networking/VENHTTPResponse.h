@@ -11,17 +11,21 @@ NSString *const VENErrorDomainHTTPResponse;
 
 NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
     VENErrorCodeHTTPResponseUnauthorizedRequest,
-    VENErrorCodeHTTPResponseBadResponse,
-    VENErrorCodeHTTPResponseInvalidObjectType
+    VENErrorCodeHTTPResponseBadResponse
 };
 
 @interface VENHTTPResponse : NSObject
 
-@property (nonatomic, readonly, strong) id object;
+@property (nonatomic, readonly, strong) NSDictionary *object;
 @property (nonatomic, readonly, assign) NSInteger statusCode;
 
-- (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(id)object;
+- (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(NSDictionary *)object;
 
+
+/**
+ * Initializes a response object with an AFHTTPRequestOperation.
+ */
+- (instancetype)initWithOperation:(AFHTTPRequestOperation *)operation;
 
 
 /**

@@ -7,7 +7,7 @@
 
 + (BOOL)canInitWithDictionary:(NSDictionary *)dictionary {
 
-    NSArray *requiredKeys = @[VENTransactionAmountKey, VENTransactionTargetTypeKey];
+    NSArray *requiredKeys = @[VENTransactionTargetTypeKey];
 
     for (NSString *key in requiredKeys) {
         if (!dictionary[key] || [dictionary[key] isKindOfClass:[NSNull class]]) {
@@ -19,18 +19,6 @@
 
     NSString *targetType = dictionary[VENTransactionTargetTypeKey];
     if (![validTargetTypes containsObject:targetType]) {
-        return NO;
-    }
-
-    id amount = dictionary[VENTransactionAmountKey];
-
-    if ([amount isKindOfClass:[NSString class]] && ![amount intValue]) {
-        return NO;
-    }
-    else if ([amount respondsToSelector:@selector(doubleValue)]) {
-        amount = @([amount doubleValue] * 100.);
-    }
-    else {
         return NO;
     }
 
@@ -83,6 +71,9 @@
         
         self.handle = cleanDictionary[targetType];
         self.amount = (NSUInteger)([cleanDictionary[VENTransactionAmountKey] doubleValue] * (double)100);
+        if ([VENUser canInitWithDictionary:cleanDictionary[VENTransactionTargetUserKey]]) {
+            self.user = [[VENUser alloc] initWithDictionary:cleanDictionary[VENTransactionTargetUserKey]];
+        }
     }
     return self;
 }

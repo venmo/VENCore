@@ -8,15 +8,13 @@
 extern NSString *const VENAPIPathPayments;
 extern NSString *const VENAPIPathUsers;
 
-@class VENHTTPResponse;
+@class AFHTTPRequestOperationManager, AFHTTPRequestOperation, VENHTTPResponse;
 
 @interface VENHTTP : NSObject
 
-@property (nonatomic, strong, readonly) NSURL *baseURL;
+@property (strong, nonatomic) AFHTTPRequestOperationManager *operationManager;
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
-
-- (void)setProtocolClasses:(NSArray *)protocolClasses;
 
 - (void)GET:(NSString *)path parameters:(NSDictionary *)parameters
     success:(void(^)(VENHTTPResponse *response))successBlock
