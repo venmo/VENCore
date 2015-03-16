@@ -107,14 +107,13 @@ NSString *const VENAPIPathUsers     = @"users";
 
     NSMutableURLRequest *request;
 
-    NSString *encodedParametersString = [CMDQueryStringSerialization queryStringWithDictionary:parameters];
-    NSString *percentEncodedQuery = [encodedParametersString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *percentEncodedQuery = [CMDQueryStringSerialization queryStringWithDictionary:parameters];
     if ([method isEqualToString:@"GET"] || [method isEqualToString:@"DELETE"]) {
         components.percentEncodedQuery = percentEncodedQuery;
         request = [NSMutableURLRequest requestWithURL:components.URL];
     } else {
         request = [NSMutableURLRequest requestWithURL:components.URL];
-        NSData *body = [encodedParametersString dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *body = [percentEncodedQuery dataUsingEncoding:NSUTF8StringEncoding];
         [request setHTTPBody:body];
         NSDictionary *headers = @{@"Content-Type": @"application/x-www-form-urlencoded; charset=utf-8"};
         [request setAllHTTPHeaderFields:headers];
