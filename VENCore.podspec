@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "VENCore"
-  s.version      = "3.1.0"
+  s.version      = "3.1.1"
   s.summary      = "Core Venmo client library"
   s.description  = <<-DESC
                    Core iOS client library for the Venmo api
