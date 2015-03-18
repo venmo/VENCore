@@ -283,11 +283,10 @@ describe(@"performing a request", ^{
         __block NSDictionary *parameterDictionary;
 
         beforeEach(^{
-            parameterDictionary = @{@"stringParam": @"value",
+            parameterDictionary = @{@"stringParam": @"a value",
                                     @"numericParam": @42,
                                     @"trueBoolParam": @YES,
-                                    @"falseBoolParam": @NO,
-                                    @"arrayParam": @[@"i1", @"i2"]
+                                    @"falseBoolParam": @NO
                                     };
         });
 
@@ -295,9 +294,7 @@ describe(@"performing a request", ^{
             it(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
                 [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
-                    NSString *encodedParameters = [[CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary]
-                                                   stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                    expect(httpRequest.URL.query).to.equal(encodedParameters);
+                    expect(httpRequest.URL.query).to.equal([CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary]);
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
                     VENFail();
