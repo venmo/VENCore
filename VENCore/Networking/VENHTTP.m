@@ -254,14 +254,30 @@ NSString *const VENAPIPathUsers     = @"users";
 }
 
 
-- (NSString *)userAgentString {
-    NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
-    NSString *appName = [bundleInfo objectForKey:(NSString *)kCFBundleNameKey];
-    NSString *appVersion = [bundleInfo objectForKey:(NSString *)kCFBundleVersionKey];
-    return [NSString stringWithFormat:@"%@/%@ iOS/%@ %@",
-            appName, appVersion,
-            [[UIDevice currentDevice] systemVersion],
-            [[UIDevice currentDevice] VEN_platformString]];
+- (NSString *)userAgentString
+{
+    /**
+     *  Borrowed from AFNetworking 2.5.0, with modifications.
+     *  @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43
+     */
+    NSDictionary *infoDict = [NSBundle mainBundle].infoDictionary;
+    NSString *appName = infoDict[(__bridge NSString *)kCFBundleExecutableKey] ?: infoDict[(__bridge NSString *)kCFBundleIdentifierKey] ?: @"VENCore";
+    NSString *appVersion = infoDict[@"CFBundleShortVersionString"] ?: infoDict[(__bridge NSString *)kCFBundleVersionKey] ?: @"0.0";
+    NSString *model = [[UIDevice currentDevice] VEN_platformString];
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", appName, appVersion, model, osVersion, [UIScreen mainScreen].scale];
+
+    if (userAgent) {
+        if (![userAgent canBeConvertedToEncoding:NSASCIIStringEncoding]) {
+            NSMutableString *mutableUserAgent = [userAgent mutableCopy];
+            if (CFStringTransform((__bridge CFMutableStringRef)(mutableUserAgent), NULL, (__bridge CFStringRef) @"Any-Latin; Latin-ASCII; [:^ASCII:] Remove", false)) {
+                userAgent = mutableUserAgent;
+            }
+        }
+    }
+
+    return userAgent;
 }
 
 
