@@ -14,7 +14,7 @@
 
 extern NSString *const VENErrorDomainCore;
 
-NS_ENUM(NSInteger, VENCoreErrorCode) {
+typedef NS_ENUM(NSInteger, VENCoreErrorCode) {
     VENCoreErrorCodeNoDefaultCore,
     VENCoreErrorCodeNoAccessToken
 };
