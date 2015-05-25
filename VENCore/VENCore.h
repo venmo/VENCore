@@ -12,7 +12,7 @@
 #import "VENUser.h"
 #import "VENUserPayloadKeys.h"
 
-NSString *const VENErrorDomainCore;
+extern NSString *const VENErrorDomainCore;
 
 NS_ENUM(NSInteger, VENCoreErrorCode) {
     VENCoreErrorCodeNoDefaultCore,

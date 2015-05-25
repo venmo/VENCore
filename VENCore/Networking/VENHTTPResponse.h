@@ -7,7 +7,7 @@
 
 @class AFHTTPRequestOperation;
 
-NSString *const VENErrorDomainHTTPResponse;
+extern NSString *const VENErrorDomainHTTPResponse;
 
 NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
     VENErrorCodeHTTPResponseUnauthorizedRequest,
