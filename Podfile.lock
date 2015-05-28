@@ -9,7 +9,7 @@ PODS:
   - Specta (0.2.1)
 
 DEPENDENCIES:
-  - CMDQueryStringSerialization
+  - CMDQueryStringSerialization (~> 0.3)
   - Expecta
   - Nocilla
   - OCHamcrest

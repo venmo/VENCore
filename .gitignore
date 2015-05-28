@@ -6,4 +6,4 @@ build/
 xcuserdata
 *.xccheckout
 VENCoreIntegrationTests/config.plist
-
+VENCore.xcworkspace
