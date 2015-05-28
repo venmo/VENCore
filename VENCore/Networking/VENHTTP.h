@@ -1,9 +1,4 @@
-//
-// VENHTTP
-// Constructs and sends HTTP requests.
-//
-
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 extern NSString *const VENAPIPathPayments;
 extern NSString *const VENAPIPathUsers;

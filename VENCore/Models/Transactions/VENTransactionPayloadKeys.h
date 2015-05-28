@@ -1,5 +1,6 @@
 #ifndef VENCore_VENTransactionPayloadKeys_h
 #define VENCore_VENTransactionPayloadKeys_h
+
 //Payment Section
 #define VENTransactionIDKey @"id"
 #define VENTransactionStatusKey @"status"
@@ -22,7 +23,5 @@
 
 //Actor Subsection
 #define VENTransactionActorUserID @"id"
-
-
 
 #endif

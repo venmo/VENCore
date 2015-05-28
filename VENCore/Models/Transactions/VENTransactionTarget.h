@@ -1,4 +1,5 @@
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "VENUser.h"
 
 typedef NS_ENUM(NSUInteger, VENTargetType) {

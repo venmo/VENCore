@@ -1,4 +1,5 @@
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "VENTransaction.h"
 
 @interface VENCreateTransactionRequest : NSObject

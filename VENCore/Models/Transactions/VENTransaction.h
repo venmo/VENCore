@@ -1,4 +1,5 @@
-#import <UIKit/UIKit.h>
+@import Foundation;
+
 #import "VENTransactionTarget.h"
 
 @class VENMutableTransaction, VENUser, VENHTTPResponse;

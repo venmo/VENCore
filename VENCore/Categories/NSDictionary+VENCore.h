@@ -1,9 +1,4 @@
-//
-// NSDictionary+VENCore
-// Utility methods for deserializing JSON.
-//
-
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NSMutableDictionary (VENCore)
 

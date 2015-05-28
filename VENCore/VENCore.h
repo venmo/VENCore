@@ -1,4 +1,5 @@
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "NSDictionary+VENCore.h"
 #import "NSError+VENCore.h"
 #import "NSString+VENCore.h"
@@ -12,7 +13,7 @@
 #import "VENUser.h"
 #import "VENUserPayloadKeys.h"
 
-NSString *const VENErrorDomainCore;
+extern NSString *const VENErrorDomainCore;
 
 NS_ENUM(NSInteger, VENCoreErrorCode) {
     VENCoreErrorCodeNoDefaultCore,
