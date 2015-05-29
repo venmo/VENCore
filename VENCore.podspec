@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
                      :tag => "v#{s.version}" }
   s.source_files = 'VENCore/**/*.{h,m}'
   s.dependency 'CMDQueryStringSerialization', '~> 0.3'
+  s.requires_arc = true
 end

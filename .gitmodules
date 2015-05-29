@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/CMDQueryStringSerialization"]
+	path = Carthage/Checkouts/CMDQueryStringSerialization
+	url = https://github.com/calebd/CMDQueryStringSerialization.git

@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26B2687F1B18BEF100D82815 /* NSString+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB8E3BF18FDDB6300A22C6B /* NSString+VENCore.h */; };
+		26B268801B18BEF100D82815 /* NSString+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */; };
+		26B268811B18BEF100D82815 /* NSDictionary+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */; };
+		26B268821B18BEF100D82815 /* NSDictionary+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */; };
+		26B268831B18BEF100D82815 /* NSArray+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B2C2D04196ED75400D1B241 /* NSArray+VENCore.h */; };
+		26B268841B18BEF100D82815 /* NSArray+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C2D05196ED75400D1B241 /* NSArray+VENCore.m */; };
+		26B268851B18BEF100D82815 /* NSError+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBF84D2818EA5ADE00C0E077 /* NSError+VENCore.h */; };
+		26B268861B18BEF100D82815 /* NSError+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF84D2918EA5ADE00C0E077 /* NSError+VENCore.m */; };
+		26B268871B18BEF100D82815 /* UIDevice+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBFB2F8E18F7228600612BD8 /* UIDevice+VENCore.h */; };
+		26B268881B18BEF100D82815 /* UIDevice+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFB2F8F18F7228600612BD8 /* UIDevice+VENCore.m */; };
+		26B268891B18BEF500D82815 /* VENCreateTransactionRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AE56FEE190871DF0054B7EF /* VENCreateTransactionRequest.h */; };
+		26B2688A1B18BEF500D82815 /* VENCreateTransactionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE56FEF190871DF0054B7EF /* VENCreateTransactionRequest.m */; };
+		26B2688B1B18BEF500D82815 /* VENTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = C24E595318F84C67009670F7 /* VENTransaction.h */; };
+		26B2688C1B18BEF500D82815 /* VENTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595418F84C67009670F7 /* VENTransaction.m */; };
+		26B2688D1B18BEF500D82815 /* VENTransactionTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */; };
+		26B2688E1B18BEF500D82815 /* VENTransactionTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3B018FD86AB00A22C6B /* VENTransactionTarget.m */; };
+		26B2688F1B18BEF500D82815 /* VENTransactionPayloadKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = 47136D3A18FF001F00AD63CD /* VENTransactionPayloadKeys.h */; };
+		26B268901B18BEF800D82815 /* VENUser.h in Headers */ = {isa = PBXBuildFile; fileRef = C24E595618F84C67009670F7 /* VENUser.h */; };
+		26B268911B18BEF800D82815 /* VENUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595718F84C67009670F7 /* VENUser.m */; };
+		26B268921B18BEF800D82815 /* VENUserPayloadKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = C24E596018F885D7009670F7 /* VENUserPayloadKeys.h */; };
+		26B268931B18BEFC00D82815 /* VENHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = EB74B2BD18E9FD7B00838A9D /* VENHTTP.h */; };
+		26B268941B18BEFC00D82815 /* VENHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */; };
+		26B268951B18BEFC00D82815 /* VENHTTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EBBE7E0618EA017700E47338 /* VENHTTPResponse.h */; };
+		26B268961B18BEFC00D82815 /* VENHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */; };
+		26B268971B18BEFC00D82815 /* VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBCB247C18E9FBAF00807472 /* VENCore.h */; };
+		26B268981B18BEFC00D82815 /* VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCB247E18E9FBAF00807472 /* VENCore.m */; };
 		3AE56FF0190871DF0054B7EF /* VENCreateTransactionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE56FEF190871DF0054B7EF /* VENCreateTransactionRequest.m */; };
 		3AE56FF21908A0610054B7EF /* VENCreateTransactionRequestSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE56FF11908A0610054B7EF /* VENCreateTransactionRequestSpec.m */; };
 		3DED53F413AA485586839756 /* libPods-VENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DC461A27E94407698BE1D38 /* libPods-VENCore.a */; };
@@ -27,9 +53,9 @@
 		EB00DB371906E647001836A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB248818E9FBAF00807472 /* UIKit.framework */; };
 		EB00DB3D1906E647001836A8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB00DB3B1906E647001836A8 /* InfoPlist.strings */; };
 		EB00DB3F1906E647001836A8 /* PaymentSandboxSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DB3E1906E647001836A8 /* PaymentSandboxSpec.m */; };
-		EB10A52D18F7295B007F2119 /* libVENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libVENCore.a */; };
+		EB10A52D18F7295B007F2119 /* libold-VENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libold-VENCore.a */; };
 		EB34431319071EA200B7791E /* paymentToUser.json in Resources */ = {isa = PBXBuildFile; fileRef = EB34431219071EA200B7791E /* paymentToUser.json */; };
-		EB34AA901906FDD600663ECF /* libVENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libVENCore.a */; };
+		EB34AA901906FDD600663ECF /* libold-VENCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247418E9FBAF00807472 /* libold-VENCore.a */; };
 		EB34AA911907006F00663ECF /* VENTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */; };
 		EB403ECC1953A1DA00F23593 /* EXPMatchers+Venmo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB403ECB1953A1DA00F23593 /* EXPMatchers+Venmo.m */; };
 		EB418B9A18EB0DD20003CBF5 /* NSError+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9918EB0DD20003CBF5 /* NSError+VENCoreSpec.m */; };
@@ -97,6 +123,8 @@
 		2217ED26197A5908221D4520 /* Pods-VENCoreUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCoreUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VENCoreUnitTests/Pods-VENCoreUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		2222D271DEDBF7804774C8FD /* Pods-VENCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCore.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VENCore/Pods-VENCore.debug.xcconfig"; sourceTree = "<group>"; };
 		25B6CD691E644507A1045E0D /* libPods-VENCoreIntegrationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreIntegrationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26B268661B18BBD000D82815 /* VENCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VENCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		26B268691B18BBD100D82815 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AE56FEE190871DF0054B7EF /* VENCreateTransactionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCreateTransactionRequest.h; sourceTree = "<group>"; };
 		3AE56FEF190871DF0054B7EF /* VENCreateTransactionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCreateTransactionRequest.m; sourceTree = "<group>"; };
 		3AE56FF11908A0610054B7EF /* VENCreateTransactionRequestSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCreateTransactionRequestSpec.m; sourceTree = "<group>"; };
@@ -156,7 +184,7 @@
 		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; };
 		EBBE7E0C18EA022300E47338 /* VENHTTPResponseSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponseSpec.m; path = Networking/VENHTTPResponseSpec.m; sourceTree = "<group>"; };
 		EBBE7E1818EA2D7600E47338 /* VENCoreUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VENCoreUnitTests-Prefix.pch"; sourceTree = "<group>"; };
-		EBCB247418E9FBAF00807472 /* libVENCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVENCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBCB247418E9FBAF00807472 /* libold-VENCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libold-VENCore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBCB247718E9FBAF00807472 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EBCB247B18E9FBAF00807472 /* VENCore-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VENCore-Prefix.pch"; sourceTree = "<group>"; };
 		EBCB247C18E9FBAF00807472 /* VENCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENCore.h; sourceTree = "<group>"; };
@@ -174,11 +202,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		26B268621B18BBD000D82815 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB00DB311906E647001836A8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB34AA901906FDD600663ECF /* libVENCore.a in Frameworks */,
+				EB34AA901906FDD600663ECF /* libold-VENCore.a in Frameworks */,
 				EB00DB351906E647001836A8 /* XCTest.framework in Frameworks */,
 				EB00DB371906E647001836A8 /* UIKit.framework in Frameworks */,
 				EB00DB361906E647001836A8 /* Foundation.framework in Frameworks */,
@@ -199,7 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB10A52D18F7295B007F2119 /* libVENCore.a in Frameworks */,
+				EB10A52D18F7295B007F2119 /* libold-VENCore.a in Frameworks */,
 				EBCB248618E9FBAF00807472 /* XCTest.framework in Frameworks */,
 				EBCB248918E9FBAF00807472 /* UIKit.framework in Frameworks */,
 				EBCB248718E9FBAF00807472 /* Foundation.framework in Frameworks */,
@@ -413,9 +448,10 @@
 		EBCB247518E9FBAF00807472 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EBCB247418E9FBAF00807472 /* libVENCore.a */,
+				EBCB247418E9FBAF00807472 /* libold-VENCore.a */,
 				EBCB248418E9FBAF00807472 /* VENCoreUnitTests.xctest */,
 				EB00DB341906E647001836A8 /* VENCoreIntegrationTests.xctest */,
+				26B268661B18BBD000D82815 /* VENCore.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,6 +486,7 @@
 		EBCB247A18E9FBAF00807472 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				26B268691B18BBD100D82815 /* Info.plist */,
 				EBCB247B18E9FBAF00807472 /* VENCore-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -498,7 +535,49 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		26B268631B18BBD000D82815 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B268931B18BEFC00D82815 /* VENHTTP.h in Headers */,
+				26B268971B18BEFC00D82815 /* VENCore.h in Headers */,
+				26B268811B18BEF100D82815 /* NSDictionary+VENCore.h in Headers */,
+				26B268901B18BEF800D82815 /* VENUser.h in Headers */,
+				26B2688B1B18BEF500D82815 /* VENTransaction.h in Headers */,
+				26B2688D1B18BEF500D82815 /* VENTransactionTarget.h in Headers */,
+				26B268921B18BEF800D82815 /* VENUserPayloadKeys.h in Headers */,
+				26B2687F1B18BEF100D82815 /* NSString+VENCore.h in Headers */,
+				26B268831B18BEF100D82815 /* NSArray+VENCore.h in Headers */,
+				26B268891B18BEF500D82815 /* VENCreateTransactionRequest.h in Headers */,
+				26B268871B18BEF100D82815 /* UIDevice+VENCore.h in Headers */,
+				26B2688F1B18BEF500D82815 /* VENTransactionPayloadKeys.h in Headers */,
+				26B268951B18BEFC00D82815 /* VENHTTPResponse.h in Headers */,
+				26B268851B18BEF100D82815 /* NSError+VENCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		26B268651B18BBD000D82815 /* VENCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26B268791B18BBD100D82815 /* Build configuration list for PBXNativeTarget "VENCore" */;
+			buildPhases = (
+				26B268611B18BBD000D82815 /* Sources */,
+				26B268621B18BBD000D82815 /* Frameworks */,
+				26B268631B18BBD000D82815 /* Headers */,
+				26B268641B18BBD000D82815 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VENCore;
+			productName = VENCore;
+			productReference = 26B268661B18BBD000D82815 /* VENCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		EB00DB331906E647001836A8 /* VENCoreIntegrationTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EB00DB451906E647001836A8 /* Build configuration list for PBXNativeTarget "VENCoreIntegrationTests" */;
@@ -518,9 +597,9 @@
 			productReference = EB00DB341906E647001836A8 /* VENCoreIntegrationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		EBCB247318E9FBAF00807472 /* VENCore */ = {
+		EBCB247318E9FBAF00807472 /* old-VENCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EBCB249718E9FBAF00807472 /* Build configuration list for PBXNativeTarget "VENCore" */;
+			buildConfigurationList = EBCB249718E9FBAF00807472 /* Build configuration list for PBXNativeTarget "old-VENCore" */;
 			buildPhases = (
 				EBCB247018E9FBAF00807472 /* Sources */,
 				EBCB247118E9FBAF00807472 /* Frameworks */,
@@ -531,9 +610,9 @@
 			);
 			dependencies = (
 			);
-			name = VENCore;
+			name = "old-VENCore";
 			productName = VENCore;
-			productReference = EBCB247418E9FBAF00807472 /* libVENCore.a */;
+			productReference = EBCB247418E9FBAF00807472 /* libold-VENCore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		EBCB248318E9FBAF00807472 /* VENCoreUnitTests */ = {
@@ -564,6 +643,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Venmo;
 				TargetAttributes = {
+					26B268651B18BBD000D82815 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
 					EB00DB331906E647001836A8 = {
 						TestTargetID = EBCB247318E9FBAF00807472;
 					};
@@ -581,7 +663,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EBCB247318E9FBAF00807472 /* VENCore */,
+				26B268651B18BBD000D82815 /* VENCore */,
+				EBCB247318E9FBAF00807472 /* old-VENCore */,
 				EBCB248318E9FBAF00807472 /* VENCoreUnitTests */,
 				EB00DB331906E647001836A8 /* VENCoreIntegrationTests */,
 			);
@@ -589,6 +672,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		26B268641B18BBD000D82815 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB00DB321906E647001836A8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -665,6 +755,25 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		26B268611B18BBD000D82815 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B268911B18BEF800D82815 /* VENUser.m in Sources */,
+				26B2688A1B18BEF500D82815 /* VENCreateTransactionRequest.m in Sources */,
+				26B268861B18BEF100D82815 /* NSError+VENCore.m in Sources */,
+				26B2688C1B18BEF500D82815 /* VENTransaction.m in Sources */,
+				26B268801B18BEF100D82815 /* NSString+VENCore.m in Sources */,
+				26B268821B18BEF100D82815 /* NSDictionary+VENCore.m in Sources */,
+				26B268981B18BEFC00D82815 /* VENCore.m in Sources */,
+				26B268961B18BEFC00D82815 /* VENHTTPResponse.m in Sources */,
+				26B268881B18BEF100D82815 /* UIDevice+VENCore.m in Sources */,
+				26B268941B18BEFC00D82815 /* VENHTTP.m in Sources */,
+				26B268841B18BEF100D82815 /* NSArray+VENCore.m in Sources */,
+				26B2688E1B18BEF500D82815 /* VENTransactionTarget.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB00DB301906E647001836A8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -719,12 +828,12 @@
 /* Begin PBXTargetDependency section */
 		EB00DB421906E647001836A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EBCB247318E9FBAF00807472 /* VENCore */;
+			target = EBCB247318E9FBAF00807472 /* old-VENCore */;
 			targetProxy = EB00DB411906E647001836A8 /* PBXContainerItemProxy */;
 		};
 		EBCB248B18E9FBAF00807472 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EBCB247318E9FBAF00807472 /* VENCore */;
+			target = EBCB247318E9FBAF00807472 /* old-VENCore */;
 			targetProxy = EBCB248A18E9FBAF00807472 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -749,6 +858,63 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		26B2687A1B18BBD100D82815 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VENCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		26B2687B1B18BBD100D82815 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = VENCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		EB00DB431906E647001836A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 205F497EB245D3BA7F715DC0 /* Pods-VENCoreIntegrationTests.debug.xcconfig */;
@@ -942,6 +1108,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		26B268791B18BBD100D82815 /* Build configuration list for PBXNativeTarget "VENCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26B2687A1B18BBD100D82815 /* Debug */,
+				26B2687B1B18BBD100D82815 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EB00DB451906E647001836A8 /* Build configuration list for PBXNativeTarget "VENCoreIntegrationTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -960,7 +1134,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EBCB249718E9FBAF00807472 /* Build configuration list for PBXNativeTarget "VENCore" */ = {
+		EBCB249718E9FBAF00807472 /* Build configuration list for PBXNativeTarget "old-VENCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBCB249818E9FBAF00807472 /* Debug */,
