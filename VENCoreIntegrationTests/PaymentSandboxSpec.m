@@ -33,7 +33,7 @@ describe(@"Settled Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"user payment failure occurred: %@", error.localizedDescription]);
             done();
         }];
     });
@@ -50,7 +50,7 @@ describe(@"Settled Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);           
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"email payment failure occurred: %@", error.localizedDescription]);
             done();
         }];
     });
@@ -68,7 +68,7 @@ describe(@"Settled Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"phone number payment failure occurred: %@", error.localizedDescription]);
             done();
         }];
     });
@@ -96,7 +96,7 @@ describe(@"Failed Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusFailed);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"email payment failure occurred: %@", error.localizedDescription]);
             done();
         }];
     });
@@ -124,7 +124,7 @@ describe(@"Pending Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"pending email payment failure occurred: %@", error.localizedDescription]);
             done();
         }];
 
@@ -142,7 +142,7 @@ describe(@"Pending Payment", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"pending phone payment failure occurred: %@", error.localizedDescription]);
             done();
         }];       
     });
@@ -171,7 +171,7 @@ describe(@"Settled Charge", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusSettled);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"settled charge failure occurred: %@", error.localizedDescription]);
             done();
         }];
     });
@@ -200,7 +200,7 @@ describe(@"Pending Charge", ^{
             expect(sentTransaction.status).to.equal(VENTransactionStatusPending);
             done();
         } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"non-trusted friend pending charge failure occurred: %@", error.localizedDescription]);
             done();
         }];       
     });

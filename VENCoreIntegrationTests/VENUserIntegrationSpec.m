@@ -20,7 +20,7 @@ describe(@"Fetching a user", ^{
             expect(user.externalId).to.equal(externalId);
             done();
         } failure:^(NSError *error) {
-            VENFail();
+            failure([NSString stringWithFormat:@"user fetching error occurred: %@", error.localizedDescription]);
             done();
         }];
     });
