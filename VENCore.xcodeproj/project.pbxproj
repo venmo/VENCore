@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2603C8C71B19009200C6685B /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2603C8C61B19009200C6685B /* ISO8601.framework */; };
-		2603C8C91B19009700C6685B /* CMDQueryStringSerialization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2603C8C81B19009700C6685B /* CMDQueryStringSerialization.framework */; };
+		2603C8CB1B19037400C6685B /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2603C8CA1B19037400C6685B /* ISO8601.framework */; };
+		2603C8CD1B19037600C6685B /* CMDQueryStringSerialization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2603C8CC1B19037600C6685B /* CMDQueryStringSerialization.framework */; };
 		26B2687F1B18BEF100D82815 /* NSString+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB8E3BF18FDDB6300A22C6B /* NSString+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26B268801B18BEF100D82815 /* NSString+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */; };
 		26B268811B18BEF100D82815 /* NSDictionary+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -91,28 +91,12 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		26B268AE1B18D78300D82815 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		15088C9D7EAF6B7EA4373B26 /* libPods-VENCoreUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2603C8C21B18F9F200C6685B /* CMDQueryStringSerialization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMDQueryStringSerialization.framework; path = "Carthage/Checkouts/CMDQueryStringSerialization/build/Debug-iphoneos/CMDQueryStringSerialization.framework"; sourceTree = "<group>"; };
-		2603C8C41B18FE3A00C6685B /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = "Carthage/Checkouts/ISO8601/build/Debug-iphoneos/ISO8601.framework"; sourceTree = "<group>"; };
-		2603C8C61B19009200C6685B /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = "Carthage/Checkouts/ISO8601/build/Debug-iphoneos/ISO8601.framework"; sourceTree = "<group>"; };
-		2603C8C81B19009700C6685B /* CMDQueryStringSerialization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMDQueryStringSerialization.framework; path = "Carthage/Checkouts/CMDQueryStringSerialization/build/Debug-iphoneos/CMDQueryStringSerialization.framework"; sourceTree = "<group>"; };
+		2603C8CA1B19037400C6685B /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = "Carthage/Checkouts/ISO8601/build/Debug-iphoneos/ISO8601.framework"; sourceTree = "<group>"; };
+		2603C8CC1B19037600C6685B /* CMDQueryStringSerialization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMDQueryStringSerialization.framework; path = "Carthage/Checkouts/CMDQueryStringSerialization/build/Debug-iphoneos/CMDQueryStringSerialization.framework"; sourceTree = "<group>"; };
 		26B268661B18BBD000D82815 /* VENCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VENCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		26B268691B18BBD100D82815 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		26B2689A1B18BF4F00D82815 /* CMDQueryStringSerialization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMDQueryStringSerialization.framework; path = Carthage/Build/iOS/CMDQueryStringSerialization.framework; sourceTree = "<group>"; };
-		26B2689B1B18BF4F00D82815 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
 		3AE56FEE190871DF0054B7EF /* VENCreateTransactionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCreateTransactionRequest.h; sourceTree = "<group>"; };
 		3AE56FEF190871DF0054B7EF /* VENCreateTransactionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCreateTransactionRequest.m; sourceTree = "<group>"; };
 		3AE56FF11908A0610054B7EF /* VENCreateTransactionRequestSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCreateTransactionRequestSpec.m; sourceTree = "<group>"; };
@@ -191,8 +175,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2603C8C91B19009700C6685B /* CMDQueryStringSerialization.framework in Frameworks */,
-				2603C8C71B19009200C6685B /* ISO8601.framework in Frameworks */,
+				2603C8CD1B19037600C6685B /* CMDQueryStringSerialization.framework in Frameworks */,
+				2603C8CB1B19037400C6685B /* ISO8601.framework in Frameworks */,
 				26B268991B18BF3600D82815 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,12 +417,8 @@
 		EBCB247618E9FBAF00807472 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2603C8C81B19009700C6685B /* CMDQueryStringSerialization.framework */,
-				2603C8C61B19009200C6685B /* ISO8601.framework */,
-				2603C8C41B18FE3A00C6685B /* ISO8601.framework */,
-				2603C8C21B18F9F200C6685B /* CMDQueryStringSerialization.framework */,
-				26B2689A1B18BF4F00D82815 /* CMDQueryStringSerialization.framework */,
-				26B2689B1B18BF4F00D82815 /* ISO8601.framework */,
+				2603C8CC1B19037600C6685B /* CMDQueryStringSerialization.framework */,
+				2603C8CA1B19037400C6685B /* ISO8601.framework */,
 				EBCB247718E9FBAF00807472 /* Foundation.framework */,
 				EBCB248518E9FBAF00807472 /* XCTest.framework */,
 				EBCB248818E9FBAF00807472 /* UIKit.framework */,
@@ -585,7 +565,6 @@
 				EBCB248118E9FBAF00807472 /* Frameworks */,
 				EBCB248218E9FBAF00807472 /* Resources */,
 				BC37B750BF400E77C674E594 /* Copy Pods Resources */,
-				26B268AE1B18D78300D82815 /* CopyFiles */,
 			);
 			buildRules = (
 			);
