@@ -1,9 +1,4 @@
-//
-// VENHTTPResponse
-// HTTP response wrapper.
-//
-
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @class AFHTTPRequestOperation;
 
@@ -21,8 +16,6 @@ typedef NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {
 @property (nonatomic, readonly, assign) NSInteger statusCode;
 
 - (instancetype)initWithStatusCode:(NSInteger)statusCode responseObject:(id)object;
-
-
 
 /**
  * Returns YES if the response represents an error state.

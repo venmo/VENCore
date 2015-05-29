@@ -1,6 +1,8 @@
 #import "VENTransactionTarget.h"
 #import "VENCore.h"
 
+@import CoreGraphics;
+
 @implementation VENTransactionTarget
 
 #pragma mark - Class Methods

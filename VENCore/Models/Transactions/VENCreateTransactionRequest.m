@@ -1,6 +1,8 @@
 #import "VENCreateTransactionRequest.h"
 #import "VENCore.h"
 
+@import CoreGraphics;
+
 @interface VENCreateTransactionRequest ()
 
 @property (nonatomic, strong) NSMutableOrderedSet *mutableTargets;

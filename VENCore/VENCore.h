@@ -1,4 +1,5 @@
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "NSDictionary+VENCore.h"
 #import "NSError+VENCore.h"
 #import "NSString+VENCore.h"
