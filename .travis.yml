@@ -3,6 +3,7 @@ osx_image: beta-xcode6.3
 before_install:
 - gem i cocoapods --no-ri --no-rdoc
 - brew uninstall xctool; brew install xctool --HEAD;
+- brew install carthage; carthage bootstrap
 xcode_workspace: VENCore.xcworkspace
 xcode_scheme: VENCore
 xcode_sdk: iphonesimulator
