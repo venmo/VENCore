@@ -2,7 +2,7 @@
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
 
-NSString *const VENErrorDomainHTTPResponse = @"com.venmo.VENCore.ErrorDomain.VENHTTPResponse";
+NSString * const VENErrorDomainHTTPResponse = @"com.venmo.VENCore.ErrorDomain.VENHTTPResponse";
 
 @interface VENHTTPResponse ()
 

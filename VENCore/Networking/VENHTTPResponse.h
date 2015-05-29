@@ -1,8 +1,6 @@
 @import Foundation;
 
-@class AFHTTPRequestOperation;
-
-extern NSString *const VENErrorDomainHTTPResponse;
+extern NSString * const VENErrorDomainHTTPResponse;
 
 typedef NS_ENUM(NSInteger, VENErrorCodeHTTPResponse) {
     VENErrorCodeHTTPResponseUnauthorizedRequest,

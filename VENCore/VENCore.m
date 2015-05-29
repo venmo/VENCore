@@ -1,6 +1,7 @@
 #import "VENCore.h"
 
 NSString *const VENErrorDomainCore = @"com.venmo.VENCore.ErrorDomain.VENCore";
+#import "VENHTTP.h"
 
 static VENCore *sharedInstance = nil;
 

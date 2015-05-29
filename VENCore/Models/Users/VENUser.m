@@ -1,7 +1,10 @@
 #import "VENUser.h"
 #import "VENCore.h"
-
-
+#import "NSDictionary+VENCore.h"
+#import "VENUserPayloadKeys.h"
+#import "VENHTTPResponse.h"
+#import "VENHTTP.h"
+#import "NSError+VENCore.h"
 
 @implementation VENUser
 

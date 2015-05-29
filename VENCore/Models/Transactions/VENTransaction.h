@@ -1,14 +1,13 @@
 @import Foundation;
 
-#import "VENTransactionTarget.h"
-
-@class VENMutableTransaction, VENUser, VENHTTPResponse;
+@class VENMutableTransaction, VENUser, VENHTTPResponse, VENTransactionTarget;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypeUnknown,
     VENTransactionTypePay,
     VENTransactionTypeCharge
 };
+
 extern NSString *const VENTransactionTypeStrings[];
 
 typedef NS_ENUM(NSUInteger, VENTransactionStatus) {
@@ -26,6 +25,7 @@ typedef NS_ENUM(NSUInteger, VENTransactionAudience) {
     VENTransactionAudienceFriends,
     VENTransactionAudiencePublic
 };
+
 extern NSString *const VENTransactionAudienceStrings[];
 
 extern NSString *const VENErrorDomainTransaction;

@@ -13,5 +13,4 @@
 #define VENUserKeyExternalId @"id"
 #define VENUserKeyDateJoined @"date_joined"
 
-
 #endif
