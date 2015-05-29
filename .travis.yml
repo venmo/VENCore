@@ -3,7 +3,7 @@ osx_image: beta-xcode6.3
 before_install:
 - gem i cocoapods --no-ri --no-rdoc
 - sudo find /Library/Developer/CoreSimulator -name dyld_sim -exec chgrp wheel {} \; # fixes simulator verification issues
-- brew install carthage; carthage bootstrap
+- brew install carthage; carthage bootstrap --verbose
 xcode_workspace: VENCore.xcworkspace
 xcode_scheme: VENCore
 xcode_sdk: iphonesimulator
