@@ -1,8 +1,8 @@
 language: objective-c
-before_install:
-- gem i cocoapods --no-ri --no-rdoc
-- brew uninstall xctool; brew install xctool --HEAD;
-xcode_workspace: VENCore.xcworkspace
-xcode_scheme: VENCore
-xcode_sdk: iphonesimulator
+install:
+- bundle install --jobs=3 --retry=3
+script: bundle exec rake test
 after_success: slather
+cache:
+  directories:
+  - vendor/bundle
