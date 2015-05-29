@@ -1,17 +1,19 @@
 @import Foundation;
 
-#import "NSDictionary+VENCore.h"
-#import "NSError+VENCore.h"
-#import "NSString+VENCore.h"
-#import "VENCore.h"
-#import "VENCreateTransactionRequest.h"
-#import "VENHTTP.h"
-#import "VENHTTPResponse.h"
-#import "VENTransaction.h"
-#import "VENTransactionPayloadKeys.h"
-#import "VENTransactionTarget.h"
-#import "VENUser.h"
-#import "VENUserPayloadKeys.h"
+#import <VENCore/NSString+VENCore.h>
+#import <VENCore/NSArray+VENCore.h>
+#import <VENCore/NSDictionary+VENCore.h>
+#import <VENCore/NSError+VENCore.h>
+#import <VENCore/NSString+VENCore.h>
+#import <VENCore/UIDevice+VENCore.h>
+#import <VENCore/VENCreateTransactionRequest.h>
+#import <VENCore/VENTransaction.h>
+#import <VENCore/VENTransactionPayloadKeys.h>
+#import <VENCore/VENTransactionTarget.h>
+#import <VENCore/VENUser.h>
+#import <VENCore/VENUserPayloadKeys.h>
+#import <VENCore/VENHTTP.h>
+#import <VENCore/VENHTTPResponse.h>
 
 extern NSString *const VENErrorDomainCore;
 
@@ -20,7 +22,7 @@ typedef NS_ENUM(NSInteger, VENCoreErrorCode) {
     VENCoreErrorCodeNoAccessToken
 };
 
-@class VENTransaction, VENUser;
+@class VENTransaction, VENUser, VENHTTP;
 
 @interface VENCore : NSObject
 

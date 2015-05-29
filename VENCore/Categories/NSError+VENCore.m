@@ -7,19 +7,19 @@
 + (instancetype)errorWithDomain:(NSString *)domain
                            code:(NSInteger)code
                     description:(NSString *)description
-             recoverySuggestion:(NSString *)recoverySuggestion {
-
-    NSDictionary *errorUserInfo =
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     NSLocalizedString(description, nil), NSLocalizedDescriptionKey,
-     NSLocalizedString(recoverySuggestion, nil), NSLocalizedRecoverySuggestionErrorKey, nil];
-
+             recoverySuggestion:(NSString *)recoverySuggestion
+{    
+    NSDictionary *errorUserInfo = @{
+                                    NSLocalizedDescriptionKey : NSLocalizedString(description, nil),
+                                    NSLocalizedRecoverySuggestionErrorKey : NSLocalizedString(recoverySuggestion, nil)
+                                    };
     return [self errorWithDomain:domain code:code userInfo:errorUserInfo];
 
 }
 
 
-+ (instancetype)defaultResponseError {
++ (instancetype)defaultResponseError
+{
     return [self errorWithDomain:VENErrorDomainHTTPResponse
                             code:VENErrorCodeHTTPResponseBadResponse
                      description:NSLocalizedString(@"Bad response", nil)
@@ -27,7 +27,8 @@
 }
 
 
-+ (instancetype)noDefaultCoreError {
++ (instancetype)noDefaultCoreError
+{
     return [self errorWithDomain:VENErrorDomainCore
                             code:VENCoreErrorCodeNoDefaultCore
                      description:NSLocalizedString(@"No default core", nil)
@@ -35,7 +36,8 @@
 }
 
 
-+ (instancetype)noAccessTokenError {
++ (instancetype)noAccessTokenError
+{
     return [self errorWithDomain:VENErrorDomainCore
                             code:VENCoreErrorCodeNoAccessToken
                      description:NSLocalizedString(@"No access token", nil)

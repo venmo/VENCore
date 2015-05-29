@@ -2,6 +2,8 @@
 
 #import "VENTransaction.h"
 
+@class VENHTTPResponse, VENTransactionTarget;
+
 @interface VENCreateTransactionRequest : NSObject
 
 @property (strong, nonatomic, readonly) NSOrderedSet *targets;

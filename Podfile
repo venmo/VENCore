@@ -1,24 +1,18 @@
-source 'https://github.com/CocoaPods/Specs.git'
-
-platform :ios, '6.0'
+platform :ios, '7.0'
 inhibit_all_warnings!
 
-target 'VENCore', :exclusive => true do
-  podspec
-end
-
 target 'VENCoreUnitTests', :exclusive => true do
-  pod 'Expecta'
+  pod 'Expecta', '~> 1.0.0'
   pod 'Nocilla'
-  pod 'OCMock'
+  pod 'OCMock', '~> 2.2.4'
   pod 'OCHamcrest'
   pod 'Specta'
 end
 
 target 'VENCoreIntegrationTests', :exclusive => true do
-  pod 'Expecta'
+  pod 'Expecta', '~> 1.0.0'
   pod 'Nocilla'
-  pod 'OCMock'
+  pod 'OCMock', '~> 2.2.4'
   pod 'OCHamcrest'
   pod 'Specta'
 end

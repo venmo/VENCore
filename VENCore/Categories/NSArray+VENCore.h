@@ -15,4 +15,5 @@
  * @return Array with no NULL values
  */
 - (instancetype)arrayByCleansingResponseArray;
+
 @end

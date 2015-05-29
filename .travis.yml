@@ -1,8 +1,8 @@
 language: objective-c
-install:
-- bundle install --jobs=3 --retry=3
-script: bundle exec rake test
+osx_image: beta-xcode6.3
+before_install:
+- gem i cocoapods --no-ri --no-rdoc
+xcode_workspace: VENCore.xcworkspace
+xcode_scheme: VENCore
+xcode_sdk: iphonesimulator
 after_success: slather
-cache:
-  directories:
-  - vendor/bundle

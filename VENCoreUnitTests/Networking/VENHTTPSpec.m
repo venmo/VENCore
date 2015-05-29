@@ -3,8 +3,6 @@
 #import "VENCore.h"
 #import "NSString+VENCore.h"
 
-#import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
-
 #define kVENHTTPTestProtocolScheme @"ven-http-test"
 #define kVENHTTPTestProtocolHost @"base.example.com"
 #define kVENHTTPTestProtocolBasePath @"/base/path/"
@@ -294,7 +292,7 @@ describe(@"performing a request", ^{
             it(@"transmits the parameters as URL encoded query parameters", ^AsyncBlock{
                 [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
-                    expect(httpRequest.URL.query).to.equal([CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary]);
+                    expect(httpRequest.URL.query).to.equal(@"falseBoolParam=0&numericParam=42&stringParam=a%20value&trueBoolParam=1");
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
                     VENFail();
@@ -307,7 +305,7 @@ describe(@"performing a request", ^{
                 [http POST:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                     NSString *httpRequestBody = [VENHTTPTestProtocol parseRequestBodyFromTestResponse:response];
-                    NSString *encodedParameters = [CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary];
+                    NSString *encodedParameters = @"falseBoolParam=0&numericParam=42&stringParam=a%20value&trueBoolParam=1";
 
                     expect([httpRequest valueForHTTPHeaderField:@"Content-type"]).to.equal(@"application/x-www-form-urlencoded; charset=utf-8");
                     expect(httpRequestBody).to.equal(encodedParameters);
