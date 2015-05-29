@@ -1,5 +1,19 @@
 @import Foundation;
 
+#import <VENCore/NSString+VENCore.h>
+#import <VENCore/NSArray+VENCore.h>
+#import <VENCore/NSDictionary+VENCore.h>
+#import <VENCore/NSError+VENCore.h>
+#import <VENCore/NSString+VENCore.h>
+#import <VENCore/UIDevice+VENCore.h>
+#import <VENCore/VENCreateTransactionRequest.h>
+#import <VENCore/VENTransaction.h>
+#import <VENCore/VENTransactionPayloadKeys.h>
+#import <VENCore/VENTransactionTarget.h>
+#import <VENCore/VENUser.h>
+#import <VENCore/VENUserPayloadKeys.h>
+#import <VENCore/VENHTTP.h>
+#import <VENCore/VENHTTPResponse.h>
 
 extern NSString *const VENErrorDomainCore;
 
