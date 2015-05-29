@@ -2,8 +2,6 @@ language: objective-c
 osx_image: beta-xcode6.3
 before_install:
 - gem i cocoapods --no-ri --no-rdoc
-- sudo chown :wheel /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ *.simruntime/Contents/Resources/RuntimeRoot/usr/lib/dyld_sim # fixes simulator verification issues
-- brew install carthage; carthage bootstrap --verbose
 xcode_workspace: VENCore.xcworkspace
 xcode_scheme: VENCore
 xcode_sdk: iphonesimulator

@@ -7,4 +7,10 @@
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/CMDQueryStringSerialization/CMDQueryStringSerialization.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/ISO8601/ISO8601.xcodeproj">
+   </FileRef>
 </Workspace>

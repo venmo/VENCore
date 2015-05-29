@@ -33,8 +33,6 @@
 		26B268971B18BEFC00D82815 /* VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBCB247C18E9FBAF00807472 /* VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26B268981B18BEFC00D82815 /* VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCB247E18E9FBAF00807472 /* VENCore.m */; };
 		26B268991B18BF3600D82815 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCB247718E9FBAF00807472 /* Foundation.framework */; };
-		26B2689C1B18BF4F00D82815 /* CMDQueryStringSerialization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B2689A1B18BF4F00D82815 /* CMDQueryStringSerialization.framework */; };
-		26B2689D1B18BF4F00D82815 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B2689B1B18BF4F00D82815 /* ISO8601.framework */; };
 		26B2689F1B18BF6C00D82815 /* VENCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B268661B18BBD000D82815 /* VENCore.framework */; };
 		26B268A91B18C39100D82815 /* VENUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C24E595718F84C67009670F7 /* VENUser.m */; };
 		26B268B31B18D7D100D82815 /* VENCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26B268661B18BBD000D82815 /* VENCore.framework */; };
@@ -118,6 +116,8 @@
 
 /* Begin PBXFileReference section */
 		15088C9D7EAF6B7EA4373B26 /* libPods-VENCoreUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENCoreUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2603C8C21B18F9F200C6685B /* CMDQueryStringSerialization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMDQueryStringSerialization.framework; path = "Carthage/Checkouts/CMDQueryStringSerialization/build/Debug-iphoneos/CMDQueryStringSerialization.framework"; sourceTree = "<group>"; };
+		2603C8C41B18FE3A00C6685B /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = "Carthage/Checkouts/ISO8601/build/Debug-iphoneos/ISO8601.framework"; sourceTree = "<group>"; };
 		26B268661B18BBD000D82815 /* VENCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VENCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		26B268691B18BBD100D82815 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26B2689A1B18BF4F00D82815 /* CMDQueryStringSerialization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMDQueryStringSerialization.framework; path = Carthage/Build/iOS/CMDQueryStringSerialization.framework; sourceTree = "<group>"; };
@@ -201,8 +201,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				26B268991B18BF3600D82815 /* Foundation.framework in Frameworks */,
-				26B2689C1B18BF4F00D82815 /* CMDQueryStringSerialization.framework in Frameworks */,
-				26B2689D1B18BF4F00D82815 /* ISO8601.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +440,8 @@
 		EBCB247618E9FBAF00807472 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2603C8C41B18FE3A00C6685B /* ISO8601.framework */,
+				2603C8C21B18F9F200C6685B /* CMDQueryStringSerialization.framework */,
 				26B2689A1B18BF4F00D82815 /* CMDQueryStringSerialization.framework */,
 				26B2689B1B18BF4F00D82815 /* ISO8601.framework */,
 				EBCB247718E9FBAF00807472 /* Foundation.framework */,
@@ -833,10 +833,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -871,10 +867,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = VENCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -974,7 +966,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -1011,7 +1003,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
