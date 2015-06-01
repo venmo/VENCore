@@ -1,5 +1,5 @@
 PODS:
-  - CMDQueryStringSerialization (0.3.2):
+  - CMDQueryStringSerialization (0.4.0):
     - ISO8601
   - Expecta (0.3.0)
   - ISO8601 (0.3.0)
@@ -9,7 +9,7 @@ PODS:
   - Specta (0.2.1)
 
 DEPENDENCIES:
-  - CMDQueryStringSerialization (~> 0.3)
+  - CMDQueryStringSerialization (~> 0.4)
   - Expecta
   - Nocilla
   - OCHamcrest
@@ -17,7 +17,7 @@ DEPENDENCIES:
   - Specta
 
 SPEC CHECKSUMS:
-  CMDQueryStringSerialization: 03c5d9847a4eaa2b3e4e439ce1ae24f914cc7fe1
+  CMDQueryStringSerialization: 71bb5c0014147c55089964df23fd6e44316bd6f5
   Expecta: 917bda2935b63ca7175741b8cf1b26796db6205f
   ISO8601: 8d8a22d5edf0554a1cf75bac028c76c1dc0ffaef
   Nocilla: d7d96e8a11e363f0d7c976d48b320c43d61fb471
