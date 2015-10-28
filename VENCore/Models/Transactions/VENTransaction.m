@@ -1,5 +1,7 @@
 #import "VENTransaction.h"
 #import "VENCore.h"
+#import "VENTransactionPayloadKeys.h"
+#import "NSDictionary+VENCore.h"
 
 NSString *const VENErrorDomainTransaction = @"com.venmo.VENCore.ErrorDomain.VENTransaction";
 NSString *const VENTransactionTypeStrings[] = {@"unknown", @"pay", @"charge"};

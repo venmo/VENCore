@@ -1,5 +1,8 @@
 #import "VENCreateTransactionRequest.h"
 #import "VENCore.h"
+#import "NSString+VENCore.h"
+#import "NSError+VENCore.h"
+#import "NSDictionary+VENCore.h"
 
 @import CoreGraphics;
 

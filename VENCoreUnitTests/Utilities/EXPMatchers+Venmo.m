@@ -1,6 +1,6 @@
 #import "EXPMatchers+Venmo.h"
 
-EXPMatcherImplementationBegin(match, (id pattern))
+EXPMatcherImplementationBegin(regexMatch, (id pattern))
 
 prerequisite(^BOOL{
     return [actual isKindOfClass:[NSString class]] && ([pattern isKindOfClass:[NSString class]] || [pattern isKindOfClass:[NSRegularExpression class]]);

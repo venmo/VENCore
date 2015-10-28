@@ -6,7 +6,7 @@
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
 #import "NSArray+VENCore.h"
-#import <CMDQueryStringSerialization/CMDQueryStringSerialization.h>
+@import CMDQueryStringSerialization;
 
 NSString *const VENAPIPathPayments  = @"payments";
 NSString *const VENAPIPathUsers     = @"users";
