@@ -3,8 +3,6 @@
 #import "VENCore.h"
 #import "NSString+VENCore.h"
 
-@import CMDQueryStringSerialization;
-
 #define kVENHTTPTestProtocolScheme @"ven-http-test"
 #define kVENHTTPTestProtocolHost @"base.example.com"
 #define kVENHTTPTestProtocolBasePath @"/base/path/"
@@ -324,10 +322,10 @@ describe(@"performing a request", ^{
                 waitUntil(^(DoneCallback done) {
                     [http GET:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                         NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
-                        expect(httpRequest.URL.query).to.equal([CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary]);
+                        expect(httpRequest.URL.query).to.equal(@"falseBoolParam=0&numericParam=42&stringParam=a%20value&trueBoolParam=1");
                         done();
                     } failure:^(VENHTTPResponse *response, NSError *error) {
-                        VENFail();
+                        failure(@"Failed to return correct response.");
                     }];
                 });
             });
@@ -339,10 +337,9 @@ describe(@"performing a request", ^{
                     [http POST:@"200.json" parameters:parameterDictionary success:^(VENHTTPResponse *response) {
                         NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                         NSString *httpRequestBody = [VENHTTPTestProtocol parseRequestBodyFromTestResponse:response];
-                        NSString *encodedParameters = [CMDQueryStringSerialization queryStringWithDictionary:parameterDictionary];
-                        
+
                         expect([httpRequest valueForHTTPHeaderField:@"Content-type"]).to.equal(@"application/x-www-form-urlencoded; charset=utf-8");
-                        expect(httpRequestBody).to.equal(encodedParameters);
+                        expect(httpRequestBody).to.equal(@"falseBoolParam=0&numericParam=42&stringParam=a%20value&trueBoolParam=1");
                         
                         done();
                     } failure:^(VENHTTPResponse *response, NSError *error) {
