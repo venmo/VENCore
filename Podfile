@@ -4,6 +4,10 @@ platform :ios, '8.0'
 
 inhibit_all_warnings!
 
+use_frameworks!
+
+podspec
+
 target 'VENCoreUnitTests', :exclusive => true do
   pod 'Expecta'
   pod 'Nocilla'
