@@ -84,7 +84,7 @@
 		26839E131BE11F82001651E8 /* ISO8601.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ISO8601.framework; path = Carthage/Build/iOS/ISO8601.framework; sourceTree = "<group>"; };
 		3AE56FEE190871DF0054B7EF /* VENCreateTransactionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCreateTransactionRequest.h; sourceTree = "<group>"; };
 		3AE56FEF190871DF0054B7EF /* VENCreateTransactionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCreateTransactionRequest.m; sourceTree = "<group>"; };
-		3AE56FF11908A0610054B7EF /* VENCreateTransactionRequestSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCreateTransactionRequestSpec.m; sourceTree = "<group>"; };
+		3AE56FF11908A0610054B7EF /* VENCreateTransactionRequestSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VENCreateTransactionRequestSpec.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		47136D3A18FF001F00AD63CD /* VENTransactionPayloadKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTransactionPayloadKeys.h; sourceTree = "<group>"; };
 		4796A38618FDD4C6005CABA6 /* fetchInvalidUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fetchInvalidUser.json; sourceTree = "<group>"; };
 		4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTransactionSpec.m; sourceTree = "<group>"; };
@@ -111,8 +111,8 @@
 		EB00DB341906E647001836A8 /* VENCoreIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VENCoreIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB00DB3A1906E647001836A8 /* VENCoreIntegrationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VENCoreIntegrationTests-Info.plist"; sourceTree = "<group>"; };
 		EB00DB3C1906E647001836A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EB00DB3E1906E647001836A8 /* PaymentSandboxSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentSandboxSpec.m; sourceTree = "<group>"; };
-		EB00DB401906E647001836A8 /* VENCoreIntegrationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VENCoreIntegrationTests-Prefix.pch"; sourceTree = "<group>"; };
+		EB00DB3E1906E647001836A8 /* PaymentSandboxSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PaymentSandboxSpec.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		EB00DB401906E647001836A8 /* VENCoreIntegrationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "VENCoreIntegrationTests-Prefix.pch"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		EB34431219071EA200B7791E /* paymentToUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = paymentToUser.json; path = API/payments/paymentToUser.json; sourceTree = "<group>"; };
 		EB403ECA1953A1DA00F23593 /* EXPMatchers+Venmo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+Venmo.h"; path = "Utilities/EXPMatchers+Venmo.h"; sourceTree = "<group>"; };
 		EB403ECB1953A1DA00F23593 /* EXPMatchers+Venmo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+Venmo.m"; path = "Utilities/EXPMatchers+Venmo.m"; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		EB427E5618F8451B0070EDD9 /* VENTestUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENTestUtilities.h; path = Utilities/VENTestUtilities.h; sourceTree = "<group>"; };
 		EB427E5718F8451B0070EDD9 /* VENTestUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENTestUtilities.m; path = Utilities/VENTestUtilities.m; sourceTree = "<group>"; };
 		EB58F97C18F75B25008A6914 /* VENMutableTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMutableTransactionSpec.m; sourceTree = "<group>"; };
-		EB6A5AD91906FC44003C067E /* VENUserIntegrationSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserIntegrationSpec.m; sourceTree = "<group>"; };
+		EB6A5AD91906FC44003C067E /* VENUserIntegrationSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VENUserIntegrationSpec.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		EB74B2BD18E9FD7B00838A9D /* VENHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTP.h; path = Networking/VENHTTP.h; sourceTree = "<group>"; };
 		EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTP.m; path = Networking/VENHTTP.m; sourceTree = "<group>"; };
 		EB9BF00718EA83B500416645 /* VENUserSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserSpec.m; sourceTree = "<group>"; };
@@ -140,9 +140,9 @@
 		EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VENCore.m"; path = "Categories/NSString+VENCore.m"; sourceTree = "<group>"; };
 		EBBE7E0618EA017700E47338 /* VENHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VENHTTPResponse.h; path = Networking/VENHTTPResponse.h; sourceTree = "<group>"; };
 		EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponse.m; path = Networking/VENHTTPResponse.m; sourceTree = "<group>"; };
-		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; };
+		EBBE7E0918EA020500E47338 /* VENHTTPSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VENHTTPSpec.m; path = Networking/VENHTTPSpec.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		EBBE7E0C18EA022300E47338 /* VENHTTPResponseSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VENHTTPResponseSpec.m; path = Networking/VENHTTPResponseSpec.m; sourceTree = "<group>"; };
-		EBBE7E1818EA2D7600E47338 /* VENCoreUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VENCoreUnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		EBBE7E1818EA2D7600E47338 /* VENCoreUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "VENCoreUnitTests-Prefix.pch"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		EBCB247718E9FBAF00807472 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EBCB247B18E9FBAF00807472 /* VENCore-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VENCore-Prefix.pch"; sourceTree = "<group>"; };
 		EBCB247C18E9FBAF00807472 /* VENCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENCore.h; sourceTree = "<group>"; };
