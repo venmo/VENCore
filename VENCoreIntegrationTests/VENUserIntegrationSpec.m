@@ -20,7 +20,7 @@ describe(@"Fetching a user", ^{
             expect(user.externalId).to.equal(externalId);
             done();
         } failure:^(NSError *error) {
-            VENFail();
+            failure(@"Failed to return correct response.");
             done();
         }];
     });

@@ -212,7 +212,7 @@ describe(@"Fetching a User", ^{
                 expect(user.externalId).to.equal(externalId);
                 done();
             } failure:^(NSError *error) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             }];
         });
@@ -229,7 +229,7 @@ describe(@"Fetching a User", ^{
         
         waitUntil(^(DoneCallback done) {
             [VENUser fetchUserWithExternalId:externalId success:^(VENUser *user) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             } failure:^(NSError *error) {
                 expect([error localizedDescription]).to.equal(@"Resource not found.");
@@ -241,7 +241,7 @@ describe(@"Fetching a User", ^{
     it(@"should call failure when not passed an external id", ^{
         waitUntil(^(DoneCallback done) {
             [VENUser fetchUserWithExternalId:nil success:^(VENUser *user) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             } failure:^(NSError *error) {
                 expect(error).notTo.beNil();
@@ -253,7 +253,7 @@ describe(@"Fetching a User", ^{
     it(@"should call failure when passed an empty-string external id", ^{
         waitUntil(^(DoneCallback done) {
             [VENUser fetchUserWithExternalId:@"" success:^(VENUser *user) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             } failure:^(NSError *error) {
                 expect(error).notTo.beNil();
@@ -279,7 +279,7 @@ describe(@"Fetching Friends", ^{
                 done();
                 
             } failure:^(NSError *error){
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             }];
         });
@@ -303,7 +303,7 @@ describe(@"Fetching Friends", ^{
                 }
                 done();
             } failure:^(NSError *error) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             }];
         });
@@ -324,7 +324,7 @@ describe(@"Fetching Friends", ^{
                 }
                 done();
             } failure:^(NSError *error) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             }];
         });
@@ -338,7 +338,7 @@ describe(@"Fetching Friends", ^{
         
         waitUntil(^(DoneCallback done) {
             [VENUser fetchFriendsWithExternalId:externalId success:^(NSArray *friendsArray) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             } failure:^(NSError *error) {
                 expect([error localizedDescription]).to.equal(@"Resource not found.");
@@ -350,7 +350,7 @@ describe(@"Fetching Friends", ^{
     it(@"should call failure when not passed an external id", ^{
         waitUntil(^(DoneCallback done) {
             [VENUser fetchFriendsWithExternalId:nil success:^(NSArray *friendsArray) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             } failure:^(NSError *error) {
                 expect(error).notTo.beNil();
@@ -362,7 +362,7 @@ describe(@"Fetching Friends", ^{
     it(@"should call failure when passed an empty-string external id", ^{
         waitUntil(^(DoneCallback done) {
             [VENUser fetchFriendsWithExternalId:@"" success:^(NSArray *friendsArray) {
-                VENFail();
+                failure(@"Failed to return correct response.");
                 done();
             } failure:^(NSError *error) {
                 expect(error).notTo.beNil();

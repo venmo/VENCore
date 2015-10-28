@@ -90,7 +90,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                     expect([sentTransactions count]).to.equal(1);
                     done();
                 } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                    VENFail();
+                    failure(@"Failed to return correct response.");
                     done();
                 }];
             });
@@ -110,7 +110,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             
             waitUntil(^(DoneCallback done) {
                 [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                    VENFail();
+                    failure(@"Failed to return correct response.");
                     done();
                 } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                     expect([sentTransactions count]).to.equal(0);
@@ -150,7 +150,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                     expect([sentTransactions count]).to.equal(2);
                     done();
                 } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                    VENFail();
+                    failure(@"Failed to return correct response.");
                     done();
                 }];
             });
@@ -181,7 +181,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             
             waitUntil(^(DoneCallback done) {
                 [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                    VENFail();
+                    failure(@"Failed to return correct response.");
                     done();
                 } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                     // The failure block shouldn't be called
@@ -211,7 +211,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
             
             waitUntil(^(DoneCallback done) {
                 [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                    VENFail();
+                    failure(@"Failed to return correct response.");
                     done();
                 } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
                     expect([sentTransactions count]).to.equal(0);
