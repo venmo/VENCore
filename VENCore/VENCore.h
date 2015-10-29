@@ -6,6 +6,11 @@
 #import <VENCore/VENTransaction.h>
 #import <VENCore/VENTransactionTarget.h>
 #import <VENCore/VENUser.h>
+#import <VENCore/NSArray+VENCore.h>
+#import <VENCore/NSDictionary+VENCore.h>
+#import <VENCore/NSError+VENCore.h>
+#import <VENCore/NSString+VENCore.h>
+#import <VENCore/UIDevice+VENCore.h>
 
 extern NSString *const VENErrorDomainCore;
 
