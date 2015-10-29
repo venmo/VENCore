@@ -19,7 +19,7 @@
     BOOL hasCorrectHost = [request.URL.host isEqualToString:kVENHTTPTestProtocolHost];
     BOOL hasCorrectPort = [request.URL.port isEqual:kVENHTTPTestProtocolPort];
     BOOL hasCorrectBasePath = [request.URL.path rangeOfString:kVENHTTPTestProtocolBasePath].location != NSNotFound;
-    
+
     return hasCorrectScheme && hasCorrectHost && hasCorrectPort && hasCorrectBasePath;
 }
 
@@ -29,21 +29,21 @@
 
 - (void)startLoading {
     id<NSURLProtocolClient> client = self.client;
-    
+
     NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                               statusCode:200
                                                              HTTPVersion:@"HTTP/1.1"
                                                             headerFields:@{@"Content-Type": @"application/json"}];
-    
+
     NSData *archivedRequest = [NSKeyedArchiver archivedDataWithRootObject:self.request];
     NSString *base64ArchivedRequest = [archivedRequest base64EncodedStringWithOptions:0];
-    
+
     NSData *requestBodyData;
     if (self.request.HTTPBodyStream) {
         NSInputStream *inputStream = self.request.HTTPBodyStream;
         [inputStream open];
         NSMutableData *mutableBodyData = [NSMutableData data];
-        
+
         while ([inputStream hasBytesAvailable]) {
             uint8_t buffer[128];
             NSUInteger bytesRead = [inputStream read:buffer maxLength:128];
@@ -54,14 +54,14 @@
     } else {
         requestBodyData = self.request.HTTPBody;
     }
-    
+
     NSDictionary *responseBody = @{ @"request": base64ArchivedRequest,
                                     @"requestBody": [[NSString alloc] initWithData:requestBodyData encoding:NSUTF8StringEncoding] };
-    
+
     [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    
+
     [client URLProtocol:self didLoadData:[NSJSONSerialization dataWithJSONObject:responseBody options:NSJSONWritingPrettyPrinted error:NULL]];
-    
+
     [client URLProtocolDidFinishLoading:self];
 }
 
@@ -92,18 +92,18 @@ SpecBegin(VENHTTP)
 
 describe(@"performing a request", ^{
     __block VENHTTP *http;
-    
+
     beforeEach(^{
         http = [[VENHTTP alloc] initWithBaseURL:[VENHTTPTestProtocol testBaseURL]];
         [http setProtocolClasses:@[[VENHTTPTestProtocol class]]];
     });
-    
+
     describe(@"base URL", ^{
         it(@"sends requests using the specified URL scheme", ^{
             waitUntil(^(DoneCallback done) {
                 [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
-                    
+
                     expect(httpRequest.URL.scheme).to.equal(@"ven-http-test");
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
@@ -111,26 +111,26 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
-        
+
+
         it(@"sends requests to the host at the base URL", ^{
             waitUntil(^(DoneCallback done) {
                 [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
                     expect(httpRequest.URL.host).to.equal(@"base.example.com");
-                    
+
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
                     failure(@"Failed to return correct response.");
                 }];
             });
         });
-        
+
         it(@"appends the path to the base URL", ^{
             waitUntil(^(DoneCallback done) {
                 [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
-                    
+
                     expect(httpRequest.URL.path).to.equal(@"/base/path/200.json");
                     done();
                 } failure:^(VENHTTPResponse *response, NSError *error) {
@@ -139,7 +139,7 @@ describe(@"performing a request", ^{
             });
         });
     });
-    
+
     describe(@"HTTP methods", ^{
         it(@"sends a GET request", ^{
             waitUntil(^(DoneCallback done) {
@@ -154,7 +154,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"sends a GET request with parameters", ^{
             waitUntil(^(DoneCallback done) {
                 [http GET:@"200.json" parameters:@{@"param": @"value"} success:^(VENHTTPResponse *response) {
@@ -169,7 +169,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"sends a POST request", ^{
             waitUntil(^(DoneCallback done) {
                 [http POST:@"200.json" parameters:@{@"param": @"value"} success:^(VENHTTPResponse *response) {
@@ -184,7 +184,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"sends a POST request with parameters", ^{
             waitUntil(^(DoneCallback done) {
                 [http POST:@"200.json" parameters:@{@"param": @"value"} success:^(VENHTTPResponse *response) {
@@ -200,7 +200,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"sends a PUT request", ^{
             waitUntil(^(DoneCallback done) {
                 [http PUT:@"200.json" parameters:@{@"param": @"value"} success:^(VENHTTPResponse *response) {
@@ -215,7 +215,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"sends a PUT request with parameters", ^{
             waitUntil(^(DoneCallback done) {
                 [http PUT:@"200.json" parameters:@{@"param": @"value"} success:^(VENHTTPResponse *response) {
@@ -231,8 +231,8 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
-        
+
+
         it(@"sends a DELETE request", ^{
             waitUntil(^(DoneCallback done) {
                 [http DELETE:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
@@ -247,12 +247,12 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"sends a DELETE request with parameters", ^{
             waitUntil(^(DoneCallback done) {
                 [http DELETE:@"200.json" parameters:@{@"param": @"value"} success:^(VENHTTPResponse *response) {
                     NSURLRequest *httpRequest = [VENHTTPTestProtocol parseRequestFromTestResponse:response];
-                    
+
                     expect(httpRequest.URL.path).to.match(@"/200.json$");
                     expect(httpRequest.URL.query).to.equal(@"param=value");
                     expect(httpRequest.HTTPMethod).to.equal(@"DELETE");
@@ -264,7 +264,7 @@ describe(@"performing a request", ^{
             });
         });
     });
-    
+
     describe(@"default headers", ^{
         it(@"include Accept", ^{
             waitUntil(^(DoneCallback done) {
@@ -278,7 +278,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"include User-Agent", ^{
             waitUntil(^(DoneCallback done) {
                 [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
@@ -291,7 +291,7 @@ describe(@"performing a request", ^{
                 }];
             });
         });
-        
+
         it(@"include Accept-Language", ^{
             waitUntil(^(DoneCallback done) {
                 [http GET:@"200.json" parameters:nil success:^(VENHTTPResponse *response) {
@@ -305,10 +305,10 @@ describe(@"performing a request", ^{
             });
         });
     });
-    
+
     describe(@"parameters", ^{
         __block NSDictionary *parameterDictionary;
-        
+
         beforeEach(^{
             parameterDictionary = @{@"stringParam": @"a value",
                                     @"numericParam": @42,
@@ -316,7 +316,7 @@ describe(@"performing a request", ^{
                                     @"falseBoolParam": @NO
                                     };
         });
-        
+
         describe(@"in GET requests", ^{
             it(@"transmits the parameters as URL encoded query parameters", ^{
                 waitUntil(^(DoneCallback done) {
@@ -330,7 +330,7 @@ describe(@"performing a request", ^{
                 });
             });
         });
-        
+
         describe(@"in non-GET requests", ^{
             it(@"transmits the parameters as JSON", ^{
                 waitUntil(^(DoneCallback done) {
@@ -340,7 +340,7 @@ describe(@"performing a request", ^{
 
                         expect([httpRequest valueForHTTPHeaderField:@"Content-type"]).to.equal(@"application/x-www-form-urlencoded; charset=utf-8");
                         expect(httpRequestBody).to.equal(@"falseBoolParam=0&numericParam=42&stringParam=a%20value&trueBoolParam=1");
-                        
+
                         done();
                     } failure:^(VENHTTPResponse *response, NSError *error) {
                         failure(@"Failed to return correct response.");
