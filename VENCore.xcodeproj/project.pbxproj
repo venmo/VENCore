@@ -21,11 +21,11 @@
 		26839E1F1BE12057001651E8 /* VENHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = EB74B2BE18E9FD7B00838A9D /* VENHTTP.m */; };
 		26839E201BE12057001651E8 /* VENHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBE7E0718EA017700E47338 /* VENHTTPResponse.m */; };
 		26839E211BE12057001651E8 /* VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCB247E18E9FBAF00807472 /* VENCore.m */; };
-		26839E221BE1206D001651E8 /* NSString+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB8E3BF18FDDB6300A22C6B /* NSString+VENCore.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		26839E231BE1206D001651E8 /* NSDictionary+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		26839E241BE1206D001651E8 /* NSArray+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B2C2D04196ED75400D1B241 /* NSArray+VENCore.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		26839E251BE1206D001651E8 /* NSError+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBF84D2818EA5ADE00C0E077 /* NSError+VENCore.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		26839E261BE1206D001651E8 /* UIDevice+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBFB2F8E18F7228600612BD8 /* UIDevice+VENCore.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		26839E221BE1206D001651E8 /* NSString+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB8E3BF18FDDB6300A22C6B /* NSString+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26839E231BE1206D001651E8 /* NSDictionary+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EB418B9B18EB0E060003CBF5 /* NSDictionary+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26839E241BE1206D001651E8 /* NSArray+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B2C2D04196ED75400D1B241 /* NSArray+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26839E251BE1206D001651E8 /* NSError+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBF84D2818EA5ADE00C0E077 /* NSError+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26839E261BE1206D001651E8 /* UIDevice+VENCore.h in Headers */ = {isa = PBXBuildFile; fileRef = EBFB2F8E18F7228600612BD8 /* UIDevice+VENCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26839E271BE1206D001651E8 /* VENCreateTransactionRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AE56FEE190871DF0054B7EF /* VENCreateTransactionRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26839E281BE1206D001651E8 /* VENTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = C24E595318F84C67009670F7 /* VENTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26839E291BE1206D001651E8 /* VENTransactionTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB8E3AF18FD86AB00A22C6B /* VENTransactionTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
