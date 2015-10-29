@@ -1,8 +1,6 @@
 @import Foundation;
 
-#import "VENTransactionTarget.h"
-
-@class VENMutableTransaction, VENUser, VENHTTPResponse;
+@class VENMutableTransaction, VENUser, VENHTTPResponse, VENTransactionTarget;
 
 typedef NS_ENUM(NSUInteger, VENTransactionType) {
     VENTransactionTypeUnknown,

@@ -1,3 +1,5 @@
 #import <Expecta/Expecta.h>
 
-EXPMatcherInterface(match, (id pattern))
+EXPMatcherInterface(regexMatch, (id pattern))
+
+#define regexMatch regexMatch

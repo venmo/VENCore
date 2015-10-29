@@ -73,7 +73,7 @@ describe(@"Sending Payments With Stubbed Responses", ^{
     });
 
     describe(@"sending a transaction with one target", ^{
-        it(@"should POST to the payments endpoint and call the success block when the POST succeeds", ^AsyncBlock {
+        it(@"should POST to the payments endpoint and call the success block when the POST succeeds", ^{
             VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
             [transactionService addTransactionTarget:target];
@@ -85,16 +85,18 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                              success:OCMOCK_ANY
                                                              failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                expect([sentTransactions count]).to.equal(1);
-                done();
-            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                VENFail();
-                done();
-            }];
+            waitUntil(^(DoneCallback done) {
+                [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+                    expect([sentTransactions count]).to.equal(1);
+                    done();
+                } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                    failure(@"Failed to return correct response.");
+                    done();
+                }];
+            });
         });
 
-        it(@"should POST to the payments endpoint and call the failure block when the POST fails", ^AsyncBlock {
+        it(@"should POST to the payments endpoint and call the failure block when the POST fails", ^{
             VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             VENTransactionTarget *target = [[VENTransactionTarget alloc] initWithHandle:@"peter@venmo.com" amount:30];
             [transactionService addTransactionTarget:target];
@@ -106,21 +108,22 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                VENFail();
-                done();
-            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                expect([sentTransactions count]).to.equal(0);
-                expect(response).toNot.beNil();
-                expect(error).toNot.beNil();
-                done();
-            }];
-
+            waitUntil(^(DoneCallback done) {
+                [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+                    failure(@"Failed to return correct response.");
+                    done();
+                } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                    expect([sentTransactions count]).to.equal(0);
+                    expect(response).toNot.beNil();
+                    expect(error).toNot.beNil();
+                    done();
+                }];
+            });
         });
     });
 
     describe(@"sending a transaction with two targets",  ^{
-        it(@"should POST twice to the payments endpoint and call the success block twice when both transactions succeed", ^AsyncBlock {
+        it(@"should POST twice to the payments endpoint and call the success block twice when both transactions succeed", ^{
             VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             transactionService.note = @"hi";
 
@@ -142,16 +145,18 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                              success:OCMOCK_ANY
                                                              failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                expect([sentTransactions count]).to.equal(2);
-                done();
-            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                VENFail();
-                done();
-            }];
+            waitUntil(^(DoneCallback done) {
+                [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+                    expect([sentTransactions count]).to.equal(2);
+                    done();
+                } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                    failure(@"Failed to return correct response.");
+                    done();
+                }];
+            });
         });
 
-        it(@"should call successBlock for successful payment and failureBlock for second payment which fails", ^AsyncBlock {
+        it(@"should call successBlock for successful payment and failureBlock for second payment which fails", ^{
             VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             transactionService.note = @"hi";
 
@@ -174,17 +179,19 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
 
-            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                VENFail();
-                done();
-            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                // The failure block shouldn't be called
-                expect([sentTransactions count]).to.equal(1);
-                done();
-            }];
+            waitUntil(^(DoneCallback done) {
+                [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+                    failure(@"Failed to return correct response.");
+                    done();
+                } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                    // The failure block shouldn't be called
+                    expect([sentTransactions count]).to.equal(1);
+                    done();
+                }];
+            });
         });
 
-        it(@"should not initiate second payment if the first payment fails", ^AsyncBlock {
+        it(@"should not initiate second payment if the first payment fails", ^{
 
             VENCreateTransactionRequest *transactionService = [[VENCreateTransactionRequest alloc] init];
             transactionService.note = @"hi";
@@ -201,19 +208,21 @@ describe(@"Sending Payments With Stubbed Responses", ^{
                                                      parameters:expectedParameters1
                                                         success:OCMOCK_ANY
                                                         failure:OCMOCK_ANY];
-            
-            [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
-                VENFail();
-                done();
-            } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
-                expect([sentTransactions count]).to.equal(0);
-                expect(response).toNot.beNil();
-                expect(error).toNot.beNil();
-                // Make sure no POSTs are made after the first one.
-                dispatch_after(3, dispatch_get_main_queue(), ^{
+
+            waitUntil(^(DoneCallback done) {
+                [transactionService sendWithSuccess:^(NSArray *sentTransactions, VENHTTPResponse *response) {
+                    failure(@"Failed to return correct response.");
                     done();
-                });
-            }];
+                } failure:^(NSArray *sentTransactions, VENHTTPResponse *response, NSError *error) {
+                    expect([sentTransactions count]).to.equal(0);
+                    expect(response).toNot.beNil();
+                    expect(error).toNot.beNil();
+                    // Make sure no POSTs are made after the first one.
+                    dispatch_after(3, dispatch_get_main_queue(), ^{
+                        done();
+                    });
+                }];
+            });
         });
     });
 });

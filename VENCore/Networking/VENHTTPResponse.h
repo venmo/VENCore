@@ -1,7 +1,5 @@
 @import Foundation;
 
-@class AFHTTPRequestOperation;
-
 extern NSString *const VENErrorDomainHTTPResponse;
 
 typedef NS_ENUM(NSInteger, VEErrorCodeHTTPResponse) {

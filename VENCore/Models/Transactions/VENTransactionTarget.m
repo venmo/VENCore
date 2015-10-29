@@ -1,5 +1,9 @@
 #import "VENTransactionTarget.h"
 #import "VENCore.h"
+#import "VENTransactionPayloadKeys.h"
+#import "NSString+VENCore.h"
+#import "NSDictionary+VENCore.h"
+#import "VENUser.h"
 
 @import CoreGraphics;
 

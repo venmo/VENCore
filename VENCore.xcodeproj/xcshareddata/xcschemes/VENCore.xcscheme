@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0710"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EBCB247318E9FBAF00807472"
-               BuildableName = "libVENCore.a"
+               BlueprintIdentifier = "26839E091BE11E83001651E8"
+               BuildableName = "VENCore.framework"
                BlueprintName = "VENCore"
+               ReferencedContainer = "container:VENCore.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EB00DB331906E647001836A8"
+               BuildableName = "VENCoreIntegrationTests.xctest"
+               BlueprintName = "VENCoreIntegrationTests"
                ReferencedContainer = "container:VENCore.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -37,10 +51,10 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -52,41 +66,34 @@
                ReferencedContainer = "container:VENCore.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EB00DB331906E647001836A8"
-               BuildableName = "VENCoreIntegrationTests.xctest"
-               BlueprintName = "VENCoreIntegrationTests"
-               ReferencedContainer = "container:VENCore.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBCB247318E9FBAF00807472"
-            BuildableName = "libVENCore.a"
+            BlueprintIdentifier = "26839E091BE11E83001651E8"
+            BuildableName = "VENCore.framework"
             BlueprintName = "VENCore"
             ReferencedContainer = "container:VENCore.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBCB247318E9FBAF00807472"
-            BuildableName = "libVENCore.a"
+            BlueprintIdentifier = "26839E091BE11E83001651E8"
+            BuildableName = "VENCore.framework"
             BlueprintName = "VENCore"
             ReferencedContainer = "container:VENCore.xcodeproj">
          </BuildableReference>
@@ -95,16 +102,16 @@
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBCB247318E9FBAF00807472"
-            BuildableName = "libVENCore.a"
+            BlueprintIdentifier = "26839E091BE11E83001651E8"
+            BuildableName = "VENCore.framework"
             BlueprintName = "VENCore"
             ReferencedContainer = "container:VENCore.xcodeproj">
          </BuildableReference>

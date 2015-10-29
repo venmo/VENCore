@@ -17,5 +17,3 @@
 #import "VENTestUtilities.h"
 
 #import "EXPMatchers+Venmo.h"
-
-#define VENFail() expect(YES).to.equal(NO)

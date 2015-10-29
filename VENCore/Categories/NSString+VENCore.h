@@ -1,6 +1,6 @@
 @import Foundation;
 
-#import "VENTransactionTarget.h"
+#import <VENCore/VENTransactionTarget.h>
 
 @interface NSString (VENCore)
 

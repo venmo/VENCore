@@ -1,28 +1,28 @@
 PODS:
-  - CMDQueryStringSerialization (0.4.0):
+  - CMDQueryStringSerialization (0.4.1):
     - ISO8601
-  - Expecta (0.3.0)
+  - Expecta (1.0.3)
   - ISO8601 (0.3.0)
-  - Nocilla (0.9.0)
-  - OCHamcrest (3.0.1)
+  - Nocilla (0.10.0)
+  - OCHamcrest (4.3.0)
   - OCMock (2.2.4)
-  - Specta (0.2.1)
+  - Specta (1.0.4)
 
 DEPENDENCIES:
   - CMDQueryStringSerialization (~> 0.4)
   - Expecta
   - Nocilla
   - OCHamcrest
-  - OCMock
+  - OCMock (~> 2.2)
   - Specta
 
 SPEC CHECKSUMS:
-  CMDQueryStringSerialization: 71bb5c0014147c55089964df23fd6e44316bd6f5
-  Expecta: 917bda2935b63ca7175741b8cf1b26796db6205f
+  CMDQueryStringSerialization: 4bb0a2f5e7d8d8678d911d88072274952cbef4e5
+  Expecta: 9d1bff6c8b0eeee73a166a2ee898892478927a15
   ISO8601: 8d8a22d5edf0554a1cf75bac028c76c1dc0ffaef
-  Nocilla: d7d96e8a11e363f0d7c976d48b320c43d61fb471
-  OCHamcrest: e19857683e4eefab64b878668eac04c2f4567118
+  Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
+  OCHamcrest: cd63d27f48a266d4412c0b295b01b8f0940efa81
   OCMock: a6a7dc0e3997fb9f35d99f72528698ebf60d64f2
-  Specta: 15a276a6343867b426d5ed135d5aa4d04123a573
+  Specta: 69bb134672aae190a1379ff91df07dad8dd1f869
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.39.0

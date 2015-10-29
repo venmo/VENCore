@@ -1,0 +1,2 @@
+github "soffes/ISO8601" "v0.3.0"
+github "calebd/CMDQueryStringSerialization" "v0.4.3"
