@@ -9,5 +9,6 @@
 - (BOOL)isUserId;
 - (VENTargetType)targetType;
 - (BOOL)hasContent;
+- (NSString *)urlEncodedString;
 
 @end

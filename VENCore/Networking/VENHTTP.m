@@ -6,7 +6,6 @@
 #import "NSError+VENCore.h"
 #import "NSDictionary+VENCore.h"
 #import "NSArray+VENCore.h"
-@import CMDQueryStringSerialization;
 
 NSString *const VENAPIPathPayments  = @"payments";
 NSString *const VENAPIPathUsers     = @"users";
@@ -107,7 +106,7 @@ NSString *const VENAPIPathUsers     = @"users";
 
     NSMutableURLRequest *request;
 
-    NSString *percentEncodedQuery = [CMDQueryStringSerialization queryStringWithDictionary:parameters];
+    NSString *percentEncodedQuery = [parameters urlEncodedString];
     if ([method isEqualToString:@"GET"] || [method isEqualToString:@"DELETE"]) {
         components.percentEncodedQuery = percentEncodedQuery;
         request = [NSMutableURLRequest requestWithURL:components.URL];

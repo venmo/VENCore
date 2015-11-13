@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26839E141BE11F82001651E8 /* CMDQueryStringSerialization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26839E121BE11F82001651E8 /* CMDQueryStringSerialization.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		26839E151BE11F82001651E8 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26839E131BE11F82001651E8 /* ISO8601.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		26839E161BE12057001651E8 /* NSString+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */; };
 		26839E171BE12057001651E8 /* NSDictionary+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */; };
@@ -165,7 +164,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26839E141BE11F82001651E8 /* CMDQueryStringSerialization.framework in Frameworks */,
 				26839E151BE11F82001651E8 /* ISO8601.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
