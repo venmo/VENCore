@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26839E151BE11F82001651E8 /* ISO8601.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26839E131BE11F82001651E8 /* ISO8601.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		26839E161BE12057001651E8 /* NSString+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8E3C018FDDB6300A22C6B /* NSString+VENCore.m */; };
 		26839E171BE12057001651E8 /* NSDictionary+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = EB418B9C18EB0E060003CBF5 /* NSDictionary+VENCore.m */; };
 		26839E181BE12057001651E8 /* NSArray+VENCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C2D05196ED75400D1B241 /* NSArray+VENCore.m */; };
@@ -44,6 +43,7 @@
 		4796D62118FC4B6D001461B1 /* VENTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61C18FC4B6D001461B1 /* VENTransactionSpec.m */; };
 		4796D62318FC4B6D001461B1 /* VENUserSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4796D61F18FC4B6D001461B1 /* VENUserSpec.m */; };
 		47BD36E018FDBA4500DE4554 /* fetchChrisUser.json in Resources */ = {isa = PBXBuildFile; fileRef = 47BD36DF18FDBA4500DE4554 /* fetchChrisUser.json */; };
+		7EA7AB141BF6882100064935 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA7AB131BF6882100064935 /* DateFormatter.swift */; };
 		9B2C2CF9196C992000D1B241 /* fetchInvalidFriends.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B2C2CF8196C992000D1B241 /* fetchInvalidFriends.json */; };
 		9B2C2D09196EDC3000D1B241 /* NSArray+VENCoreSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C2D08196EDC3000D1B241 /* NSArray+VENCoreSpec.m */; };
 		9BF60703196C333000F163E5 /* fetchFriends.json in Resources */ = {isa = PBXBuildFile; fileRef = 9BF60702196C333000F163E5 /* fetchFriends.json */; };
@@ -90,6 +90,7 @@
 		47BD36DF18FDBA4500DE4554 /* fetchChrisUser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fetchChrisUser.json; sourceTree = "<group>"; };
 		5027E661B70FCF9BC067E6E7 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		575041DA39E107A80821B977 /* Pods-VENCoreIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENCoreIntegrationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VENCoreIntegrationTests/Pods-VENCoreIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7EA7AB131BF6882100064935 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		8224C74786CBFD1C6FDE05EC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8CDDE8E3C8B8608E0C8651A1 /* Pods_VENCoreIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VENCoreIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4462F85B08E286CD5E765C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,7 +165,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26839E151BE11F82001651E8 /* ISO8601.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +241,7 @@
 			children = (
 				C24E595018F84C67009670F7 /* Transactions */,
 				C24E595518F84C67009670F7 /* Users */,
+				7EA7AB131BF6882100064935 /* DateFormatter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -743,6 +744,7 @@
 				26839E171BE12057001651E8 /* NSDictionary+VENCore.m in Sources */,
 				26839E181BE12057001651E8 /* NSArray+VENCore.m in Sources */,
 				26839E191BE12057001651E8 /* NSError+VENCore.m in Sources */,
+				7EA7AB141BF6882100064935 /* DateFormatter.swift in Sources */,
 				26839E1A1BE12057001651E8 /* UIDevice+VENCore.m in Sources */,
 				26839E1B1BE12057001651E8 /* VENCreateTransactionRequest.m in Sources */,
 				26839E1C1BE12057001651E8 /* VENTransaction.m in Sources */,
@@ -810,6 +812,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8224C74786CBFD1C6FDE05EC /* Pods.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -818,6 +821,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -844,6 +848,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8E4462F85B08E286CD5E765C /* Pods.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -853,6 +858,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -868,6 +874,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.venmo.VENCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

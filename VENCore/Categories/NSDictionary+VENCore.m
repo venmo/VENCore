@@ -2,7 +2,7 @@
 #import "NSArray+VENCore.h"
 #import "NSString+VENCore.h"
 
-#import <ISO8601/ISO8601.h>
+#import <VENCore/VENCore-Swift.h>
 
 @implementation NSMutableDictionary (VENCore)
 
@@ -83,7 +83,7 @@
 
     if ([object  isKindOfClass:[NSDate class]]) {
         NSDate *date = (NSDate *)object;
-        return [date ISO8601String];
+        return date.ISO8601String;
     }
 
     return [NSString stringWithFormat:@"%@", object];
