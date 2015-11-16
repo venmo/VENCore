@@ -1,5 +1,8 @@
 #import "NSDictionary+VENCore.h"
 #import "NSArray+VENCore.h"
+#import "NSString+VENCore.h"
+
+#import <VENCore/VENCore-Swift.h>
 
 @implementation NSMutableDictionary (VENCore)
 
@@ -54,6 +57,36 @@
     [dictionary cleanseResponseDictionary];
 
     return [NSDictionary dictionaryWithDictionary:dictionary];
+}
+
+- (NSString *)urlEncodedString {
+    NSMutableArray *queries = [NSMutableArray new];
+    NSArray *keys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    for (NSString* key in keys) {
+        NSString* value = self[key];
+        if (value != nil) {
+            [queries addObject:[NSString stringWithFormat:@"%@=%@", [self encode:key], [self encode:value]]];
+        }
+    }
+    return [queries componentsJoinedByString:@"&"];
+}
+
+- (NSString *)encode:(id)object {
+
+    if ([object  isKindOfClass:[NSString class]]) {
+        NSString *string = (NSString *)object;
+        NSString *encodedString = [string stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+        encodedString = [encodedString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        encodedString = [encodedString stringByReplacingOccurrencesOfString:@"=" withString:@"%3D"];
+        return encodedString;
+    }
+
+    if ([object  isKindOfClass:[NSDate class]]) {
+        NSDate *date = (NSDate *)object;
+        return date.ISO8601String;
+    }
+
+    return [NSString stringWithFormat:@"%@", object];
 }
 
 @end

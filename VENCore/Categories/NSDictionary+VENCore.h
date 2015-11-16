@@ -40,4 +40,10 @@
  */
 - (instancetype)dictionaryByCleansingResponseDictionary;
 
+/**
+ * Returns an url encoded string from the keys / values of the dictionary
+ * @return NSString
+ */
+- (NSString *)urlEncodedString;
+
 @end
