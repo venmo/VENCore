@@ -79,6 +79,9 @@
         else if ([targetType isEqualToString:VENTransactionTargetPhoneKey]) {
             self.targetType = VENTargetTypePhone;
         }
+        else if ([targetType isEqualToString:VENTransactionTargetRedeemableKey]) {
+            self.targetType = VENTargetTypeRedeemable;
+        }
         else {
             self.targetType = VENTargetTypeUnknown;
         }
@@ -108,6 +111,9 @@
                 dictionary[VENTransactionTargetTypeKey]  = VENTransactionTargetUserKey;
                 dictionary[VENTransactionTargetUserKey]  = self.handle;
                 break;
+            case VENTargetTypeRedeemable:
+                dictionary[VENTransactionTargetTypeKey]  = VENTransactionTargetRedeemableKey;
+                dictionary[VENTransactionTargetUserKey]  = self.handle;
             default:
                 break;
         }

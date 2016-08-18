@@ -2,11 +2,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 inhibit_all_warnings!
 
-target 'VENCore', :exclusive => true do
+target 'VENCore' do
   podspec
 end
 
-target 'VENCoreUnitTests', :exclusive => true do
+target 'VENCoreUnitTests' do
+  podspec
   pod 'Expecta'
   pod 'Nocilla'
   pod 'OCMock'
@@ -14,7 +15,8 @@ target 'VENCoreUnitTests', :exclusive => true do
   pod 'Specta'
 end
 
-target 'VENCoreIntegrationTests', :exclusive => true do
+target 'VENCoreIntegrationTests' do
+  podspec
   pod 'Expecta'
   pod 'Nocilla'
   pod 'OCMock'
