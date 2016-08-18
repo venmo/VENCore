@@ -6,7 +6,8 @@ typedef NS_ENUM(NSUInteger, VENTargetType) {
     VENTargetTypeUnknown,
     VENTargetTypePhone,
     VENTargetTypeEmail,
-    VENTargetTypeUserId
+    VENTargetTypeUserId,
+    VENTargetTypeRedeemable
 };
 
 @interface VENTransactionTarget : NSObject
