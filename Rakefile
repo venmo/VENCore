@@ -4,7 +4,7 @@ SCHEME = 'VENCore'
 desc 'Run the tests'
 task :test do
   require_binary 'bundle', 'gem install bundler'
-  sh 'bundle exec pod repo update --silent'
+  sh 'bundle exec pod repo update'
   sh 'bundle exec pod install'
 
   require_binary 'xcodebuild', 'brew install xcodebuild'
