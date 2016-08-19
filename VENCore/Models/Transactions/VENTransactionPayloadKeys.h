@@ -16,6 +16,7 @@
 #define VENTransactionTargetPhoneKey @"phone"
 #define VENTransactionTargetEmailKey @"email"
 #define VENTransactionTargetUserKey @"user"
+#define VENTransactionTargetRedeemableKey @"redeemable"
 
 //User Subsection
 #define VENTransactionTargetUserIDKey @"id"
