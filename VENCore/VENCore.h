@@ -24,6 +24,9 @@ typedef NS_ENUM(NSInteger, VENCoreErrorCode) {
 
 @interface VENCore : NSObject
 
+- (instancetype)initWithDeviceID:(NSString *)deviceID;
+- (instancetype)initWithBaseURL:(NSURL *)baseURL deviceID:(NSString *)deviceID  NS_DESIGNATED_INITIALIZER;
+
 @property (strong, nonatomic) VENHTTP *httpClient;
 @property (strong, nonatomic) NSString *accessToken;
 

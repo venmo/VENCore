@@ -10,14 +10,14 @@ static NSString *const VENAPIBaseURL = @"https://api.venmo.com/v1";
 
 #pragma mark - Private
 
-- (instancetype)init {
-    return [self initWithBaseURL:[NSURL URLWithString:VENAPIBaseURL]];
+- (instancetype)initWithDeviceID:(NSString *)deviceID {
+    return [self initWithBaseURL:VENAPIBaseURL deviceID:deviceID];
 }
 
-- (instancetype)initWithBaseURL:(NSURL *)baseURL {
+- (instancetype)initWithBaseURL:(NSURL *)baseURL deviceID:(NSString *)deviceID {
     self = [super init];
     if (self) {
-        self.httpClient = [[VENHTTP alloc] initWithBaseURL:baseURL];
+        self.httpClient = [[VENHTTP alloc] initWithBaseURL:baseURL deviceID:deviceID];
     }
     return self;
 }
