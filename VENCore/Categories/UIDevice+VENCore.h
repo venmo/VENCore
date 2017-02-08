@@ -4,6 +4,4 @@
 
 - (NSString *)VEN_platformString;
 
-- (NSString *)VEN_deviceIDString;
-
 @end

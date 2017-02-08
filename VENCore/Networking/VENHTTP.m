@@ -14,6 +14,7 @@ NSString *const VENAPIPathUsers     = @"users";
 @interface VENHTTP ()<NSURLSessionDelegate>
 
 @property (strong, nonatomic) NSString *accessToken;
+@property (strong, nonatomic) NSString *deviceID;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong, readwrite) NSURL *baseURL;
 
@@ -21,11 +22,12 @@ NSString *const VENAPIPathUsers     = @"users";
 
 @implementation VENHTTP
 
-- (instancetype)initWithBaseURL:(NSURL *)baseURL
+- (instancetype)initWithBaseURL:(NSURL *)baseURL deviceID:(NSString *)deviceID
 {
     self = [self init];
     if (self) {
         self.baseURL = baseURL;
+        self.deviceID = deviceID;
         [self initializeSessionWithHeaders:self.defaultHeaders];
     }
     return self;
@@ -249,7 +251,10 @@ NSString *const VENAPIPathUsers     = @"users";
     [defaultHeaders addEntriesFromDictionary:@{@"User-Agent" : [self userAgentString],
                                                @"Accept": [self acceptString],
                                                @"Accept-Language": [self acceptLanguageString],
-                                               @"Device-ID" : [[UIDevice currentDevice] VEN_deviceIDString]}];
+                                               }];
+    if ([self deviceID]) {
+        defaultHeaders[@"device-id"] = [self deviceID];
+    }
     return defaultHeaders;
 }
 
