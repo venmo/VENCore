@@ -16,18 +16,4 @@ NSString *const VENUserDefaultsKeyDeviceID = @"VenmoDeviceID";
     return platform;
 }
 
-
-- (NSString *)VEN_deviceIDString {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *uniqueIdentifier = [userDefaults stringForKey:VENUserDefaultsKeyDeviceID];
-    if (!uniqueIdentifier) {
-        CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
-        uniqueIdentifier = CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, uuid));
-        CFRelease(uuid);
-        [userDefaults setObject:uniqueIdentifier forKey:VENUserDefaultsKeyDeviceID];
-        [userDefaults synchronize];
-    }
-    return uniqueIdentifier;
-}
-
 @end

@@ -9,7 +9,7 @@ extern NSString *const VENAPIPathUsers;
 
 @property (nonatomic, strong, readonly) NSURL *baseURL;
 
-- (instancetype)initWithBaseURL:(NSURL *)baseURL;
+- (instancetype)initWithBaseURL:(NSURL *)baseURL deviceID:(NSString *)deviceID;
 
 - (void)setProtocolClasses:(NSArray *)protocolClasses;
 
